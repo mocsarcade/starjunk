@@ -7,9 +7,13 @@
 }
 
 html {
-    background-color: #111;
+    background-color: #EEE;
 }
 
 canvas {
+    width: 100%;
+    height: 100%;
     image-rendering: pixelated;
 }
+
+@import "./systems/Frame.scss"

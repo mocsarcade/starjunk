@@ -25,13 +25,22 @@ rimraf("./build", function() {
         })
     Webpack({
         watch: isServer,
-        entry: {"index.js": "./source/index.js"},
-        output: {path: "./build/web", filename: "index.js"},
+        entry: {
+            "index.js": "./source/index.js"
+        },
+        output: {
+            path: "./build/web",
+            filename: "index.js"
+        },
+        node: {
+            fs: "empty"
+        },
         module: {
             loaders: [
                 {test: /\.js$/i, exclude: /(node_modules)/i, loader: "babel-loader"},
                 {test: /\.(png|jpe?g|gif|svg)$/i, loaders: ["url-loader", "image-Webpack-loader"]},
                 {test: /\.s?css$/i, loaders: ["style-loader", "css-loader" + (isBundle ? "?minimize" : ""), "autoprefixer-loader", "sass-loader"]},
+                {test: /\.json$/i, include: path.resolve("./node_modules/pixi.js"), loader: "json-loader"},
             ]
         },
         plugins: [
@@ -48,7 +57,7 @@ rimraf("./build", function() {
             var errors = results.compilation.errors.map(function(error) {
                 return "<div>" + ansiup.ansi_to_html(error.toString()) + "</div>"
             }).join()
-            errors = "<style>body{background-color:#FFF;}div{font-family:monospace;white-space:pre;}</style>" + errors
+            errors = "<style>div{font-family:monospace;white-space:pre;}</style>" + errors
             errors = "document.body.innerHTML=\"" + jsesc(errors, {quotes: "double"}) + "\""
             fs.writeFile("./build/web/index.js", errors, function() {
                 console.log("js'd w/ errs!")
@@ -65,8 +74,13 @@ rimraf("./build", function() {
     })
     Webpack({
         watch: isServer,
-        entry: {"index.css": "./source/index.css"},
-        output: {path: "./build/web", filename: "index.css"},
+        entry: {
+            "index.css": "./source/index.css"
+        },
+        output: {
+            path: "./build/web",
+            filename: "index.css"
+        },
         module: {
             loaders: [
                 {test: /\.(png|jpe?g|gif|svg)$/i, loaders: ["url-loader", "image-webpack-loader"]},
@@ -82,7 +96,7 @@ rimraf("./build", function() {
         } if(results.compilation.errors.length > 0) {
             errors = results.compilation.errors.join("\n")
             errors = "body:before{content:\"" + cssesc(errors, {quotes: "double"}) + "\";}"
-            errors = "body{font-family:monospace;white-space:pre;background-color:#FFF}" + errors
+            errors = "body{font-family:monospace;white-space:pre;}" + errors
             fs.writeFile("./build/web/index.css", errors, function() {
                 console.log("css'd w/ errs!")
                 if(!!server && !!server.active) {
