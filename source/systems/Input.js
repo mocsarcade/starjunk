@@ -54,4 +54,4 @@ document.addEventListener("keyup", function(event) {
     Input.setUp(vkey[event.keyCode])
 })
 
-export default Input
+module.exports = Input

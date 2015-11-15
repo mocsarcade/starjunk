@@ -1,6 +1,6 @@
 var Pixi = require("pixi.js")
 
-var renderer = Pixi.autoDetectRenderer(160/2, 90/2)
+var renderer = Pixi.autoDetectRenderer(80, 45)
 document.getElementById("frame").appendChild(renderer.view)
 
 var makeImage = function(colors, pixels) {
@@ -43,16 +43,32 @@ var image = makeImage(Colors, [
 ])
 
 var pulser = Pixi.Sprite.fromImage(image)
-pulser.position.x = 10
-pulser.position.y = 10
-//pulser.anchor.x = 0.5
-//pulser.anchor.y = 0.5
+pulser.position.x = 15.5
+pulser.position.y = 15.5
+pulser.anchor.x = 0.5
+pulser.anchor.y = 0.5
 
 var stage = new Pixi.Container()
 stage.addChild(pulser)
 
 var Loop = require("./systems/Loop")
+var Input = require("./systems/Input")
 
-var loop = new Loop(function() {
+var loop = new Loop(function(tick) {
     renderer.render(stage)
+    if(Input.isDown("<space>")) {
+        if(pulser.position.y < 45 - 15.5) {
+            pulser.position.y += 500 * tick
+            if(pulser.position.y > 45 - 15.5) {
+                pulser.position.y = 45 - 15.5
+            }
+        }
+    } else {
+        if(pulser.position.y > 15.5) {
+            pulser.position.y -= 500 * tick
+            if(pulser.position.y < 15.5) {
+                pulser.position.y = 15.5
+            }
+        }
+    }
 })
