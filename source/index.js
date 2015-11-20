@@ -1,119 +1,133 @@
-"use strict"
-
 var Pixi = require("pixi.js")
+var Keyb = require("keyb")
+var Loop = require("./systems/Loop")
 
-var WIDTH = 80, HEIGHT = 45
+const WIDTH = 80
+const HEIGHT = 45
 
 var renderer = Pixi.autoDetectRenderer(WIDTH, HEIGHT)
 document.getElementById("frame").appendChild(renderer.view)
 
-var Texture = function(colors, pixels) {
-    var canvas = document.createElement("canvas")
-    var context = canvas.getContext("2d")
+renderer.roundPixels = true
+renderer.backgroundColor = 0x0F380F
 
-    canvas.width = pixels[pixels.length-1].length
-    canvas.height = pixels.length
-
-    for(var y = 0; y < pixels.length; y++) {
-        for(var x = 0; x < pixels[y].length; x++) {
-            var pixel = pixels[y][x]
-            if(pixel != undefined) {
-                context.fillStyle = colors[pixel]
-                context.fillRect(x, y, 1, 1)
-            }
-        }
-    }
-
-    return Pixi.Texture.fromImage(canvas.toDataURL())
-}
+var Imagine = require("./systems/Imagine")
 
 var Colors = {
-    0: "#5C415D",
-    1: "#74526C",
-    2: "#AA767C",
-    3: "#D6A2AD",
-    4: "#EEC584"
+    0: "#9CBD0F",
+    1: "#8CAD0F",
+    2: "#306230",
+    3: "#0F380F",
 }
 
 var Images = {
-    "onetapship": Texture(Colors, [
-        [1,1,0,1,1, , , , , , ],
-        [0,1,0,0,1,1,0,0, , , ],
-        [1,1,0,0,0,0,0,1,0,0, ],
-        [0,1,0,0,1,0,1,0,0,1,1],
-        [1,1,0,1,1,0,0,1,0,0,1],
-    ]),
-    "projectile": Texture(Colors, [
-        [1,2,3,2]
-    ])
+    "defender": Pixi.Texture.fromImage(Imagine(Colors, [
+        [ , , , , ,0, , , , , ,],
+        [ , , , ,0,0,0, , , , ,],
+        [0, , , ,0,0,0, , , ,0,],
+        [0,0, , ,0,0,0, , ,0,0,],
+        [0,0,0,0,0,0,0,0,0,0,0,],
+        [0,0,0,0,0,0,0,0,0,0,0,],
+        [ ,0,0,0,0,0,0,0,0,0, ,],
+    ])),
+    "invader1": Pixi.Texture.fromImage(Imagine(Colors, [
+        [ , ,1, , , , , ,1, , ,],
+        [1, , ,1, , , ,1, , ,1,],
+        [1, ,1,1,1,1,1,1,1, ,1,],
+        [1,1,1,3,1,1,1,3,1,1,1,],
+        [1,1,1,1,1,1,1,1,1,1,1,],
+        [ ,1,1,1,1,1,1,1,1,1, ,],
+        [ , ,1, , , , , ,1, , ,],
+        [ ,1, , , , , , , ,1, ,],
+    ])),
+    "invader2": Pixi.Texture.fromImage(Imagine(Colors, [
+        [ , ,1, , , , , ,1, , ,],
+        [ , , ,1, , , ,1, , , ,],
+        [ , ,1,1,1,1,1,1,1, , ,],
+        [ ,1,1,3,1,1,1,3,1,1, ,],
+        [1,1,1,1,1,1,1,1,1,1,1,],
+        [1, ,1,1,1,1,1,1,1, ,1,],
+        [1, ,1, , , , , ,1, ,1,],
+        [ , , ,1,1, ,1,1, , , ,],
+    ])),
+    "projectile": Pixi.Texture.fromImage(Imagine(Colors, [
+        [0,],
+        [0,],
+        [0,],
+        [0,],
+    ])),
 }
 
-var stage = new Pixi.Container()
-
-class Onetapship extends Pixi.Sprite {
+class Defender extends Pixi.Sprite {
     constructor() {
-        super(Images.onetapship)
-        this.position.x = 15.5
-        this.position.y = 15.5
+        super(Images.defender)
+        this.position.x = WIDTH / 2
+        this.position.y = HEIGHT - 2
         this.anchor.x = 0.5
-        this.anchor.y = 0.5
+        this.anchor.y = 1
 
-        this.speed = 500
-        this.firerate = 0
-        this.maxfirerate = 0.1
+        this.speed = 10
     }
     update(tick) {
-        if(Input.isDown("<space>")) {
-            if(this.position.y < HEIGHT - 15.5) {
-                this.position.y += this.speed * tick
-                if(this.position.y > HEIGHT - 15.5) {
-                    this.position.y = HEIGHT - 15.5
-                }
-            }
-        } else {
-            if(this.position.y > 15.5) {
-                this.position.y -= this.speed * tick
-                if(this.position.y < 15.5) {
-                    this.position.y = 15.5
-                }
-            }
-        }
-        if(this.position.y == 15.5
-        || this.position.y == HEIGHT - 15.5) {
-            this.firerate += tick
-            if(this.firerate > this.maxfirerate) {
-                this.firerate -= this.maxfirerate
-                this.parent.addChild(new Projectile({
-                    x: this.position.x + (this.width / 2),
-                    y: this.position.y + (this.height / 2) - 1
-                }))
-            }
+        if(Keyb.isDown("A")
+        || Keyb.isDown("<left>")) {
+            this.position.x -= this.speed * tick
+        } if(Keyb.isDown("D")
+        || Keyb.isDown("<right>")) {
+            this.position.x += this.speed * tick
+        } if(Keyb.isJustDown("<space>")) {
+            stage.addChild(new Projectile({
+                x: this.position.x,
+                y: this.position.y
+            }))
         }
     }
 }
-
-var pulser = new Onetapship()
-stage.addChild(pulser)
 
 class Projectile extends Pixi.Sprite {
     constructor(protoprojectile) {
         super(Images.projectile)
         this.position.x = protoprojectile.x || 0
-        this.position.y = protoprojectile.y || 0
-        this.anchor.y = 0.5
-
+        this.position.y = HEIGHT - 6
+        this.anchor.x = 0.5
+        this.anchor.y = 1
         this.speed = 200
     }
     update(tick) {
-        this.position.x += this.speed * tick
-        if(this.position.x > WIDTH) {
-            this.parent.removeChild(this)
+        this.position.y -= this.speed * tick
+        if(this.position.y < 0) {
+             this.parent.removeChild(this)
+        }
+        for(var key in invaders.children) {
+            var invader = invaders.children[key]
+            if(Math.abs(invader.position.y - this.position.y) < 8
+            && Math.abs(invader.position.x - this.position.x) < 6) {
+                invaders.removeChild(invader)
+            }
         }
     }
 }
 
-var Loop = require("./systems/Loop")
-var Input = require("./systems/Input")
+class Invader extends Pixi.Sprite {
+    constructor(protoinvader) {
+        super(Images.invader2)
+        this.position.x = protoinvader.x
+        this.position.y = protoinvader.y
+        this.anchor.x = 0.5
+        this.anchor.y = 0.5
+    }
+}
+
+var stage = new Pixi.Container()
+stage.addChild(new Defender())
+var invaders = new Pixi.Container()
+stage.addChild(invaders)
+invaders.addChild(new Invader({
+    x: 6+8, y: 4+8
+}))
+invaders.addChild(new Invader({
+    x: 6+8+11+3, y: 4+8
+}))
 
 var loop = new Loop(function(tick) {
     for(var key in stage.children) {

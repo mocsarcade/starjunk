@@ -1,3 +1,5 @@
+@import "./systems/Frame.scss";
+
 * {
     margin: 0;
     padding: 0;
@@ -15,5 +17,3 @@ canvas {
     height: 100%;
     image-rendering: pixelated;
 }
-
-@import "./systems/Frame.scss"
