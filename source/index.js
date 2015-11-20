@@ -1,10 +1,8 @@
 var Pixi = require("pixi.js")
 var Keyb = require("keyb")
-var Loop = require("./systems/Loop")
-var ShortID = require("shortid")
+var Afloop = require("afloop")
 
-const WIDTH = 80
-const HEIGHT = 45
+var WIDTH = 80, HEIGHT = 45
 
 var renderer = Pixi.autoDetectRenderer(WIDTH, HEIGHT)
 document.getElementById("frame").appendChild(renderer.view)
@@ -12,80 +10,11 @@ document.getElementById("frame").appendChild(renderer.view)
 renderer.roundPixels = true
 renderer.backgroundColor = 0x0F380F
 
-var Imagine = require("./systems/Imagine")
-
-var Colors = {
-    0: "#9CBD0F",
-    1: "#8CAD0F",
-    2: "#306230",
-    3: "#0F380F",
-}
-
 var Images = {
-    "defender": Pixi.Texture.fromImage(Imagine(Colors, [
-        [ , , , , ,0, , , , , ,],
-        [ , , , ,0,0,0, , , , ,],
-        [0, , , ,0,0,0, , , ,0,],
-        [0,0, , ,0,0,0, , ,0,0,],
-        [0,0,0,0,0,0,0,0,0,0,0,],
-        [0,0,0,0,0,0,0,0,0,0,0,],
-        [ ,0,0,0,0,0,0,0,0,0, ,],
-    ])),
-    "invader1": Pixi.Texture.fromImage(Imagine(Colors, [
-        [ , ,1, , , , , ,1, , ,],
-        [1, , ,1, , , ,1, , ,1,],
-        [1, ,1,1,1,1,1,1,1, ,1,],
-        [1,1,1,3,1,1,1,3,1,1,1,],
-        [1,1,1,1,1,1,1,1,1,1,1,],
-        [ ,1,1,1,1,1,1,1,1,1, ,],
-        [ , ,1, , , , , ,1, , ,],
-        [ ,1, , , , , , , ,1, ,],
-    ])),
-    "invader2": Pixi.Texture.fromImage(Imagine(Colors, [
-        [ , ,1, , , , , ,1, , ,],
-        [ , , ,1, , , ,1, , , ,],
-        [ , ,1,1,1,1,1,1,1, , ,],
-        [ ,1,1,3,1,1,1,3,1,1, ,],
-        [1,1,1,1,1,1,1,1,1,1,1,],
-        [1, ,1,1,1,1,1,1,1, ,1,],
-        [1, ,1, , , , , ,1, ,1,],
-        [ , , ,1,1, ,1,1, , , ,],
-    ])),
-    "projectile": Pixi.Texture.fromImage(Imagine(Colors, [
-        [0,],
-        [0,],
-        [0,],
-        [0,],
-    ])),
-}
-
-class SuperContainer extends Pixi.Container {
-    constructor() {
-        super(arguments)
-    }
-    update(tick) {
-        for(var key in this.children) {
-            if(!!this.children[key].update) {
-                this.children[key].update(tick)
-            }
-        }
-    }
-    addChild(label, child) {
-        child = child || label
-        super.addChild(child)
-        if(label != child) {
-            child.label = label
-            this[label] = this[label] || {}
-            child.id = ShortID.generate()
-            this[label][child.id] = child
-        }
-    }
-    removeChild(child) {
-        super.removeChild(child)
-        if(!!child.label && !!this[child.label]) {
-            delete this[child.label][child.id]
-        }
-    }
+    "defender": Pixi.Texture.fromImage(require("./images/defender.png")),
+    "invader1": Pixi.Texture.fromImage(require("./images/invader1.png")),
+    "invader2": Pixi.Texture.fromImage(require("./images/invader2.png")),
+    "projectile": Pixi.Texture.fromImage(require("./images/projectile.png"))
 }
 
 class Defender extends Pixi.Sprite {
@@ -106,7 +35,7 @@ class Defender extends Pixi.Sprite {
         || Keyb.isDown("<right>")) {
             this.position.x += this.speed * tick
         } if(Keyb.isJustDown("<space>")) {
-            stage.addChild("projectile", new Projectile({
+            stage.addChild(new Projectile({
                 x: this.position.x,
                 y: this.position.y
             }))
@@ -128,14 +57,13 @@ class Projectile extends Pixi.Sprite {
         if(this.position.y < 0) {
              this.parent.removeChild(this)
         }
-        for(var key in stage.invaders) {
-            var invader = stage.invaders[key]
-            if(Math.abs(invader.position.y - this.position.y) < 8
-            && Math.abs(invader.position.x - this.position.x) < 6) {
-                stage.removeChild(this)
-                stage.removeChild(invader)
-                if(Object.keys(stage.invaders).length == 0) {
-                    console.log("You win!")
+        for(var key in stage.children) {
+            if(stage.children[key].constructor.name == "Invader") {
+                var invader = stage.children[key]
+                if(Math.abs(invader.position.y - this.position.y) < 8
+                && Math.abs(invader.position.x - this.position.x) < 6) {
+                    stage.removeChild(this)
+                    stage.removeChild(invader)
                 }
             }
         }
@@ -144,7 +72,7 @@ class Projectile extends Pixi.Sprite {
 
 class Invader extends Pixi.Sprite {
     constructor(protoinvader) {
-        super(protoinvader.image)
+        super(Images.invader1)
         this.position.x = protoinvader.x
         this.position.y = protoinvader.y
         this.anchor.x = 0.5
@@ -162,36 +90,21 @@ class Invader extends Pixi.Sprite {
             this.strafe -= this.maxstrafe
             this.direction *= -1
             this.position.y += 2
-            if(this.position.y > HEIGHT - 16) {
-                console.log("You lose!")
-            }
         }
     }
 }
 
-var stage = new SuperContainer()
+var stage = new Pixi.Container()
 stage.addChild(new Defender())
+stage.addChild(new Invader({x: 6+8, y: 4+8, strafe: 24}))
+stage.addChild(new Invader({x: 6+8+11+3, y: 4+8, strafe: 24}))
+stage.addChild(new Invader({x: 6+8+((11+3)*2), y: 4+8, strafe: 24}))
 
-stage.addChild("invaders", new Invader({
-    x: 6+8, y: 4+8,
-    image: Images.invader1,
-    strafe: 24
-}))
-stage.addChild("invaders", new Invader({
-    x: 6+8+11+3, y: 4+8,
-    image: Images.invader2,
-    strafe: 24
-}))
-stage.addChild("invaders", new Invader({
-    x: 6+8+((11+3)*2), y: 4+8,
-    image: Images.invader1,
-    strafe: 24
-}))
-
-var loop = new Loop(function(tick) {
-    stage.update(tick)
+var loop = new Afloop(function(tick) {
+    stage.children.forEach(function(child) {
+        if(child.update != undefined) {
+            child.update(tick)
+        }
+    })
     renderer.render(stage)
 })
-
-// use tickly for loop
-// better update loop
