@@ -1,8 +1,8 @@
 var Pixi = require("pixi.js")
-var Keyb = require("keyb")
 var Afloop = require("afloop")
+var Keyb = require("keyb")
 
-var WIDTH = 80, HEIGHT = 45
+var WIDTH = 160, HEIGHT = 90
 
 var renderer = Pixi.autoDetectRenderer(WIDTH, HEIGHT)
 document.getElementById("frame").appendChild(renderer.view)

@@ -1,3 +1,3 @@
-# Pulse #
+# Starjunk #
 
-A game for the #onetapjam.
+A game about interplanetary salvaging, developed for the Mocs Arcade Cabinet.
