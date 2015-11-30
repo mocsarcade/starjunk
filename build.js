@@ -116,7 +116,7 @@ rimraf("./build", function() {
                 server: "./build/web",
                 logLevel: "silent",
                 notify: false,
-                port: 1234
+                port: 1701
             })
         }, 100)
     }
