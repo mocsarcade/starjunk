@@ -204,7 +204,7 @@ class Junkership extends Pixi.Sprite {
             if(this.position.x < 0) {
                 this.position.x = 0
             }
-        } if(Keyb.isDown("D") || Keyb.isDown("right>")) {
+        } if(Keyb.isDown("D") || Keyb.isDown("<right>")) {
             this.position.x += this.speed * tick
             if(this.position.x > WIDTH) {
                 this.position.x = WIDTH
@@ -281,13 +281,13 @@ for(var i = 0; i < 9 * 5; i++) {
 
 stage.addChild(new Junkership())
 
-var text = new Pixi.Text("Hello World!!", {
-    font: "10px Arial",
-    fill: Colors[4],
-    strokeThickness: 5,
-})
-text.blendMode = PIXI.BLEND_MODES.ADD
-stage.addChild(text)
+window.setTimeout(function() {
+    stage.addChild(new Pixi.Text("AAA HELLO WORLD", {
+        font: "1em box",
+        fill: Colors[4],
+        strokeThickness: 5,
+    }))
+}, 1000)
 
 var loop = new Afloop(function(tick) {
     tick = Math.min(tick, 0.5)

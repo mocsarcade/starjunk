@@ -83,6 +83,7 @@ rimraf("./build", function() {
         },
         module: {
             loaders: [
+                {test: /\.(ttf)$/i, loader: "url-loader"},
                 {test: /\.(png|jpe?g|gif|svg)$/i, loaders: ["url-loader", "image-webpack-loader"]},
                 {test: /\.s?css$/i, loader: WebpackText.extract(["css-loader" + (isBundle ? "?minimize" : ""), "autoprefixer-loader", "sass-loader"])},
             ]

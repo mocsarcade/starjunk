@@ -1,4 +1,5 @@
 @import "./styles/Frame.scss";
+@import "./styles/Fonts.scss";
 
 * {
     margin: 0;
@@ -11,6 +12,9 @@
 html {
     color: #EEE;
     background-color: #111;
+
+    font-size: 2em;
+    font-family: box;
 }
 
 canvas {
