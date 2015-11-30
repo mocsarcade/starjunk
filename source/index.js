@@ -279,15 +279,7 @@ for(var i = 0; i < 9 * 5; i++) {
     }))
 }
 
-stage.addChild(new Junkership())
-
-window.setTimeout(function() {
-    stage.addChild(new Pixi.Text("AAA HELLO WORLD", {
-        font: "1em box",
-        fill: Colors[4],
-        strokeThickness: 5,
-    }))
-}, 1000)
+//stage.addChild(new Junkership())
 
 var loop = new Afloop(function(tick) {
     tick = Math.min(tick, 0.5)
@@ -297,4 +289,8 @@ var loop = new Afloop(function(tick) {
         }
     })
     renderer.render(stage)
+
+    if(Keyb.isDown("Z")) {
+        throw -1
+    }
 })
