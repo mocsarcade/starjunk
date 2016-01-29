@@ -1,10 +1,10 @@
 var Pixi = require("pixi.js")
 var Reference = require("Reference.js")
 
+var projectileTex = Pixi.Texture.fromImage(require("./images/projectile.png"))
+
 export default class Projectile extends Pixi.Sprite {
     constructor(x, y) {
-        var projectileTex =
-            Pixi.Texture.fromImage(require("./images/projectile.png"))
         super(projectileTex)
         this.x = x
         this.y = y

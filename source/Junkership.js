@@ -4,10 +4,10 @@ var Keyb = require("keyb")
 import Reference from "./Reference.js"
 import Projectile from "./Projectile.js"
 
+var junkerTex = Pixi.Texture.fromImage(require("./images/blue-starship.png"))
+
 export default class Junkership extends Pixi.Sprite {
     constructor() {
-        var junkerTex =
-            Pixi.Texture.fromImage(require("./images/blue-starship.png"))
         super(junkerTex)
         this.speed = 60
     }
