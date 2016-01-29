@@ -2,6 +2,7 @@ var Pixi = require("pixi.js")
 var Keyb = require("keyb")
 
 import Reference from "./Reference.js"
+import Projectile from "./Projectile.js"
 
 export default class Junkership extends Pixi.Sprite {
     constructor() {
@@ -24,6 +25,10 @@ export default class Junkership extends Pixi.Sprite {
         if(Keyb.isDown("<right>") &&
             (this.position.x + this.width) < Reference.GAME_WIDTH){
             this.position.x += this.speed * delta
+        }
+        if(Keyb.isJustDown("<space>")){
+            game.addChild(new Projectile(this.x + this.width,
+                this.y + this.height/2))
         }
     }
 }
