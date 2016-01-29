@@ -2,15 +2,20 @@ var Pixi = require("pixi.js")
 var Afloop = require("afloop")
 var Keyb = require("keyb")
 
-var WIDTH = 230, HEIGHT = 130
+import Junkership from "./Junkership.js"
+import Reference from "./Reference.js"
 
-var renderer = Pixi.autoDetectRenderer(WIDTH, HEIGHT)
+var renderer = Pixi.autoDetectRenderer(Reference.GAME_WIDTH, Reference.GAME_HEIGHT)
 renderer.backgroundColor = 0x222222
 renderer.roundPixels = true
 
 document.getElementById("mount").appendChild(renderer.view)
+window.game = new Pixi.Container()
+game.addChild(new Junkership())
 
-var game = new Pixi.Container()
 var loop = new Afloop(function(delta) {
+    game.children.forEach((child) => {
+        child.update(delta)
+    })
     renderer.render(game)
 })
