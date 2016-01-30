@@ -20,4 +20,8 @@ export default class Projectile extends Pixi.Sprite {
                 this.destroy()
             }
     }
+    onCollision(){
+        game.removeChild(this)
+        this.destroy()
+    }
 }
