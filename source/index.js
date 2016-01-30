@@ -5,6 +5,7 @@ var Keyb = require("keyb")
 import Junkership from "./Junkership.js"
 import Trashbot from "./Trashbot.js"
 import Reference from "./Reference.js"
+import Projectile from "./Projectile.js"
 
 var renderer = Pixi.autoDetectRenderer(Reference.GAME_WIDTH, Reference.GAME_HEIGHT)
 renderer.backgroundColor = 0x222222
@@ -21,8 +22,8 @@ var loop = new Afloop(function(delta) {
     game.children.forEach((child) => {
         child.update(delta)
 
-        if (child.constructor.name === "Trashbot" ||
-            child.constructor.name === "Junkership"){
+        if (child instanceof Trashbot ||
+            child instanceof Junkership){
             collisionCheck(child)
         }
     })
@@ -39,8 +40,7 @@ function collisionCheck(child){
     var x2, y2, w2, h2
 
     game.children.forEach((toCompare) => {
-        if (child.constructor.name === "Trashbot" &&
-        toCompare.constructor.name === "Projectile"){
+        if (child instanceof Trashbot && toCompare instanceof Projectile){
             x2 = toCompare.position.x
             y2 = toCompare.position.y
             w2 = toCompare.width
