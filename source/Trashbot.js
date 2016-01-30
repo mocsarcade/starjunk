@@ -20,5 +20,6 @@ export default class Trashbot extends Pixi.Sprite {
     onCollision(){
         game.removeChild(this)
         this.destroy()
+        game.score++
     }
 }

@@ -13,6 +13,7 @@ renderer.roundPixels = true
 document.getElementById("mount").appendChild(renderer.view)
 window.game = new Pixi.Container()
 game.addChild(new Junkership())
+game.score = 0
 
 game.addChild(new Trashbot(Reference.GAME_WIDTH, Reference.GAME_HEIGHT/2))
 
@@ -26,6 +27,7 @@ var loop = new Afloop(function(delta) {
         }
     })
     renderer.render(game)
+    console.log(game.score)
 })
 
 function collisionCheck(child){
