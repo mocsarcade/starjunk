@@ -3,6 +3,7 @@ var Afloop = require("afloop")
 var Keyb = require("keyb")
 
 import Junkership from "./Junkership.js"
+import Trashbot from "./Trashbot.js"
 import Reference from "./Reference.js"
 
 var renderer = Pixi.autoDetectRenderer(Reference.GAME_WIDTH, Reference.GAME_HEIGHT)
@@ -12,6 +13,8 @@ renderer.roundPixels = true
 document.getElementById("mount").appendChild(renderer.view)
 window.game = new Pixi.Container()
 game.addChild(new Junkership())
+
+game.addChild(new Trashbot(Reference.GAME_WIDTH, Reference.GAME_HEIGHT/2))
 
 var loop = new Afloop(function(delta) {
     game.children.forEach((child) => {
