@@ -41,5 +41,6 @@ export default class Trashbot extends Pixi.Sprite {
         game.removeChild(this)
         this.destroy()
         collidedWith.shotBy.score++
+        game.spawnWave()
     }
 }

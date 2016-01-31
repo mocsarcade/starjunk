@@ -16,7 +16,7 @@ document.getElementById("mount").appendChild(renderer.view)
 window.game = new GameContainer()
 game.addChild(new Junkership())
 
-game.addChild(new Trashbot(Reference.GAME_WIDTH, Reference.GAME_HEIGHT/2))
+game.spawnWave()
 
 var loop = new Afloop(function(delta) {
     game.children.forEach((child) => {
