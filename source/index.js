@@ -27,8 +27,3 @@ var loop = new Afloop(function(delta) {
     }
     renderer.render(game)
 })
-
-game.gameOver = function () {
-    console.log("Respawning Junkership")
-    game.addChild(new Junkership())
-}
