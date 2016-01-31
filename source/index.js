@@ -16,7 +16,7 @@ document.getElementById("mount").appendChild(renderer.view)
 window.game = new GameContainer()
 game.addChild(new Junkership())
 
-game.addChild(new Trashbot(Reference.GAME_WIDTH, Reference.GAME_HEIGHT/2))
+game.spawnWave()
 
 var loop = new Afloop(function(delta) {
     game.children.forEach((child) => {
@@ -27,8 +27,3 @@ var loop = new Afloop(function(delta) {
     }
     renderer.render(game)
 })
-
-game.gameOver = function () {
-    console.log("Respawning Junkership")
-    game.addChild(new Junkership())
-}
