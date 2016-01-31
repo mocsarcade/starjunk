@@ -34,7 +34,7 @@ rimraf("./builds", function() {
         },
         module: {
             preLoaders: [
-                {test:/\.js$/, exclude: /node_modules/, loader: "eslint-loader"}
+                {test:/\.js$/, exclude: /node_modules/, loader: "eslint-loader"},
             ],
             loaders: [
                 {test: /\.json$/i, loader: "json-loader"},
@@ -65,7 +65,8 @@ rimraf("./builds", function() {
         watch: MODE == "SERVER",
     }, function(error, results) {
         print("Building " + NAME)
-        if(results.compilation.errors.length > 0) {
+        if(results.compilation.errors.length > 0
+        || results.compilation.warnings.length > 0) {
             var jserrors = [], csserrors = [], htmlerrors = []
             results.compilation.errors.forEach(function(error) {
                 if(/\.js$/.test(error.module.resource)) {
@@ -74,6 +75,15 @@ rimraf("./builds", function() {
                     csserrors.push(error.toString())
                 } else if(/\.html$/.test(error.module.resource)) {
                     htmlerrors.push(error.toString())
+                }
+            })
+            results.compilation.warnings.forEach(function(warning) {
+                if(/\.js$/.test(warning.module.resource)) {
+                    jserrors.push(warning.toString())
+                } else if(/\.css$/.test(warning.module.resource)) {
+                    csserrors.push(warning.toString())
+                } else if(/\.html$/.test(warning.module.resource)) {
+                    htmlerrors.push(warning.toString())
                 }
             })
             if(jserrors.length > 0) {

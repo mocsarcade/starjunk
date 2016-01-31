@@ -12,22 +12,22 @@ export default class Junkership extends Pixi.Sprite {
         this.speed = 60
         this.score = 0
     }
-    update(delta){
-        if(Keyb.isDown("<up>") && this.position.y > 0){
+    update(delta) {
+        if(Keyb.isDown("<up>") && this.position.y > 0) {
             this.position.y -= this.speed * delta
         }
         if(Keyb.isDown("<down>") &&
-            (this.position.y + this.height) < Reference.GAME_HEIGHT){
+            (this.position.y + this.height) < Reference.GAME_HEIGHT) {
             this.position.y += this.speed * delta
         }
-        if(Keyb.isDown("<left>") && this.position.x > 0){
+        if(Keyb.isDown("<left>") && this.position.x > 0) {
             this.position.x -= this.speed * delta
         }
         if(Keyb.isDown("<right>") &&
-            (this.position.x + this.width) < Reference.GAME_WIDTH){
+            (this.position.x + this.width) < Reference.GAME_WIDTH) {
             this.position.x += this.speed * delta
         }
-        if(Keyb.isJustDown("<space>")){
+        if(Keyb.isJustDown("<space>")) {
             game.addChild(new Projectile(
                 this.x + this.width,
                 this.y + this.height/2,
@@ -35,7 +35,7 @@ export default class Junkership extends Pixi.Sprite {
         }
         console.log("Score: " + this.score)
     }
-    onCollision(collidedWith){
+    onCollision(collidedWith) {
         
     }
 

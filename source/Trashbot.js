@@ -13,14 +13,14 @@ export default class Trashbot extends Pixi.Sprite {
         this.position.x = x
         this.position.y = y
     }
-    update(delta){
+    update(delta) {
         this.position.x -= this.speed * delta
-        if (this.position.x + this.width < 0){
+        if (this.position.x + this.width < 0) {
             this.position.x = Reference.GAME_WIDTH
         }
         game.children.forEach((toCompare) => {
-            if (toCompare instanceof Projectile){
-                if(Utility.hasCollision(this, toCompare)){
+            if (toCompare instanceof Projectile) {
+                if(Utility.hasCollision(this, toCompare)) {
                     this.onCollision(toCompare)
                     toCompare.onCollision(this)
                 }
@@ -28,7 +28,7 @@ export default class Trashbot extends Pixi.Sprite {
         })
     }
 
-    onCollision(collidedWith){
+    onCollision(collidedWith) {
         game.removeChild(this)
         this.destroy()
         collidedWith.shotBy.score++
