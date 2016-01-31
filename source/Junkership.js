@@ -35,20 +35,8 @@ export default class Junkership extends Pixi.Sprite {
         }
         console.log("Score: " + this.score)
     }
-
-    collisionCheck(){
-        //var x1 = this.position.x
-        //var y1 = this.position.y
-        //var w1 = this.width
-        //var h1 = this.height
-
-        //var x2, y2, w2, h2
-
-        //TODO: Complete Player Collision logic
-    }
-
     onCollision(collidedWith){
-
+        
     }
 
 }
