@@ -5,6 +5,7 @@ var Keyb = require("keyb")
 import Junkership from "./Junkership.js"
 import Trashbot from "./Trashbot.js"
 import Reference from "./Reference.js"
+import Projectile from "./Projectile.js"
 
 var renderer = Pixi.autoDetectRenderer(Reference.GAME_WIDTH, Reference.GAME_HEIGHT)
 renderer.backgroundColor = 0x222222
