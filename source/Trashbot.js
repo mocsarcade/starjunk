@@ -20,15 +20,15 @@ export default class Trashbot extends Pixi.Sprite {
             this.position.x = Reference.GAME_WIDTH
         }
         var killedBy
-        game.children.forEach((toCompare) => {
-            if (toCompare instanceof Projectile) {
-                if (Utility.hasCollision(this, toCompare)) {
-                    killedBy = toCompare //
-                    toCompare.onCollision(this)
+        game.children.forEach((child) => {
+            if (child instanceof Projectile) {
+                if (Utility.hasCollision(this, child)) {
+                    killedBy = child
+                    child.onCollision(this)
                 }
-            } else if (toCompare instanceof Junkership) {
-                if (Utility.hasCollision(this, toCompare)) {
-                    toCompare.onCollision(this)
+            } else if (child instanceof Junkership) {
+                if (Utility.hasCollision(this, child)) {
+                    child.onCollision(this)
                 }
             }
         })
