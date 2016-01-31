@@ -11,6 +11,7 @@ export default class Junkership extends Pixi.Sprite {
         super(junkerTex)
         this.speed = 60
         this.score = 0
+        game.playerCount++
     }
     update(delta) {
         if(Keyb.isDown("<up>") && this.position.y > 0) {
@@ -38,6 +39,7 @@ export default class Junkership extends Pixi.Sprite {
     onCollision(collidedWith) {
         game.removeChild(this)
         this.destroy()
+        game.playerCount--
     }
 
 }
