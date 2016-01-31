@@ -3,6 +3,7 @@ var Utility = require("./Utility")
 
 import Reference from "./Reference.js"
 import Projectile from "./Projectile.js"
+import Junkership from "./Junkership.js"
 
 var trashbotTex = Pixi.Texture.fromImage(require("./images/enemy-starship.png"))
 
@@ -18,14 +19,22 @@ export default class Trashbot extends Pixi.Sprite {
         if (this.position.x + this.width < 0) {
             this.position.x = Reference.GAME_WIDTH
         }
+        var killedBy
         game.children.forEach((toCompare) => {
             if (toCompare instanceof Projectile) {
-                if(Utility.hasCollision(this, toCompare)) {
-                    this.onCollision(toCompare)
+                if (Utility.hasCollision(this, toCompare)) {
+                    killedBy = toCompare //
+                    toCompare.onCollision(this)
+                }
+            } else if (toCompare instanceof Junkership) {
+                if (Utility.hasCollision(this, toCompare)) {
                     toCompare.onCollision(this)
                 }
             }
         })
+        if (killedBy) {
+            this.onCollision(killedBy)
+        }
     }
 
     onCollision(collidedWith) {

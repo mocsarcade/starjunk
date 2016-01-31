@@ -36,7 +36,8 @@ export default class Junkership extends Pixi.Sprite {
         console.log("Score: " + this.score)
     }
     onCollision(collidedWith) {
-        
+        game.removeChild(this)
+        this.destroy()
     }
 
 }
