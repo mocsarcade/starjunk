@@ -12,8 +12,10 @@ var renderer = Pixi.autoDetectRenderer(Reference.GAME_WIDTH, Reference.GAME_HEIG
 renderer.backgroundColor = 0x222222
 renderer.roundPixels = true
 
+renderer.view.id = "gameCanvas"
 document.getElementById("mount").appendChild(renderer.view)
 window.game = new GameContainer()
+game.addChild(new Junkership())
 game.addChild(new Junkership())
 
 game.spawnWave()
