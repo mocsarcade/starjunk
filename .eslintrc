@@ -5,7 +5,8 @@
     "indent": [1, 4],
     "semi": [1, "never"],
     "quotes": [1, "double"],
-    "max-len": [1, 80, 4],
-    "brace-style": [1, "1tbs"]
+    "brace-style": [1, "1tbs"],
+    "spaced-comment": [2, "always"],
+    "space-before-blocks": 2
   }
 }

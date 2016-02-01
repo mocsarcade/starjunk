@@ -13,17 +13,17 @@ export default class Projectile extends Pixi.Sprite {
         console.log("Creating projectile")
     }
     
-    update(delta){
-            this.position.x += this.speed * delta
-            if (this.position.x < 0 || this.position.x > Reference.GAME_WIDTH ||
-                this.position.y < 0 || this.position.y > Reference.GAME_HEIGHT){
-                console.log("Destroying projectile")
-                game.removeChild(this)
-                this.destroy()
-            }
+    update(delta) {
+        this.position.x += this.speed * delta
+        if (this.position.x < 0 || this.position.x > Reference.GAME_WIDTH ||
+            this.position.y < 0 || this.position.y > Reference.GAME_HEIGHT) {
+            console.log("Destroying projectile")
+            game.removeChild(this)
+            this.destroy()
+        }
     }
 
-    onCollision(collidedWith){
+    onCollision(collidedWith) {
         game.removeChild(this)
         this.destroy()
     }
