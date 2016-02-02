@@ -16,42 +16,37 @@ html {
     font-family: box;
 }
 
-canvas {
+canvas, .player-score-list {
     @include aspect-ratio(160, 90);
 }
 
 .player-score {
-    position: relative;
     text-align: center;
-    text-decoration: underline;
     font-weight: bold;
+    @include score-aspect-ratio(160, 90);
+    width: 25%;
+    float: left;
 }
 
-.player-score .foreground-score {
-    position: relative;
-    z-index: 1;
-}
-
-.player-score .shadow-score {
-    position: relative;
-    z-index: 0;
+.player-score-value {
+    @include score-value-aspect-ratio(160, 90);
     text-decoration: underline;
 }
 
 #player-1-score {
-    color: #C44040;
+    text-shadow: 0.5vmin 0.5vmin #C44040;
 }
 
 #player-2-score {
-    color: #D89000;
+    text-shadow: 0.5vmin 0.5vmin #D89000;
 }
 
 #player-3-score {
-    color: #339D33;
+    text-shadow: 0.5vmin 0.5vmin #339D33;
 }
 
 #player-4-score {
-    color: #4A508A
+    text-shadow: 0.5vmin 0.5vmin #4A508A;
 }
 
 
