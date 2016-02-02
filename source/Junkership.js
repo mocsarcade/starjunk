@@ -17,40 +17,41 @@ export default class Junkership extends Pixi.Sprite {
     update(delta) {
         var relativeSpeed = this.speed * delta
         if(Keyb.isDown("<up>")) {
-            this.position.y = this.move(this.position.y - relativeSpeed)
-        }
-        if(Keyb.isDown("<down>")) {
-            var maxBottom = Reference.GAME_HEIGHT - this.height
-            this.position.y = this.move(this.position.y + relativeSpeed, maxBottom)
+            this.move(-relativeSpeed, "y")
+        } else if(Keyb.isDown("<down>")) {
+            this.move(relativeSpeed, "y")
         }
         if(Keyb.isDown("<left>")) {
-            this.position.x = this.move(this.position.x - relativeSpeed)
+            this.move(-relativeSpeed, "x")
+        } else if(Keyb.isDown("<right>")) {
+            this.move(relativeSpeed, "x")
         }
-        if(Keyb.isDown("<right>")) {
-            var maxRight = Reference.GAME_WIDTH - this.width
-            this.position.x = this.move(this.position.x + relativeSpeed, maxRight)
-        }
+
         if(Keyb.isJustDown("<space>")) {
             this.shoot()
         }
 
-        this.score.update()
-        // console.log("Score: " + this.score.getScore())
     }
     onCollision(collidedWith) {
         game.removeChild(this)
-        this.score.destroy()
+        this.score.reset()
         this.destroy()
         game.playerCount--
     }
 
-    move(newPosition, maxPosition) {
-        if (maxPosition !== undefined && newPosition > maxPosition) {
-            newPosition = maxPosition
-        } else if (newPosition < 0) {
+    move(distance, direction) {
+        var newPosition = this.position[direction] + distance
+        var maxBottom = Reference.GAME_HEIGHT - this.height
+        var maxRight = Reference.GAME_WIDTH - this.width
+        if (newPosition < 0) {
             newPosition = 0
+        } else if (direction === "x" && newPosition > maxRight) {
+            newPosition = maxRight
+        } else if (direction === "y" && newPosition > maxBottom) {
+            newPosition = maxBottom
         }
-        return newPosition
+
+        this.position[direction] = newPosition
     }
 
     shoot() {
