@@ -18,31 +18,3 @@
         width: 100vw !important;
     }
 }
-
-@mixin score-aspect-ratio($width, $height) {
-    @media(min-aspect-ratio: #{$width + "/" + $height}) {
-        font-size: (($width/$height)*7*100vh)/$width;
-        line-height: (($width/$height)*6*100vh)/$width;
-        padding-left: (($width/$height)*5*100vh)/$width;
-        padding-right: (($width/$height)*5*100vh)/$width;
-        padding-top: (($width/$height)*100vh)/$width;
-    }
-    @media(max-aspect-ratio: #{$width + "/" + $height}) {
-        font-size: (($height/$width)*7*100vw)/$height;
-        line-height: (($height/$width)*6*100vw)/$height;
-        padding-left: (($height/$width)*5*100vw)/$height;
-        padding-right: (($height/$width)*5*100vw)/$height;
-        padding-top: (($height/$width)*100vw)/$height;
-    }
-}
-
-@mixin score-value-aspect-ratio($width, $height) {
-    @media(min-aspect-ratio: #{$width + "/" + $height}) {
-        font-size: (($width/$height)*12*100vh)/$width;
-        line-height: (($width/$height)*12*100vh)/$width;
-    }
-    @media(max-aspect-ratio: #{$width + "/" + $height}) {
-        font-size: (($height/$width)*12*100vw)/$height;
-        line-height: (($height/$width)*12*100vw)/$height;
-    }
-}

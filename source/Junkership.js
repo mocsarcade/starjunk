@@ -16,14 +16,18 @@ export default class Junkership extends Pixi.Sprite {
     }
     update(delta) {
         var relativeSpeed = this.speed * delta
+
+
         if(Keyb.isDown("<up>")) {
             this.move(-relativeSpeed, "y")
-        } else if(Keyb.isDown("<down>")) {
+        }
+        if(Keyb.isDown("<down>")) {
             this.move(relativeSpeed, "y")
         }
         if(Keyb.isDown("<left>")) {
             this.move(-relativeSpeed, "x")
-        } else if(Keyb.isDown("<right>")) {
+        }
+        if(Keyb.isDown("<right>")) {
             this.move(relativeSpeed, "x")
         }
 

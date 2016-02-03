@@ -13,12 +13,14 @@ var renderer = Pixi.autoDetectRenderer(Reference.GAME_WIDTH, Reference.GAME_HEIG
 renderer.backgroundColor = 0x222222
 renderer.roundPixels = true
 
-document.getElementById("mount").appendChild(renderer.view)
+var mount = document.getElementById("mount")
+mount.insertBefore(renderer.view, mount.firstChild)
 window.game = new GameContainer()
 Score.resetAll()
 game.addChild(new Junkership())
 
 game.spawnWave()
+
 
 var loop = new Afloop(function(delta) {
     game.children.forEach((child) => {
