@@ -16,8 +16,55 @@ html {
     font-family: box;
 }
 
-canvas {
+#mount {
     @include aspect-ratio(160, 90);
 }
+
+canvas {
+    position: absolute;
+    height: 100%;
+}
+
+.player-score-list {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+.player-score {
+    text-align: center;
+    width: 25%;
+    float: left;
+    font-size: 8em;
+    line-height: 0.8em;
+    padding-top: 0.25em;
+}
+
+.player-score-value {
+    text-decoration: underline;
+    font-size: 12em;
+}
+
+#player-1-score {
+    text-shadow: 0.25vmin 0.25vmin #C44040,
+    0.5vmin 0.5vmin #C44040;
+}
+
+#player-2-score {
+    text-shadow: 0.25vmin 0.25vmin #D89000,
+    0.5vmin 0.5vmin #D89000;
+}
+
+#player-3-score {
+    text-shadow: 0.25vmin 0.25vmin #339D33,
+    0.5vmin 0.5vmin #339D33;
+}
+
+#player-4-score {
+    text-shadow: 0.25vmin 0.25vmin #4A508A,
+    0.5vmin 0.5vmin #4A508A;
+}
+
+
 
 @include font-face(box);
