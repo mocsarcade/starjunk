@@ -6,8 +6,7 @@ export default class Score {
     constructor(playerNumber) {
         this.count = 0
         this.playerNumber = (playerNumber === undefined) ? game.playerCount : playerNumber
-        this.domElement = $("#player-" + this.playerNumber + "-score")
-        $(this.domElement).addClass("player-score-value")
+        this.domElement = $("#p" + this.playerNumber + "-score")
         this.update()
     }
 
@@ -26,14 +25,12 @@ export default class Score {
     }
 
     reset() {
-        $(this.domElement).text(Reference.JOIN_GAME_TEXT)
-        $(this.domElement).removeClass("player-score-value")
+        $(this.domElement).text("")
     }
 
     static resetAll() {
-        $(".player-score").each(function() {
-            $(this).text(Reference.JOIN_GAME_TEXT)
-            $(this).removeClass("player-score-value")
+        $("[id$=-score]").each(function() {
+            $(this).text("")
         })
     }
 }

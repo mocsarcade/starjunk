@@ -1,6 +1,20 @@
 @import "./styles/AspectRatio.scss";
 @import "./styles/Fonts.scss";
 
+
+@include font(box);
+
+@keyframes blink {
+    to {
+        visibility: hidden;
+    }
+}
+
+$red: #C44040;
+$yellow: #D89000;
+$green: #339D33;
+$blue: #4A508A;
+
 * {
     margin: 0;
     padding: 0;
@@ -13,7 +27,7 @@
 html {
     color: #EEE;
     background-color: #111;
-    font-family: box;
+    font-family: box, consolas;
 }
 
 #mount {
@@ -21,50 +35,65 @@ html {
 }
 
 canvas {
-    position: absolute;
+    width: 100%;
     height: 100%;
+    position: absolute;
 }
 
 .player-score-list {
-    position: absolute;
-    height: 100%;
     width: 100%;
+    height: 100%;
+    position: absolute;
 }
 
-.player-score {
-    text-align: center;
+.score-container {
     width: 25%;
     float: left;
-    font-size: 8em;
-    line-height: 0.8em;
-    padding-top: 0.25em;
+    padding: 8em 10em;
+    
+    [id$=-score] {
+        font-size: 10em;
+        line-height: 1em;
+        text-align: center;
+        width: 1.75em;
+        border-bottom-style: solid;
+        border-bottom-width: 0.15em;
+        
+        &:empty {
+            animation-name: blink;
+            animation-duration: 3s;
+            animation-iteration-count: infinite;
+            animation-timing-function: steps(2, start);
+            &::before {
+                display: block;
+                font-size: 0.5em;
+                line-height: 1em;
+                content: "PRESS TO JOIN";
+            }
+        }
+    }
+    
+    #p1-score {
+        float: left;
+        border-color: $red;
+        text-shadow: 0.05em 0.05em $red;
+    }
+
+    #p2-score {
+        margin: auto;
+        border-color: $yellow;
+        text-shadow: 0.05em 0.05em $yellow;
+    }
+
+    #p3-score {
+        margin: auto;
+        border-color: $green;
+        text-shadow: 0.05em 0.05em $green;
+    }
+
+    #p4-score {
+        float: right;
+        border-color: $blue;
+        text-shadow: 0.05em 0.05em $blue;
+    }
 }
-
-.player-score-value {
-    text-decoration: underline;
-    font-size: 12em;
-}
-
-#player-1-score {
-    text-shadow: 0.25vmin 0.25vmin #C44040,
-    0.5vmin 0.5vmin #C44040;
-}
-
-#player-2-score {
-    text-shadow: 0.25vmin 0.25vmin #D89000,
-    0.5vmin 0.5vmin #D89000;
-}
-
-#player-3-score {
-    text-shadow: 0.25vmin 0.25vmin #339D33,
-    0.5vmin 0.5vmin #339D33;
-}
-
-#player-4-score {
-    text-shadow: 0.25vmin 0.25vmin #4A508A,
-    0.5vmin 0.5vmin #4A508A;
-}
-
-
-
-@include font-face(box);
