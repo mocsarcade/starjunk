@@ -6,7 +6,7 @@
 
 @keyframes blink {
     to {
-        visibility: hidden;
+        border-bottom-style: none;
     }
 }
 
@@ -63,7 +63,7 @@ canvas {
             animation-name: blink;
             animation-duration: 3s;
             animation-iteration-count: infinite;
-            animation-timing-function: steps(2, start);
+            animation-timing-function: steps(2, end);
             &::before {
                 display: block;
                 font-size: 0.5em;
