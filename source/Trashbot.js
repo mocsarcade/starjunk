@@ -27,7 +27,7 @@ export default class Trashbot extends Pixi.Sprite {
                     child.onCollision(this)
                 }
             } else if (child instanceof Junkership) {
-                if (Utility.hasCollision(this, child)) {
+                if (Utility.hasCollision(this, child.hitBox)) {
                     child.onCollision(this)
                 }
             }

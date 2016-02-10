@@ -13,6 +13,10 @@ export default class Junkership extends Pixi.Sprite {
         game.playerCount++
         this.speed = 60
         this.score = new Score()
+
+        this.hitBox = new Pixi.Rectangle( this.x + 1 , this.y + 1 ,
+            this.width - 3 , this.height - 3 )
+
     }
     update(delta) {
         var relativeSpeed = this.speed * delta
@@ -52,7 +56,6 @@ export default class Junkership extends Pixi.Sprite {
         if(Keyb.isJustDown("<space>")) {
             this.shoot()
         }
-
     }
     onCollision(collidedWith) {
         game.removeChild(this)
@@ -74,6 +77,9 @@ export default class Junkership extends Pixi.Sprite {
         }
 
         this.position[direction] = newPosition
+
+        this.hitBox.x = this.x + 1
+        this.hitBox.y = this.y + 1
     }
 
     shoot() {
