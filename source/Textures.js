@@ -1,7 +1,5 @@
 var Pixi = require("pixi.js")
 
-import Junkership from "./Junkership.js"
-
 exports.initTex = function initTex() {
     PIXI.loader
         .add("redJunkership",    require("./images/red-starship.png"))
