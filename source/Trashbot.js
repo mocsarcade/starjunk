@@ -5,12 +5,10 @@ import Reference from "./Reference.js"
 import Projectile from "./Projectile.js"
 import Junkership from "./Junkership.js"
 
-var trashbotTex = Pixi.Texture.fromImage(require("./images/enemy-starship.png"))
-
 export default class Trashbot extends Pixi.Sprite {
     constructor(x, y) {
-        super(trashbotTex)
-        this.speed = 40
+        super(PIXI.loader.resources.trashbot.texture)
+        this.speed = 60
         this.position.x = x
         this.position.y = y
     }
@@ -27,7 +25,7 @@ export default class Trashbot extends Pixi.Sprite {
                     child.onCollision(this)
                 }
             } else if (child instanceof Junkership) {
-                if (Utility.hasCollision(this, child)) {
+                if (Utility.hasCollision(this, child.hitBox)) {
                     child.onCollision(this)
                 }
             }

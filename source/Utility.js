@@ -2,13 +2,13 @@ exports.hasCollision = function hasCollision(a, b) {
     if ( a == null || b == null) {
         return false
     } else {
-        var x1 = a.position.x
-        var y1 = a.position.y
+        var x1 = a.x
+        var y1 = a.y
         var w1 = a.width
         var h1 = a.height
 
-        var x2 = b.position.x
-        var y2 = b.position.y
+        var x2 = b.x
+        var y2 = b.y
         var w2 = b.width
         var h2 = b.height
 

@@ -3,9 +3,7 @@ var Afloop = require("afloop")
 var Keyb = require("keyb")
 
 import Junkership from "./Junkership.js"
-import Trashbot from "./Trashbot.js"
 import Reference from "./Reference.js"
-import Projectile from "./Projectile.js"
 import Score from "./Score.js"
 import GameContainer from "./GameContainer.js"
 
@@ -16,11 +14,6 @@ renderer.roundPixels = true
 var mount = document.getElementById("mount")
 mount.insertBefore(renderer.view, mount.firstChild)
 window.game = new GameContainer()
-Score.resetAll()
-game.addChild(new Junkership())
-
-game.spawnWave()
-
 
 var loop = new Afloop(function(delta) {
     game.children.forEach((child) => {

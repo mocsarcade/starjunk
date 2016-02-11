@@ -3,11 +3,13 @@ var Pixi = require("pixi.js")
 import Junkership from "./Junkership.js"
 import Trashbot from "./Trashbot.js"
 import Reference from "./Reference.js"
+import Textures from "./Textures.js"
 
 export default class GameContainer extends Pixi.Container {
     constructor() {
         super()
         this.playerCount = 0
+        Textures.initTex()
     }
     gameOver() {
         console.log("Respawning Junkership")
