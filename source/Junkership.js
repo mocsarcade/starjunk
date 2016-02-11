@@ -12,8 +12,11 @@ export default class Junkership extends Pixi.Sprite {
         this.speed = 60
         this.score = new Score()
 
-        this.hitBox = new Pixi.Rectangle( this.x + 1 , this.y + 1 ,
-            this.width - 3 , this.height - 3 )
+        this.hitBox = new Pixi.Rectangle(
+            this.x + 1 , // Left offset
+            this.y + 1 , // Top offset
+            this.width - 3 , // Right offset + left offset
+            this.height - 3 )// Bottom offset + top offset
 
     }
     update(delta) {
