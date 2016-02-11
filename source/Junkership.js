@@ -5,11 +5,9 @@ import Reference from "./Reference.js"
 import Projectile from "./Projectile.js"
 import Score from "./Score.js"
 
-var junkerTex = Pixi.Texture.fromImage(require("./images/blue-starship.png"))
-
 export default class Junkership extends Pixi.Sprite {
     constructor() {
-        super(junkerTex)
+        super(PIXI.loader.resources.redJunkership.texture)
         game.playerCount++
         this.speed = 60
         this.score = new Score()
@@ -19,8 +17,12 @@ export default class Junkership extends Pixi.Sprite {
 
     }
     update(delta) {
-        var relativeSpeed = this.speed * delta
+        // Ugly kludge
+        if (this.width === 1) {
+            this.onCollision()
+        }
 
+        var relativeSpeed = this.speed * delta
 
         if (Keyb.isJustDown("<up>")) {
             this.ignoreY = "down"
