@@ -9,15 +9,20 @@ var ansiup = require("ansi_up")
 
 var Webpack = require("webpack")
 var WebpackExtract = require("extract-text-webpack-plugin")
-var NodeWebkitBuilder = require("nw-builder")
+var ElectronPackager = require("electron-packager")
 var BrowserSync = require("browser-sync")
 var Inliner = require("inliner")
+
+var isProduction = yargs.argv.production
+var isServer = yargs.argv._.indexOf("server")
+var isBundle = yargs.argv._.indexOf("bundle")
 
 var PORT = 1701
 var NAME = "Starjunk"
 var PATH = path.join(__dirname, "./source")
-var STAGE = yargs.argv.production ? "PRODUCTION" : "DEVELOPMENT"
-var MODE = yargs.argv._.indexOf("server") != -1 ? "SERVER" : yargs.argv._.indexOf("bundle") != -1 ? "BUNDLE" : null
+var VERSION = require("./package.json").version
+var STAGE = isProduction ? "PRODUCTION" : "DEVELOPMENT"
+var MODE = isServer != -1 ? "SERVER" : isBundle != -1 ? "BUNDLE" : null
 
 var server = null
 
@@ -58,13 +63,15 @@ rimraf("./builds", function() {
             new Webpack.DefinePlugin({
                 PATH: JSON.stringify(PATH),
                 STAGE: JSON.stringify(STAGE),
-                VERSION: JSON.stringify(JSON.parse(fs.readFileSync("./package.json")).version),
+                VERSION: JSON.stringify(VERSION),
             }),
-            STAGE == "PRODUCTION" ? new Webpack.optimize.UglifyJsPlugin() : new Webpack.IgnorePlugin(/^$/),
+            STAGE == "PRODUCTION" ? new Webpack.optimize.UglifyJsPlugin({
+                compress: {warnings: false}
+            }) : new Webpack.IgnorePlugin(/^$/),
         ],
         watch: MODE == "SERVER",
     }, function(error, results) {
-        print("Building " + NAME)
+        console.log(time(), "Building", NAME)
         if(results.compilation.errors.length > 0
         || results.compilation.warnings.length > 0) {
             var jserrors = [], csserrors = [], htmlerrors = []
@@ -111,22 +118,10 @@ rimraf("./builds", function() {
                     fs.writeFile("builds/web1/index.html", data)
                 })
             })
-            new NodeWebkitBuilder({
-                version: "v0.12.2",
-                platforms: ["win", "osx", "linux"],
-                files: ["./builds/web/**/**", "./package.json"],
-                buildType: function() {return ""},
-                cacheDir: "node_webkit_builds",
-                buildDir: "./builds",
-            }).build()
         }
     })
 })
 
-
-var print = function(message) {
-    console.log(time(), message)
-}
 
 var time = function() {
     var date = new Date()
