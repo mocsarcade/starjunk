@@ -4,6 +4,10 @@ var Keyb = require("keyb")
 import Reference from "./Reference.js"
 import Projectile from "./Projectile.js"
 import Score from "./Score.js"
+import PowerUp from "./PowerUp.js"
+import PeaShoota from "./PowerUp.js"
+import TriShotSpread from "./PowerUp.js"
+import QuinShotSpread from "./PowerUp.js"
 
 export default class Junkership extends Pixi.Sprite {
     constructor() {
@@ -11,7 +15,7 @@ export default class Junkership extends Pixi.Sprite {
         game.playerCount++
         this.speed = 60
         this.score = new Score()
-
+        this.powerUp = new TriShotSpread()
         this.hitBox = new Pixi.Rectangle(
             this.x + 1 , // Left offset
             this.y + 1 , // Top offset
@@ -59,7 +63,9 @@ export default class Junkership extends Pixi.Sprite {
         }
 
         if(Keyb.isJustDown("<space>")) {
-            this.shoot()
+            this.fire(this.position.x,this.position.y,this,
+              this.width, this.height/2
+            )
         }
     }
     onCollision(collidedWith) {
@@ -87,11 +93,15 @@ export default class Junkership extends Pixi.Sprite {
         this.hitBox.y = this.y + 1
     }
 
-    shoot() {
-        game.addChild(new Projectile(
-            this.x + this.width,
-            this.y + this.height/2,
-            this))
+    fire(curXpos,curYpos,curShip,wOffset,hOffset) {
+        this.powerUp.shoot(curXpos,curYpos,curShip,wOffset,hOffset)
     }
+
+    changePowerup(newPowerup) {
+
+        this.powerUp = newPowerup
+
+    }
+
 
 }

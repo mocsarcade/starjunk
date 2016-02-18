@@ -6,6 +6,7 @@ import Junkership from "./Junkership.js"
 import Reference from "./Reference.js"
 import Score from "./Score.js"
 import GameContainer from "./GameContainer.js"
+import PowerUp from "./PowerUp.js"
 
 var renderer = Pixi.autoDetectRenderer(Reference.GAME_WIDTH, Reference.GAME_HEIGHT)
 renderer.backgroundColor = 0x222222
