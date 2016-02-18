@@ -4,6 +4,7 @@ var Utility = require("./Utility")
 import Reference from "./Reference.js"
 import Projectile from "./Projectile.js"
 import Junkership from "./Junkership.js"
+import Junk from "./Junk.js"
 
 export default class Trashbot extends Pixi.Sprite {
     constructor(x, y) {
@@ -36,9 +37,10 @@ export default class Trashbot extends Pixi.Sprite {
     }
 
     onCollision(collidedWith) {
+        var finalPosition = this.position
         game.removeChild(this)
         this.destroy()
-        collidedWith.shotBy.score.incrementScore()
         game.spawnWave()
+        game.untilJunk(finalPosition.x, finalPosition.y)
     }
 }
