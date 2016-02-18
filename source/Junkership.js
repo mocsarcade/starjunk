@@ -4,10 +4,7 @@ var Keyb = require("keyb")
 import Reference from "./Reference.js"
 import Projectile from "./Projectile.js"
 import Score from "./Score.js"
-import PowerUp from "./PowerUp.js"
-import PeaShoota from "./PowerUp.js"
-import TriShotSpread from "./PowerUp.js"
-import QuinShotSpread from "./PowerUp.js"
+import powerUp from "./PowerUp.js"
 
 export default class Junkership extends Pixi.Sprite {
     constructor() {
@@ -15,7 +12,7 @@ export default class Junkership extends Pixi.Sprite {
         game.playerCount++
         this.speed = 60
         this.score = new Score()
-        this.powerUp = new TriShotSpread()
+        this.powerUp = new powerUp("peaShoota")
         this.hitBox = new Pixi.Rectangle(
             this.x + 1 , // Left offset
             this.y + 1 , // Top offset
@@ -67,6 +64,14 @@ export default class Junkership extends Pixi.Sprite {
               this.width, this.height/2
             )
         }
+
+        if(Keyb.isJustDown("1")) {
+            this.powerUp.curPower = "triSpreadShot"
+        }
+
+        if(Keyb.isJustDown("2")) {
+            this.powerUp.curPower = "peaShoota"
+        }
     }
     onCollision(collidedWith) {
         game.removeChild(this)
@@ -94,7 +99,13 @@ export default class Junkership extends Pixi.Sprite {
     }
 
     fire(curXpos,curYpos,curShip,wOffset,hOffset) {
-        this.powerUp.shoot(curXpos,curYpos,curShip,wOffset,hOffset)
+        if(this.powerUp.curPower == "peaShoota") {
+            this.powerUp.peaShoota(curXpos,curYpos,curShip,wOffset,hOffset)
+        }
+
+        if(this.powerUp.curPower == "triSpreadShot") {
+            this.powerUp.triShoot(curXpos,curYpos,curShip,wOffset,hOffset)
+        }
     }
 
     changePowerup(newPowerup) {
