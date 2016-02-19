@@ -11,11 +11,11 @@ export default class Junk extends Pixi.Sprite {
         super(PIXI.loader.resources.junk.texture)
         this.position.x = x
         this.position.y = y
-        this.despawn = Date.now()
+        this.spawnTime = Date.now()
     }
 
     update(delta) {
-        if (Date.now() - this.despawn >= 5000) {
+        if (Date.now() - this.spawnTime >= Reference.TIME_TO_DESPAWN) {
             game.removeChild(this)
             this.destroy()
         } else
