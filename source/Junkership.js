@@ -4,7 +4,7 @@ var Keyb = require("keyb")
 import Reference from "./Reference.js"
 import Projectile from "./Projectile.js"
 import Score from "./Score.js"
-import {PeaShoota, PowerUp, TriShoota, FiveShoota} from "./PowerUp.js"
+import {PeaShoota, PowerUp, TriShoota, FiveShoota, RapidFire} from "./PowerUp.js"
 
 
 export default class Junkership extends Pixi.Sprite {
@@ -64,11 +64,21 @@ export default class Junkership extends Pixi.Sprite {
             this.powerUp.fire(this)
         }
 
+        if(Keyb.isDown("<space>")) {
+            if(this.powerUp.rapidFire == true) {
+                this.powerUp.fire(this)
+            }
+        }
+
         if(Keyb.isJustDown("1")) {
             this.changePowerUp(new TriShoota)
         }
 
         if(Keyb.isJustDown("2")) {
+            this.changePowerUp(new RapidFire)
+        }
+
+        if(Keyb.isJustDown("3")) {
             this.changePowerUp(new FiveShoota)
         }
     }

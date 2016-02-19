@@ -93,3 +93,22 @@ export class FiveShoota extends PowerUp {
       }
 
 }
+
+export class RapidFire extends PowerUp {
+      constructor() {
+          super()
+          this.fireRate = 80
+          this.bulletSpeed = 150
+          this.projectileType = "bullet"
+          this.rapidFire = true
+      }
+
+      fire(curShip) {
+
+          game.addChild(new Projectile(
+              curShip.position.x + curShip.width,
+              curShip.position.y + curShip.height/2,
+              curShip, this.fireRate, this.bulletSpeed, this.projectileType))
+      }
+
+}
