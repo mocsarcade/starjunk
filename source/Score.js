@@ -29,7 +29,7 @@ export default class Score {
     }
 
     static resetAll() {
-        $("[id$=-score]").each(function() {
+        $("[id$=-score]").each(function () {
             $(this).text("")
         })
     }
