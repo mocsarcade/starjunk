@@ -29,7 +29,5 @@ export default class GameContainer extends Pixi.Container {
             this.countdownToJunk = Utility.randomNumber(Reference.MIN_JUNK_KILLS, Reference.MAX_JUNK_KILLS)
             this.addChild(new Junk(x, y))
         } else this.countdownToJunk--
-
-
     }
 }
