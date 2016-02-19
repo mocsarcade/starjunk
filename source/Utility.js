@@ -21,5 +21,5 @@ exports.hasCollision = function hasCollision(a, b) {
 }
 
 exports.randomNumber = function randomNumber(min, max) {
-    return max - Math.floor(Math.random() * min)
+    return max - Math.floor(Math.random() * (min + 1))
 }
