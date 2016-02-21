@@ -2,6 +2,7 @@ var Pixi = require("pixi.js")
 
 import Junkership from "./Junkership.js"
 import Trashbot from "./Trashbot.js"
+import SnakeTrashbot from "./SnakeTrashbot.js"
 import Reference from "./Reference.js"
 import Textures from "./Textures.js"
 import Junk from "./Junk.js"
@@ -21,7 +22,7 @@ export default class GameContainer extends Pixi.Container {
     }
 
     spawnWave() {
-        this.addChild(new Trashbot(Reference.GAME_WIDTH, Reference.GAME_HEIGHT / 2))
+        this.addChild(new SnakeTrashbot(Reference.GAME_WIDTH, Reference.GAME_HEIGHT / 2, Trashbot.Movement.SINUSOIDAL))
     }
 
     untilJunk(x, y) {

@@ -7,17 +7,16 @@ import Junkership from "./Junkership.js"
 import Junk from "./Junk.js"
 
 export default class Trashbot extends Pixi.Sprite {
-    constructor(x, y) {
+    constructor(x, y, speed, health) {
         super(PIXI.loader.resources.trashbot.texture)
         this.speed = 60
+        this.health = health
         this.position.x = x
         this.position.y = y
+        this.initialY = y
     }
+
     update(delta) {
-        this.position.x -= this.speed * delta
-        if (this.position.x + this.width < 0) {
-            this.position.x = Reference.GAME_WIDTH
-        }
         var killedBy
         game.children.forEach((child) => {
             if (child instanceof Projectile) {
@@ -36,11 +35,35 @@ export default class Trashbot extends Pixi.Sprite {
         }
     }
 
-    onCollision(collidedWith) {
+    die() {
         var finalPosition = this.position
         game.removeChild(this)
         this.destroy()
-        game.spawnWave()
         game.untilJunk(finalPosition.x, finalPosition.y)
     }
+
+    onCollision(collidedWith) {
+        this.health--
+        if (this.health === 0) {
+            this.die()
+        }
+        game.spawnWave()
+    }
+}
+
+
+
+Trashbot.Movement = {
+    LINEAR: function(trashbot, delta) {
+        trashbot.position.x -= trashbot.speed * delta
+    },
+    SINUSOIDAL: function(trashbot, delta, amplitude, period) {
+        trashbot.position.x -= trashbot.speed * delta
+        trashbot.position.y = trashbot.initialY - amplitude * Math.sin(2 * Math.PI * trashbot.position.x / period)
+    },
+    TRIANGLE_WAVE: function(trashbot, delta, amplitude, period) {
+        trashbot.position.x -= trashbot.speed * delta
+        trashbot.position.y = trashbot.initialY - 4 * amplitude / period * (Math.abs(trashbot.position.x % period - period / 2) - period / 4)
+    }
+
 }
