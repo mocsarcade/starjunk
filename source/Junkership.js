@@ -4,7 +4,7 @@ var Keyb = require("keyb")
 import Reference from "./Reference.js"
 import Projectile from "./Projectile.js"
 import Score from "./Score.js"
-import {PeaShoota, PowerUp, TriShoota, FiveShoota, RapidFire, SprayShot,SuperSprayShot, CrazySprayShot, VertSprayShot} from "./PowerUp.js"
+import {PeaShoota, PowerUp, TriShoota, FiveShoota, RapidFire, SprayShot,SuperSprayShot, CrazySprayShot, VertSprayShot, VertShoota, RapidSprayShot, BFG} from "./PowerUp.js"
 
 
 export default class Junkership extends Pixi.Sprite {
@@ -103,7 +103,15 @@ export default class Junkership extends Pixi.Sprite {
         }
 
         if(Keyb.isJustDown("9")) {
-            this.changePowerUp(new CrazySprayShot)
+            this.changePowerUp(new VertShoota)
+        }
+
+        if(Keyb.isJustDown("0")) {
+            this.changePowerUp(new RapidSprayShot)
+        }
+
+        if(Keyb.isJustDown("-")) {
+            this.changePowerUp(new BFG)
         }
     }
     onCollision(collidedWith) {

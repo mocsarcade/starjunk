@@ -113,6 +113,44 @@ export class RapidFire extends PowerUp {
 
 }
 
+export class RapidSprayShot extends PowerUp {
+
+      constructor() {
+          super()
+          this.vector = new Victor(1,0)
+          this.vectorN = new Victor(1,0.25)
+          this.vectorP = new Victor(1,-0.25)
+          this.bulletSpeed = 1
+          this.projectileType = "bullet"
+          this.rapidFire = true
+      }
+
+        fire(curShip) {
+
+            this.vector.normalize()
+            this.vectorN.normalize()
+            this.vectorP.normalize()
+
+            game.addChild(new Projectile(
+            curShip.position.x + curShip.width,
+            curShip.position.y + curShip.height/2,
+            this.vector, curShip, this.bulletSpeed, this.projectileType))
+
+            game.addChild(new Projectile(
+            curShip.position.x + curShip.width,
+            curShip.position.y + curShip.height/2,
+            this.vectorP, curShip, this.bulletSpeed, this.projectileType))
+
+            game.addChild(new Projectile(
+            curShip.position.x + curShip.width,
+            curShip.position.y + curShip.height/2,
+            this.vectorN, curShip, this.bulletSpeed, this.projectileType))
+        }
+
+
+
+}
+
 export class SprayShot extends PowerUp {
 
       constructor() {
@@ -306,5 +344,49 @@ export class VertSprayShot extends PowerUp {
         }
 
 
+
+}
+
+export class VertShoota extends PowerUp {
+      constructor() {
+          super()
+          this.vector = new Victor(0,1)
+          this.vector2 = new Victor(0,-1)
+          this.bulletSpeed = 1
+          this.projectileType = "bullet"
+      }
+
+      fire(curShip) {
+
+
+          game.addChild(new Projectile(
+              curShip.position.x + curShip.width/2,
+              curShip.position.y + curShip.height/2, this.vector,
+              curShip, this.bulletSpeed, this.projectileType))
+
+          game.addChild(new Projectile(
+              curShip.position.x + curShip.width/2,
+              curShip.position.y + curShip.height/2, this.vector2,
+              curShip, this.bulletSpeed, this.projectileType))
+      }
+
+}
+
+export class BFG extends PowerUp {
+      constructor() {
+          super()
+          this.vector = new Victor(1,0)
+          this.bulletSpeed = 2
+          this.projectileType = "bullet"
+          this.rapidFire = true
+      }
+
+      fire(curShip) {
+
+          game.addChild(new Projectile(
+              curShip.position.x + curShip.width,
+              curShip.position.y + curShip.height/2,
+              this.vector, curShip, this.bulletSpeed, this.projectileType))
+      }
 
 }
