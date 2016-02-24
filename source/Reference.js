@@ -12,6 +12,7 @@ module.exports.TRASHBOT = {
     },
     MOVEMENT: {
         SPEED: 60,
+        RAGE_MULTIPLIER: 1.5,
         AMPLITUDE: 15,
         PERIOD: 100
     }

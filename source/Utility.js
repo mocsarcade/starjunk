@@ -1,3 +1,5 @@
+import Reference from "./Reference.js"
+
 exports.hasCollision = function hasCollision(a, b) {
     if (a == null || b == null) {
         return false
@@ -22,4 +24,13 @@ exports.hasCollision = function hasCollision(a, b) {
 
 exports.randomNumber = function randomNumber(min, max) {
     return max - Math.floor(Math.random() * (min + 1))
+}
+
+exports.getCenterPosition = function(sprite) {
+    var centerPosition = {
+        x: sprite.x + sprite.width / 2,
+        y: sprite.y + sprite.height / 2
+    }
+
+    return centerPosition
 }
