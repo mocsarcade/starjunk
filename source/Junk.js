@@ -21,7 +21,7 @@ export default class Junk extends Pixi.Sprite {
         } else
             game.children.forEach((child) => {
                 if (child instanceof Junkership) {
-                    if (Utility.hasCollision(this, child.hitBox)) {
+                    if (Utility.hasCollision(this, child)) {
                         game.removeChild(this)
                         this.destroy()
                         child.score.incrementScore()
