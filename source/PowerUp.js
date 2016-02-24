@@ -118,18 +118,18 @@ export class RapidSprayShot extends PowerUp {
       constructor() {
           super()
           this.vector = new Victor(1,0)
-          this.vectorN = new Victor(1,0.25)
-          this.vectorP = new Victor(1,-0.25)
+          this.vectorBottom = new Victor(1,0.25)
+          this.vectorTop = new Victor(1,-0.25)
           this.bulletSpeed = 1
           this.projectileType = "bullet"
           this.rapidFire = true
+
+          this.vector.normalize()
+          this.vectorTop.normalize()
+          this.vectorBottom.normalize()
       }
 
         fire(curShip) {
-
-            this.vector.normalize()
-            this.vectorN.normalize()
-            this.vectorP.normalize()
 
             game.addChild(new Projectile(
             curShip.position.x + curShip.width,
@@ -139,12 +139,12 @@ export class RapidSprayShot extends PowerUp {
             game.addChild(new Projectile(
             curShip.position.x + curShip.width,
             curShip.position.y + curShip.height/2,
-            this.vectorP, curShip, this.bulletSpeed, this.projectileType))
+            this.vectorTop, curShip, this.bulletSpeed, this.projectileType))
 
             game.addChild(new Projectile(
             curShip.position.x + curShip.width,
             curShip.position.y + curShip.height/2,
-            this.vectorN, curShip, this.bulletSpeed, this.projectileType))
+            this.vectorBottom, curShip, this.bulletSpeed, this.projectileType))
         }
 
 
@@ -156,8 +156,8 @@ export class SprayShot extends PowerUp {
       constructor() {
           super()
           this.vector = new Victor(1,0)
-          this.vectorN = new Victor(1,0.25)
-          this.vectorP = new Victor(1,-0.25)
+          this.vectorBottom = new Victor(1,0.25)
+          this.vectorTop = new Victor(1,-0.25)
           this.bulletSpeed = 1
           this.projectileType = "bullet"
       }
@@ -165,8 +165,8 @@ export class SprayShot extends PowerUp {
         fire(curShip) {
 
             this.vector.normalize()
-            this.vectorN.normalize()
-            this.vectorP.normalize()
+            this.vectorTop.normalize()
+            this.vectorBottom.normalize()
 
             game.addChild(new Projectile(
             curShip.position.x + curShip.width,
@@ -176,12 +176,12 @@ export class SprayShot extends PowerUp {
             game.addChild(new Projectile(
             curShip.position.x + curShip.width,
             curShip.position.y + curShip.height/2,
-            this.vectorP, curShip, this.bulletSpeed, this.projectileType))
+            this.vectorTop, curShip, this.bulletSpeed, this.projectileType))
 
             game.addChild(new Projectile(
             curShip.position.x + curShip.width,
             curShip.position.y + curShip.height/2,
-            this.vectorN, curShip, this.bulletSpeed, this.projectileType))
+            this.vectorBottom, curShip, this.bulletSpeed, this.projectileType))
         }
 
 
@@ -193,20 +193,21 @@ export class SuperSprayShot extends PowerUp {
       constructor() {
           super()
           this.vector = new Victor(1,0)
-          this.vectorN = new Victor(1,0.25)
-          this.vectorP = new Victor(1,-0.25)
-          this.vectorN2 = new Victor(1,0.1)
-          this.vectorP2 = new Victor(1,-0.1)
+          this.vectorBottom = new Victor(1,0.25)
+          this.vectorTop = new Victor(1,-0.25)
+          this.vectorBottom2 = new Victor(1,0.1)
+          this.vectorTop2 = new Victor(1,-0.1)
           this.bulletSpeed = 1
           this.projectileType = "bullet"
+
+          this.vector.normalize()
+          this.vectorBottom.normalize()
+          this.vectorTop.normalize()
+          this.vectorBottom2.normalize()
+          this.vectorTop2.normalize()
       }
 
         fire(curShip) {
-            this.vector.normalize()
-            this.vectorN.normalize()
-            this.vectorP.normalize()
-            this.vectorN2.normalize()
-            this.vectorP2.normalize()
 
             game.addChild(new Projectile(
             curShip.position.x + curShip.width,
@@ -216,22 +217,22 @@ export class SuperSprayShot extends PowerUp {
             game.addChild(new Projectile(
             curShip.position.x + curShip.width,
             curShip.position.y + curShip.height/2,
-            this.vectorP, curShip, this.bulletSpeed, this.projectileType))
+            this.vectorBottom, curShip, this.bulletSpeed, this.projectileType))
 
             game.addChild(new Projectile(
             curShip.position.x + curShip.width,
             curShip.position.y + curShip.height/2,
-            this.vectorN, curShip, this.bulletSpeed, this.projectileType))
+            this.vectorTop, curShip, this.bulletSpeed, this.projectileType))
 
             game.addChild(new Projectile(
             curShip.position.x + curShip.width,
             curShip.position.y + curShip.height/2,
-            this.vectorP2, curShip, this.bulletSpeed, this.projectileType))
+            this.vectorBottom2, curShip, this.bulletSpeed, this.projectileType))
 
             game.addChild(new Projectile(
             curShip.position.x + curShip.width,
             curShip.position.y + curShip.height/2,
-            this.vectorN2, curShip, this.bulletSpeed, this.projectileType))
+            this.vectorTop2, curShip, this.bulletSpeed, this.projectileType))
         }
 
 
@@ -247,25 +248,26 @@ export class CrazySprayShot extends PowerUp {
 
 
           this.vector = new Victor(1,0)
-          this.vectorN = new Victor(1,0)
-          this.vectorP = new Victor(1,0)
+          this.vectorBottom = new Victor(1,0)
+          this.vectorTop = new Victor(1,0)
           this.bulletSpeed = 1
           this.projectileType = "bullet"
+
       }
 
         fire(curShip) {
 
             this.vector.randomizeY(this.upperBounds,this.lowerBounds)
-            this.vectorN.randomizeY(this.upperBounds,this.lowerBounds)
-            this.vectorP.randomizeY(this.upperBounds,this.lowerBounds)
+            this.vectorBottom.randomizeY(this.upperBounds,this.lowerBounds)
+            this.vectorTop.randomizeY(this.upperBounds,this.lowerBounds)
 
             this.vector.randomizeX(this.upperBounds,this.lowerBounds)
-            this.vectorN.randomizeX(this.upperBounds,this.lowerBounds)
-            this.vectorP.randomizeX(this.upperBounds,this.lowerBounds)
+            this.vectorBottom.randomizeX(this.upperBounds,this.lowerBounds)
+            this.vectorTop.randomizeX(this.upperBounds,this.lowerBounds)
 
             this.vector.normalize()
-            this.vectorN.normalize()
-            this.vectorP.normalize()
+            this.vectorBottom.normalize()
+            this.vectorTop.normalize()
 
             game.addChild(new Projectile(
             curShip.position.x + curShip.width,
@@ -275,12 +277,12 @@ export class CrazySprayShot extends PowerUp {
             game.addChild(new Projectile(
             curShip.position.x + curShip.width,
             curShip.position.y + curShip.height/2,
-            this.vectorP, curShip, this.bulletSpeed, this.projectileType))
+            this.vectorBottom, curShip, this.bulletSpeed, this.projectileType))
 
             game.addChild(new Projectile(
             curShip.position.x + curShip.width,
             curShip.position.y + curShip.height/2,
-            this.vectorN, curShip, this.bulletSpeed, this.projectileType))
+            this.vectorTop, curShip, this.bulletSpeed, this.projectileType))
         }
 
 
@@ -292,13 +294,19 @@ export class VertSprayShot extends PowerUp {
       constructor() {
           super()
 
-          this.vector = new Victor(0,1)
-          this.vectorN = new Victor(0.25,1)
-          this.vectorP = new Victor(-0.25,1)
+          this.vectorDown = new Victor(0,1)
+          this.vectorLeft = new Victor(0.25,1)
+          this.vectorRight = new Victor(-0.25,1)
 
-          this.vector2 = new Victor(0,-1)
-          this.vectorN2 = new Victor(0.25,-1)
-          this.vectorP2 = new Victor(-0.25,-1)
+          this.vectorUp = new Victor(0,-1)
+          this.vectorLeft2 = new Victor(0.25,-1)
+          this.vectorRight2 = new Victor(-0.25,-1)
+
+          this.vectorLeft.normalize()
+          this.vectorRight.normalize()
+          this.vectorLeft2.normalize()
+          this.vectorRight2.normalize()
+
 
           this.bulletSpeed = 1
           this.projectileType = "bullet"
@@ -306,41 +314,35 @@ export class VertSprayShot extends PowerUp {
 
         fire(curShip) {
 
-            this.vector.normalize()
-            this.vectorN.normalize()
-            this.vectorP.normalize()
-            this.vectorN2.normalize()
-            this.vectorP2.normalize()
+            game.addChild(new Projectile(
+            curShip.position.x + curShip.width/2,
+            curShip.position.y + curShip.height/2,
+            this.vectorUp, curShip, this.bulletSpeed, this.projectileType))
 
             game.addChild(new Projectile(
             curShip.position.x + curShip.width/2,
             curShip.position.y + curShip.height/2,
-            this.vector, curShip, this.bulletSpeed, this.projectileType))
+            this.vectorLeft, curShip, this.bulletSpeed, this.projectileType))
 
             game.addChild(new Projectile(
             curShip.position.x + curShip.width/2,
             curShip.position.y + curShip.height/2,
-            this.vectorP, curShip, this.bulletSpeed, this.projectileType))
+            this.vectorRight, curShip, this.bulletSpeed, this.projectileType))
 
             game.addChild(new Projectile(
             curShip.position.x + curShip.width/2,
             curShip.position.y + curShip.height/2,
-            this.vectorN, curShip, this.bulletSpeed, this.projectileType))
+            this.vectorDown, curShip, this.bulletSpeed, this.projectileType))
 
             game.addChild(new Projectile(
             curShip.position.x + curShip.width/2,
             curShip.position.y + curShip.height/2,
-            this.vector2, curShip, this.bulletSpeed, this.projectileType))
+            this.vectorLeft2, curShip, this.bulletSpeed, this.projectileType))
 
             game.addChild(new Projectile(
             curShip.position.x + curShip.width/2,
             curShip.position.y + curShip.height/2,
-            this.vectorP2, curShip, this.bulletSpeed, this.projectileType))
-
-            game.addChild(new Projectile(
-            curShip.position.x + curShip.width/2,
-            curShip.position.y + curShip.height/2,
-            this.vectorN2, curShip, this.bulletSpeed, this.projectileType))
+            this.vectorRight2, curShip, this.bulletSpeed, this.projectileType))
         }
 
 
@@ -350,8 +352,8 @@ export class VertSprayShot extends PowerUp {
 export class VertShoota extends PowerUp {
       constructor() {
           super()
-          this.vector = new Victor(0,1)
-          this.vector2 = new Victor(0,-1)
+          this.vectorDown = new Victor(0,1)
+          this.vectorUp = new Victor(0,-1)
           this.bulletSpeed = 1
           this.projectileType = "bullet"
       }
@@ -361,12 +363,12 @@ export class VertShoota extends PowerUp {
 
           game.addChild(new Projectile(
               curShip.position.x + curShip.width/2,
-              curShip.position.y + curShip.height/2, this.vector,
+              curShip.position.y + curShip.height/2, this.vectorUp,
               curShip, this.bulletSpeed, this.projectileType))
 
           game.addChild(new Projectile(
               curShip.position.x + curShip.width/2,
-              curShip.position.y + curShip.height/2, this.vector2,
+              curShip.position.y + curShip.height/2, this.vectorDown,
               curShip, this.bulletSpeed, this.projectileType))
       }
 
@@ -387,6 +389,8 @@ export class BFG extends PowerUp {
               curShip.position.x + curShip.width,
               curShip.position.y + curShip.height/2,
               this.vector, curShip, this.bulletSpeed, this.projectileType))
+
+          curShip.move(-0.91, "x")
       }
 
 }
