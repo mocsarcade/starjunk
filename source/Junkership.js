@@ -14,6 +14,7 @@ export default class Junkership extends Pixi.Sprite {
         this.speed = 60
         this.score = new Score()
         this.powerUp = new PeaShoota()
+        this.reloadTime = 0
         this.hitBox = new Pixi.Rectangle(
             this.x + 1 , // Left offset
             this.y + 1 , // Top offset
@@ -65,8 +66,19 @@ export default class Junkership extends Pixi.Sprite {
         }
 
         if(Keyb.isDown("<space>")) {
+            this.reloadTime += 1
             if(this.powerUp.rapidFire == true) {
-                this.powerUp.fire(this)
+                if(this.reloadTime >= 10) {
+                    this.powerUp.fire(this)
+                    this.reloadTime = 0
+                }
+            }
+
+            if(this.powerUp.BFGrapid == true) {
+                if(this.reloadTime >= 2.5) {
+                    this.powerUp.fire(this)
+                    this.reloadTime = 0
+                }
             }
         }
 

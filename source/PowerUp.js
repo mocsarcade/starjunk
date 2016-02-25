@@ -380,7 +380,7 @@ export class BFG extends PowerUp {
           this.vector = new Victor(1,0)
           this.bulletSpeed = 2
           this.projectileType = "bullet"
-          this.rapidFire = true
+          this.BFGrapid = true
       }
 
       fire(curShip) {
@@ -390,7 +390,7 @@ export class BFG extends PowerUp {
               curShip.position.y + curShip.height/2,
               this.vector, curShip, this.bulletSpeed, this.projectileType))
 
-          curShip.move(-0.91, "x")
+          curShip.move(-2.6, "x")
       }
 
 }
