@@ -13,7 +13,7 @@ export default class TankTrashbot extends Trashbot {
     }
 
     update(delta) {
-        this.movement(this, Reference.TRASHBOT.MOVEMENT.AMPLITUDE, Reference.TRASHBOT.MOVEMENT.PERIOD)
+        this.movement(this, Reference.TRASHBOT.MOVEMENT.PERIOD, Reference.TRASHBOT.MOVEMENT.AMPLITUDE)
 
 
         super.update(delta)

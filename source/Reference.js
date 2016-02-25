@@ -17,3 +17,9 @@ module.exports.TRASHBOT = {
         PERIOD: 100
     }
 }
+module.exports.DIFFICULTY = [
+    {
+        HEALTH_MULTIPLIER: 1,
+        SPAWN_INTERVAL: 5
+    }
+]

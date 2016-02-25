@@ -24,4 +24,10 @@ var loop = new Afloop(function(delta) {
         game.gameOver()
     }
     renderer.render(game)
+
+    game.spawnWaveInterval += delta
+    if (game.spawnWaveInterval >= game.difficulty.SPAWN_INTERVAL) {
+        game.spawnWave()
+        game.spawnWaveInterval = 0
+    }
 })

@@ -10,7 +10,7 @@ export default class Trashbot extends Pixi.Sprite {
     constructor(position, speed, health, texture) {
         super(texture)
         this.speed = 60
-        this.health = health
+        this.health = health * game.difficulty.HEALTH_MULTIPLIER
         this.position = position
         this.position.t = 0
         this.initial = {
@@ -24,6 +24,7 @@ export default class Trashbot extends Pixi.Sprite {
         this.position.t += this.speed * delta
         if (this.position.x + this.width < 0) {
             this.position.x = Reference.GAME_WIDTH
+            this.position.y = this.initial.y
             this.position.t = 0
             if (!this.rage) {
                 this.rage = true
@@ -61,7 +62,6 @@ export default class Trashbot extends Pixi.Sprite {
         this.health--
         if (this.health === 0) {
             this.die()
-            game.spawnWave()
         }
 
     }
@@ -73,13 +73,27 @@ Trashbot.Movement = {
     LINEAR: function(trashbot) {
         trashbot.position.x = trashbot.initial.x - trashbot.position.t
     },
-    SINUSOIDAL: function(trashbot, amplitude, period) {
+    SINUSOIDAL: function(trashbot, period, amplitude) {
         trashbot.position.x = trashbot.initial.x - trashbot.position.t
         trashbot.position.y = trashbot.initial.y - amplitude * Math.sin(2 * Math.PI * trashbot.position.t / period)
     },
-    TRIANGLE_WAVE: function(trashbot, amplitude, period) {
-        trashbot.position.x = trashbot.initial.x - Math.abs(2*(trashbot.position.t / amplitude) - Math.floor(trashbot.position.t / amplitude + 1/2))
-        trashbot.position.y = trashbot.initial.y - 4 * amplitude / period * (Math.abs(trashbot.position.x % period - period / 2) - period / 4)
+    TRIANGLE_WAVE: function(trashbot, period, amplitude) {
+        // var floorInterval = Math.floor(trashbot.position.t / amplitude + 1/2)
+        trashbot.position.x = trashbot.initial.x - trashbot.position.t
+
+        if (1/4 * period < (trashbot.position.t % period) && (trashbot.position.t % period) <= 3/4 * period) {
+            trashbot.position.y += amplitude / (period / 4)
+        } else {
+            trashbot.position.y -= amplitude / (period / 4)
+        }
+    },
+    MOVE_STOP: function(trashbot, period) {
+        period = period / 2
+        var baseT = Math.floor(trashbot.position.t / period) * period
+        if ((baseT / period) % 2 === 0) {
+            trashbot.position.x = trashbot.initial.x - trashbot.position.t + baseT/2
+        }
+
     }
 
 }
