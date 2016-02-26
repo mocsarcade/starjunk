@@ -20,9 +20,7 @@ export default class Junkership extends Pixi.Sprite {
             this.y + 1 , // Top offset
             this.width - 3 , // Right offset + left offset
             this.height - 3 )// Bottom offset + top offset
-        this.WeaponList = [new PeaShoota(), new TriShoota(), new FiveShoota(), new RapidFire(), new SprayShot(), 
-                           new SuperSprayShot(), new CrazySprayShot(), new VertSprayShot(), new VertShoota(), 
-                           new RapidSprayShot(), new BFG()]
+        this.WeaponList = [new PeaShoota(), new TriShoota(), new FiveShoota(), new RapidFire(), new SprayShot(), new SuperSprayShot(), new CrazySprayShot(), new VertSprayShot(), new VertShoota(), new RapidSprayShot(), new BFG()]
 
     }
     update(delta) {
@@ -31,7 +29,6 @@ export default class Junkership extends Pixi.Sprite {
             this.onCollision()
         }
 
-            game.updateWeaponList(this.powerUp)
         var relativeSpeed = this.speed * delta
 
         if (Keyb.isJustDown("<up>")) {
