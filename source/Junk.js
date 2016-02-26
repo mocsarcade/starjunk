@@ -12,7 +12,6 @@ export default class Junk extends Pixi.Sprite {
         this.position.x = x
         this.position.y = y
         this.spawnTime = Date.now()
-        this.hasWeapon = Utility.randomNumber(Reference.WEAPON_RANGE.lower, Reference.WEAPON_RANGE.upper)
     }
 
     update(delta) {
@@ -26,7 +25,7 @@ export default class Junk extends Pixi.Sprite {
                         game.removeChild(this)
                         this.destroy()
                         child.score.incrementScore()
-                        child.changePowerUp(this.hasWeapon)
+                        child.changePowerUp(Utility.randomNumber(0,child.WeaponList.length))
                     }
                 }
             })
