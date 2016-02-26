@@ -32,7 +32,6 @@ export class PeaShoota extends PowerUp {
               curShip.position.y + curShip.height/2, this.vector,
               curShip, this.bulletSpeed, this.projectileType))
       }
-
 }
 
 export class TriShoota extends PowerUp {
@@ -44,7 +43,6 @@ export class TriShoota extends PowerUp {
       }
 
       fire(curShip) {
-
           game.addChild(new Projectile(
               curShip.position.x + curShip.width,
               curShip.position.y + curShip.height/2,

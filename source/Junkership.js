@@ -20,6 +20,9 @@ export default class Junkership extends Pixi.Sprite {
             this.y + 1 , // Top offset
             this.width - 3 , // Right offset + left offset
             this.height - 3 )// Bottom offset + top offset
+        this.WeaponList = [new PeaShoota(), new TriShoota(), new FiveShoota(), new RapidFire(), new SprayShot(), 
+                           new SuperSprayShot(), new CrazySprayShot(), new VertSprayShot(), new VertShoota(), 
+                           new RapidSprayShot(), new BFG()]
 
     }
     update(delta) {
@@ -28,6 +31,7 @@ export default class Junkership extends Pixi.Sprite {
             this.onCollision()
         }
 
+            game.updateWeaponList(this.powerUp)
         var relativeSpeed = this.speed * delta
 
         if (Keyb.isJustDown("<up>")) {
@@ -82,49 +86,49 @@ export default class Junkership extends Pixi.Sprite {
             }
         }
 
-        if(Keyb.isJustDown("1")) {
-            this.changePowerUp(new PeaShoota)
-        }
-
-        if(Keyb.isJustDown("2")) {
-            this.changePowerUp(new TriShoota)
-        }
-
-        if(Keyb.isJustDown("3")) {
-            this.changePowerUp(new FiveShoota)
-        }
-
-        if(Keyb.isJustDown("4")) {
-            this.changePowerUp(new RapidFire)
-        }
-
-        if(Keyb.isJustDown("5")) {
-            this.changePowerUp(new SprayShot)
-        }
-
-        if(Keyb.isJustDown("6")) {
-            this.changePowerUp(new SuperSprayShot)
-        }
-
-        if(Keyb.isJustDown("7")) {
-            this.changePowerUp(new CrazySprayShot)
-        }
-
-        if(Keyb.isJustDown("8")) {
-            this.changePowerUp(new VertSprayShot)
-        }
-
-        if(Keyb.isJustDown("9")) {
-            this.changePowerUp(new VertShoota)
-        }
-
-        if(Keyb.isJustDown("0")) {
-            this.changePowerUp(new RapidSprayShot)
-        }
-
-        if(Keyb.isJustDown("-")) {
-            this.changePowerUp(new BFG)
-        }
+//        if(Keyb.isJustDown("1")) {
+//            this.changePowerUp(new PeaShoota)
+//        }
+//
+//        if(Keyb.isJustDown("2")) {
+//            this.changePowerUp(new TriShoota)
+//        }
+//
+//        if(Keyb.isJustDown("3")) {
+//            this.changePowerUp(new FiveShoota)
+//        }
+//
+//        if(Keyb.isJustDown("4")) {
+//            this.changePowerUp(new RapidFire)
+//        }
+//
+//        if(Keyb.isJustDown("5")) {
+//            this.changePowerUp(new SprayShot)
+//        }
+//
+//        if(Keyb.isJustDown("6")) {
+//            this.changePowerUp(new SuperSprayShot)
+//        }
+//
+//        if(Keyb.isJustDown("7")) {
+//            this.changePowerUp(new CrazySprayShot)
+//        }
+//
+//        if(Keyb.isJustDown("8")) {
+//            this.changePowerUp(new VertSprayShot)
+//        }
+//
+//        if(Keyb.isJustDown("9")) {
+//            this.changePowerUp(new VertShoota)
+//        }
+//
+//        if(Keyb.isJustDown("0")) {
+//            this.changePowerUp(new RapidSprayShot)
+//        }
+//
+//        if(Keyb.isJustDown("-")) {
+//            this.changePowerUp(new BFG)
+//        }
     }
     onCollision(collidedWith) {
         game.removeChild(this)
@@ -152,7 +156,8 @@ export default class Junkership extends Pixi.Sprite {
     }
 
     changePowerUp(newPowerUp) {
-        this.powerUp = newPowerUp
+        this.powerUp = this.WeaponList[newPowerUp]
+        console.log(this.powerUp)
     }
 
 
