@@ -76,7 +76,7 @@ export default class Junkership extends Pixi.Sprite {
 
             if(this.powerUp.BFGrapid == true) {
                 if(this.reloadTime >= 2.5) {
-                    this.powerUp.fire(this)
+                    this.powerUp.BfgFire(this,delta)
                     this.reloadTime = 0
                 }
             }

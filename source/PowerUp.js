@@ -9,6 +9,7 @@ export default class PowerUp {
     constructor() {
         this.bulletSpeed = 1
         this.projectileType = "bullet"
+        this.kickbackFactor = -160
     }
 
     fire(curShip) {
@@ -383,14 +384,15 @@ export class BFG extends PowerUp {
           this.BFGrapid = true
       }
 
-      fire(curShip) {
+      BfgFire(curShip,delta) {
 
           game.addChild(new Projectile(
               curShip.position.x + curShip.width,
               curShip.position.y + curShip.height/2,
               this.vector, curShip, this.bulletSpeed, this.projectileType))
 
-          curShip.move(-2.6, "x")
+// This may need to go in a variable
+          curShip.move(this.kickbackFactor*delta, "x")
       }
 
 }
