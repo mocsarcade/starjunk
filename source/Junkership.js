@@ -4,7 +4,7 @@ var Keyb = require("keyb")
 import Reference from "./Reference.js"
 import Projectile from "./Projectile.js"
 import Score from "./Score.js"
-import {PeaShoota, PowerUp, TriShoota, FiveShoota, RapidFire} from "./PowerUp.js"
+import {PeaShoota, PowerUp, TriShoota, FiveShoota, RapidFire, SprayShot,SuperSprayShot, CrazySprayShot, VertSprayShot, VertShoota, RapidSprayShot, BFG} from "./PowerUp.js"
 
 
 export default class Junkership extends Pixi.Sprite {
@@ -14,6 +14,7 @@ export default class Junkership extends Pixi.Sprite {
         this.speed = 60
         this.score = new Score()
         this.powerUp = new PeaShoota()
+        this.reloadTime = 0
         this.hitBox = new Pixi.Rectangle(
             this.x + 1 , // Left offset
             this.y + 1 , // Top offset
@@ -65,21 +66,64 @@ export default class Junkership extends Pixi.Sprite {
         }
 
         if(Keyb.isDown("<space>")) {
+            this.reloadTime += 1
             if(this.powerUp.rapidFire == true) {
-                this.powerUp.fire(this)
+                if(this.reloadTime >= 10) {
+                    this.powerUp.fire(this)
+                    this.reloadTime = 0
+                }
+            }
+
+            if(this.powerUp.BFGrapid == true) {
+                if(this.reloadTime >= 2.5) {
+                    this.powerUp.BfgFire(this,delta)
+                    this.reloadTime = 0
+                }
             }
         }
 
         if(Keyb.isJustDown("1")) {
-            this.changePowerUp(new TriShoota)
+            this.changePowerUp(new PeaShoota)
         }
 
         if(Keyb.isJustDown("2")) {
-            this.changePowerUp(new RapidFire)
+            this.changePowerUp(new TriShoota)
         }
 
         if(Keyb.isJustDown("3")) {
             this.changePowerUp(new FiveShoota)
+        }
+
+        if(Keyb.isJustDown("4")) {
+            this.changePowerUp(new RapidFire)
+        }
+
+        if(Keyb.isJustDown("5")) {
+            this.changePowerUp(new SprayShot)
+        }
+
+        if(Keyb.isJustDown("6")) {
+            this.changePowerUp(new SuperSprayShot)
+        }
+
+        if(Keyb.isJustDown("7")) {
+            this.changePowerUp(new CrazySprayShot)
+        }
+
+        if(Keyb.isJustDown("8")) {
+            this.changePowerUp(new VertSprayShot)
+        }
+
+        if(Keyb.isJustDown("9")) {
+            this.changePowerUp(new VertShoota)
+        }
+
+        if(Keyb.isJustDown("0")) {
+            this.changePowerUp(new RapidSprayShot)
+        }
+
+        if(Keyb.isJustDown("-")) {
+            this.changePowerUp(new BFG)
         }
     }
     onCollision(collidedWith) {

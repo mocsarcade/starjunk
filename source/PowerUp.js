@@ -1,14 +1,15 @@
 var Pixi = require("pixi.js")
 var Afloop = require("afloop")
 var Keyb = require("keyb")
+var Victor = require("victor")
 
 import Projectile from "./Projectile.js"
 
 export default class PowerUp {
     constructor() {
-        this.fireRate = 80
-        this.bulletSpeed = 80
+        this.bulletSpeed = 1
         this.projectileType = "bullet"
+        this.kickbackFactor = -160
     }
 
     fire(curShip) {
@@ -19,8 +20,8 @@ export default class PowerUp {
 export class PeaShoota extends PowerUp {
       constructor() {
           super()
-          this.fireRate = 80
-          this.bulletSpeed = 80
+          this.vector = new Victor(1,0)
+          this.bulletSpeed = 1
           this.projectileType = "bullet"
       }
 
@@ -28,8 +29,8 @@ export class PeaShoota extends PowerUp {
 
           game.addChild(new Projectile(
               curShip.position.x + curShip.width,
-              curShip.position.y + curShip.height/2,
-              curShip, this.fireRate, this.bulletSpeed, this.projectileType))
+              curShip.position.y + curShip.height/2, this.vector,
+              curShip, this.bulletSpeed, this.projectileType))
       }
 
 }
@@ -37,8 +38,8 @@ export class PeaShoota extends PowerUp {
 export class TriShoota extends PowerUp {
       constructor() {
           super()
-          this.fireRate = 80
-          this.bulletSpeed = 80
+          this.vector = new Victor(1,0)
+          this.bulletSpeed = 1
           this.projectileType = "bullet"
       }
 
@@ -47,15 +48,15 @@ export class TriShoota extends PowerUp {
           game.addChild(new Projectile(
               curShip.position.x + curShip.width,
               curShip.position.y + curShip.height/2,
-              curShip, this.fireRate, this.bulletSpeed, this.projectileType))
+              this.vector, curShip, this.bulletSpeed, this.projectileType))
           game.addChild(new Projectile(
               curShip.position.x + curShip.width,
               curShip.position.y + curShip.height/2 + 3,
-              curShip, this.fireRate, this.bulletSpeed, this.projectileType))
+              this.vector, curShip, this.bulletSpeed, this.projectileType))
           game.addChild(new Projectile(
               curShip.position.x + curShip.width,
               curShip.position.y + curShip.height/2 - 3,
-              curShip, this.fireRate, this.bulletSpeed, this.projectileType))
+              this.vector, curShip, this.bulletSpeed, this.projectileType))
       }
 
 }
@@ -63,8 +64,8 @@ export class TriShoota extends PowerUp {
 export class FiveShoota extends PowerUp {
       constructor() {
           super()
-          this.fireRate = 80
-          this.bulletSpeed = 80
+          this.vector = new Victor(1,0)
+          this.bulletSpeed = 1
           this.projectileType = "bullet"
       }
 
@@ -73,23 +74,23 @@ export class FiveShoota extends PowerUp {
           game.addChild(new Projectile(
               curShip.position.x + curShip.width,
               curShip.position.y + curShip.height/2,
-              curShip, this.fireRate, this.bulletSpeed, this.projectileType))
+              this.vector, curShip, this.bulletSpeed, this.projectileType))
           game.addChild(new Projectile(
               curShip.position.x + curShip.width,
               curShip.position.y + curShip.height/2 + 3,
-              curShip, this.fireRate, this.bulletSpeed, this.projectileType))
+              this.vector, curShip, this.bulletSpeed, this.projectileType))
           game.addChild(new Projectile(
               curShip.position.x + curShip.width,
               curShip.position.y + curShip.height/2 - 3,
-              curShip, this.fireRate, this.bulletSpeed, this.projectileType))
+              this.vector, curShip, this.bulletSpeed, this.projectileType))
           game.addChild(new Projectile(
               curShip.position.x + curShip.width,
               curShip.position.y + curShip.height/2 + 6,
-              curShip, this.fireRate, this.bulletSpeed, this.projectileType))
+              this.vector, curShip, this.bulletSpeed, this.projectileType))
           game.addChild(new Projectile(
               curShip.position.x + curShip.width,
               curShip.position.y + curShip.height/2 - 6,
-              curShip, this.fireRate, this.bulletSpeed, this.projectileType))
+              this.vector, curShip, this.bulletSpeed, this.projectileType))
       }
 
 }
@@ -97,8 +98,8 @@ export class FiveShoota extends PowerUp {
 export class RapidFire extends PowerUp {
       constructor() {
           super()
-          this.fireRate = 80
-          this.bulletSpeed = 150
+          this.vector = new Victor(1,0)
+          this.bulletSpeed = 2
           this.projectileType = "bullet"
           this.rapidFire = true
       }
@@ -108,7 +109,290 @@ export class RapidFire extends PowerUp {
           game.addChild(new Projectile(
               curShip.position.x + curShip.width,
               curShip.position.y + curShip.height/2,
-              curShip, this.fireRate, this.bulletSpeed, this.projectileType))
+              this.vector, curShip, this.bulletSpeed, this.projectileType))
+      }
+
+}
+
+export class RapidSprayShot extends PowerUp {
+
+      constructor() {
+          super()
+          this.vector = new Victor(1,0)
+          this.vectorBottom = new Victor(1,0.25)
+          this.vectorTop = new Victor(1,-0.25)
+          this.bulletSpeed = 1
+          this.projectileType = "bullet"
+          this.rapidFire = true
+
+          this.vector.normalize()
+          this.vectorTop.normalize()
+          this.vectorBottom.normalize()
+      }
+
+        fire(curShip) {
+
+            game.addChild(new Projectile(
+            curShip.position.x + curShip.width,
+            curShip.position.y + curShip.height/2,
+            this.vector, curShip, this.bulletSpeed, this.projectileType))
+
+            game.addChild(new Projectile(
+            curShip.position.x + curShip.width,
+            curShip.position.y + curShip.height/2,
+            this.vectorTop, curShip, this.bulletSpeed, this.projectileType))
+
+            game.addChild(new Projectile(
+            curShip.position.x + curShip.width,
+            curShip.position.y + curShip.height/2,
+            this.vectorBottom, curShip, this.bulletSpeed, this.projectileType))
+        }
+
+
+
+}
+
+export class SprayShot extends PowerUp {
+
+      constructor() {
+          super()
+          this.vector = new Victor(1,0)
+          this.vectorBottom = new Victor(1,0.25)
+          this.vectorTop = new Victor(1,-0.25)
+          this.bulletSpeed = 1
+          this.projectileType = "bullet"
+      }
+
+        fire(curShip) {
+
+            this.vector.normalize()
+            this.vectorTop.normalize()
+            this.vectorBottom.normalize()
+
+            game.addChild(new Projectile(
+            curShip.position.x + curShip.width,
+            curShip.position.y + curShip.height/2,
+            this.vector, curShip, this.bulletSpeed, this.projectileType))
+
+            game.addChild(new Projectile(
+            curShip.position.x + curShip.width,
+            curShip.position.y + curShip.height/2,
+            this.vectorTop, curShip, this.bulletSpeed, this.projectileType))
+
+            game.addChild(new Projectile(
+            curShip.position.x + curShip.width,
+            curShip.position.y + curShip.height/2,
+            this.vectorBottom, curShip, this.bulletSpeed, this.projectileType))
+        }
+
+
+
+}
+
+export class SuperSprayShot extends PowerUp {
+
+      constructor() {
+          super()
+          this.vector = new Victor(1,0)
+          this.vectorBottom = new Victor(1,0.25)
+          this.vectorTop = new Victor(1,-0.25)
+          this.vectorBottom2 = new Victor(1,0.1)
+          this.vectorTop2 = new Victor(1,-0.1)
+          this.bulletSpeed = 1
+          this.projectileType = "bullet"
+
+          this.vector.normalize()
+          this.vectorBottom.normalize()
+          this.vectorTop.normalize()
+          this.vectorBottom2.normalize()
+          this.vectorTop2.normalize()
+      }
+
+        fire(curShip) {
+
+            game.addChild(new Projectile(
+            curShip.position.x + curShip.width,
+            curShip.position.y + curShip.height/2,
+            this.vector, curShip, this.bulletSpeed, this.projectileType))
+
+            game.addChild(new Projectile(
+            curShip.position.x + curShip.width,
+            curShip.position.y + curShip.height/2,
+            this.vectorBottom, curShip, this.bulletSpeed, this.projectileType))
+
+            game.addChild(new Projectile(
+            curShip.position.x + curShip.width,
+            curShip.position.y + curShip.height/2,
+            this.vectorTop, curShip, this.bulletSpeed, this.projectileType))
+
+            game.addChild(new Projectile(
+            curShip.position.x + curShip.width,
+            curShip.position.y + curShip.height/2,
+            this.vectorBottom2, curShip, this.bulletSpeed, this.projectileType))
+
+            game.addChild(new Projectile(
+            curShip.position.x + curShip.width,
+            curShip.position.y + curShip.height/2,
+            this.vectorTop2, curShip, this.bulletSpeed, this.projectileType))
+        }
+
+
+
+}
+
+export class CrazySprayShot extends PowerUp {
+
+      constructor() {
+          super()
+          this.upperBounds = new Victor(0,90)
+          this.lowerBounds = new Victor(90,-90)
+
+
+          this.vector = new Victor(1,0)
+          this.vectorBottom = new Victor(1,0)
+          this.vectorTop = new Victor(1,0)
+          this.bulletSpeed = 1
+          this.projectileType = "bullet"
+
+      }
+
+        fire(curShip) {
+
+            this.vector.randomizeY(this.upperBounds,this.lowerBounds)
+            this.vectorBottom.randomizeY(this.upperBounds,this.lowerBounds)
+            this.vectorTop.randomizeY(this.upperBounds,this.lowerBounds)
+
+            this.vector.randomizeX(this.upperBounds,this.lowerBounds)
+            this.vectorBottom.randomizeX(this.upperBounds,this.lowerBounds)
+            this.vectorTop.randomizeX(this.upperBounds,this.lowerBounds)
+
+            this.vector.normalize()
+            this.vectorBottom.normalize()
+            this.vectorTop.normalize()
+
+            game.addChild(new Projectile(
+            curShip.position.x + curShip.width,
+            curShip.position.y + curShip.height/2,
+            this.vector, curShip, this.bulletSpeed, this.projectileType))
+
+            game.addChild(new Projectile(
+            curShip.position.x + curShip.width,
+            curShip.position.y + curShip.height/2,
+            this.vectorBottom, curShip, this.bulletSpeed, this.projectileType))
+
+            game.addChild(new Projectile(
+            curShip.position.x + curShip.width,
+            curShip.position.y + curShip.height/2,
+            this.vectorTop, curShip, this.bulletSpeed, this.projectileType))
+        }
+
+
+
+}
+
+export class VertSprayShot extends PowerUp {
+
+      constructor() {
+          super()
+
+          this.vectorDown = new Victor(0,1)
+          this.vectorLeft = new Victor(0.25,1)
+          this.vectorRight = new Victor(-0.25,1)
+
+          this.vectorUp = new Victor(0,-1)
+          this.vectorLeft2 = new Victor(0.25,-1)
+          this.vectorRight2 = new Victor(-0.25,-1)
+
+          this.vectorLeft.normalize()
+          this.vectorRight.normalize()
+          this.vectorLeft2.normalize()
+          this.vectorRight2.normalize()
+
+
+          this.bulletSpeed = 1
+          this.projectileType = "bullet"
+      }
+
+        fire(curShip) {
+
+            game.addChild(new Projectile(
+            curShip.position.x + curShip.width/2,
+            curShip.position.y + curShip.height/2,
+            this.vectorUp, curShip, this.bulletSpeed, this.projectileType))
+
+            game.addChild(new Projectile(
+            curShip.position.x + curShip.width/2,
+            curShip.position.y + curShip.height/2,
+            this.vectorLeft, curShip, this.bulletSpeed, this.projectileType))
+
+            game.addChild(new Projectile(
+            curShip.position.x + curShip.width/2,
+            curShip.position.y + curShip.height/2,
+            this.vectorRight, curShip, this.bulletSpeed, this.projectileType))
+
+            game.addChild(new Projectile(
+            curShip.position.x + curShip.width/2,
+            curShip.position.y + curShip.height/2,
+            this.vectorDown, curShip, this.bulletSpeed, this.projectileType))
+
+            game.addChild(new Projectile(
+            curShip.position.x + curShip.width/2,
+            curShip.position.y + curShip.height/2,
+            this.vectorLeft2, curShip, this.bulletSpeed, this.projectileType))
+
+            game.addChild(new Projectile(
+            curShip.position.x + curShip.width/2,
+            curShip.position.y + curShip.height/2,
+            this.vectorRight2, curShip, this.bulletSpeed, this.projectileType))
+        }
+
+
+
+}
+
+export class VertShoota extends PowerUp {
+      constructor() {
+          super()
+          this.vectorDown = new Victor(0,1)
+          this.vectorUp = new Victor(0,-1)
+          this.bulletSpeed = 1
+          this.projectileType = "bullet"
+      }
+
+      fire(curShip) {
+
+
+          game.addChild(new Projectile(
+              curShip.position.x + curShip.width/2,
+              curShip.position.y + curShip.height/2, this.vectorUp,
+              curShip, this.bulletSpeed, this.projectileType))
+
+          game.addChild(new Projectile(
+              curShip.position.x + curShip.width/2,
+              curShip.position.y + curShip.height/2, this.vectorDown,
+              curShip, this.bulletSpeed, this.projectileType))
+      }
+
+}
+
+export class BFG extends PowerUp {
+      constructor() {
+          super()
+          this.vector = new Victor(1,0)
+          this.bulletSpeed = 2
+          this.projectileType = "bullet"
+          this.BFGrapid = true
+      }
+
+      BfgFire(curShip,delta) {
+
+          game.addChild(new Projectile(
+              curShip.position.x + curShip.width,
+              curShip.position.y + curShip.height/2,
+              this.vector, curShip, this.bulletSpeed, this.projectileType))
+
+// This may need to go in a variable
+          curShip.move(this.kickbackFactor*delta, "x")
       }
 
 }
