@@ -14,7 +14,7 @@ export default class GameContainer extends Pixi.Container {
         this.countdownToJunk = Utility.randomNumber(Reference.JUNK_FREQUENCY_RANGE.lower, Reference.JUNK_FREQUENCY_RANGE.upper)
         Textures.initTex()
     }
-
+ 
     gameOver() {
         console.log("Respawning Junkership")
         game.addChild(new Junkership())
