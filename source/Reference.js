@@ -7,10 +7,9 @@ module.exports.TIME_TO_DESPAWN = 5 * 1000
 module.exports.ControlScheme = {
     WASD: 0,
     NUM_PAD: 1,
-    ARROWS: 2,
     keys: {
-        0: {up: "W", down: "S", left: "A", right: "D", fire: "<space>"},
-        1: {up: "8", down: "2", left: "4", right: "6", fire: "0"},
-        2: {up: "<up>", down: "<down>", left: "<left>", right: "<right>", fire: "<space>"}
+        0: {up: "W", down: "S", left: "A", right: "D", fire: "<space>", inUse: false},
+        1: {up: "<num-8>", down: "<num-2>", left: "<num-4>", right: "<num-6>", fire: "<num-0>", inUse: false}
     }
 }
+module.exports.controlTypeCount = 2

@@ -1,4 +1,5 @@
 var Pixi = require("pixi.js")
+var Keyb = require("keyb")
 
 import Junkership from "./Junkership.js"
 import Trashbot from "./Trashbot.js"
@@ -13,6 +14,7 @@ export default class GameContainer extends Pixi.Container {
         this.playerCount = 0
         this.countdownToJunk = Utility.randomNumber(Reference.JUNK_FREQUENCY_RANGE.lower, Reference.JUNK_FREQUENCY_RANGE.upper)
         Textures.initTex()
+
     }
 
     gameOver() {
@@ -33,6 +35,16 @@ export default class GameContainer extends Pixi.Container {
     }
 
     checkPlayerSpawn() {
+        for (var i = 0; i < Reference.controlTypeCount; i++) {
+            if (!Reference.ControlScheme.keys[i].inUse && (
+                Keyb.isDown(Reference.ControlScheme.keys[i].up) ||
+                Keyb.isDown(Reference.ControlScheme.keys[i].down) ||
+                Keyb.isDown(Reference.ControlScheme.keys[i].left) ||
+                Keyb.isDown(Reference.ControlScheme.keys[i].right))) {
+                Reference.ControlScheme.keys[i].inUse = true
 
+                game.addChild(new Junkership(i))
+            }
+        }
     }
 }

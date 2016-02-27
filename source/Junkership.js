@@ -8,10 +8,9 @@ import {PeaShoota, PowerUp, TriShoota, FiveShoota, RapidFire, SprayShot,
         SuperSprayShot, CrazySprayShot, VertSprayShot, VertShoota,
         RapidSprayShot, BFG} from "./PowerUp.js"
 
-
 export default class Junkership extends Pixi.Sprite {
     constructor(controlScheme) {
-        super(PIXI.loader.resources.redJunkership.texture)
+        super(checkTex())
         game.playerCount++
         this.speed = 60
         this.score = new Score()
@@ -29,11 +28,6 @@ export default class Junkership extends Pixi.Sprite {
     }
 
     update(delta) {
-        // Ugly kludge
-        if (this.width === 1) {
-            this.onCollision()
-        }
-
         var relativeSpeed = this.speed * delta
 
         if (Keyb.isJustDown(Reference.ControlScheme.keys[this.controls].up)) {
@@ -97,6 +91,7 @@ export default class Junkership extends Pixi.Sprite {
 
     onCollision(collidedWith) {
         game.removeChild(this)
+        Reference.ControlScheme.keys[this.controls].inUse = false
         this.score.reset()
         this.destroy()
         game.playerCount--
@@ -122,5 +117,18 @@ export default class Junkership extends Pixi.Sprite {
 
     changePowerUp(newPowerUp) {
         this.powerUp = new this.WeaponList[newPowerUp]
+    }
+}
+
+var checkTex = function() {
+    switch (game.playerCount) {
+    case 0:
+        return PIXI.loader.resources.redJunkership.texture
+    case 1:
+        return PIXI.loader.resources.yellowJunkership.texture
+    case 2:
+        return PIXI.loader.resources.greenJunkership.texture
+    case 3:
+        return PIXI.loader.resources.blueJunkership.texture
     }
 }
