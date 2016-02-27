@@ -20,8 +20,8 @@ var loop = new Afloop(function(delta) {
     game.children.forEach((child) => {
         child.update(delta)
     })
-    if (game.playerCount === 0) {
-        game.gameOver()
+    if (game.playerCount < 4) {
+        game.checkPlayerSpawn()
     }
     renderer.render(game)
 })
