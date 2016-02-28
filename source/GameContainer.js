@@ -14,12 +14,9 @@ export default class GameContainer extends Pixi.Container {
         this.playerCount = 0
         this.countdownToJunk = Utility.randomNumber(Reference.JUNK_FREQUENCY_RANGE.lower, Reference.JUNK_FREQUENCY_RANGE.upper)
         Textures.initTex()
-
     }
 
     gameOver() {
-        console.log("Respawning Junkership")
-        game.addChild(new Junkership(Reference.ControlScheme.WASD))
     }
 
     spawnWave() {
@@ -29,7 +26,7 @@ export default class GameContainer extends Pixi.Container {
     untilJunk(x, y) {
         if (this.countdownToJunk == 0) {
             this.countdownToJunk = Utility.randomNumber(Reference.JUNK_FREQUENCY_RANGE.lower, Reference.JUNK_FREQUENCY_RANGE.upper)
-            console.log(this.countdownToJunk)
+            // console.log(this.countdownToJunk)
             this.addChild(new Junk(x, y))
         } else this.countdownToJunk--
     }

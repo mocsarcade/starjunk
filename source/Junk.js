@@ -25,7 +25,9 @@ export default class Junk extends Pixi.Sprite {
                         game.removeChild(this)
                         this.destroy()
                         child.score.incrementScore()
-                        child.changePowerUp(Utility.randomNumber(0,child.WeaponList.length))
+                        var weapNum = Utility.randomNumber(0,child.WeaponList.length - 1)
+                        console.log(weapNum)
+                        child.changePowerUp(weapNum)
                     }
                 }
             })

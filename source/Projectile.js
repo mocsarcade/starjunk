@@ -13,7 +13,6 @@ export default class Projectile extends Pixi.Sprite {
       this.bulletSpeed = bulletSpeed
       this.shotBy = shotBy
       this.projectileType = projectileType
-      console.log("Creating projectile")
   }
 
   update(delta) {
@@ -22,7 +21,6 @@ export default class Projectile extends Pixi.Sprite {
 
       if (this.position.x < 0 || this.position.x > Reference.GAME_WIDTH ||
           this.position.y < 0 || this.position.y > Reference.GAME_HEIGHT) {
-          console.log("Destroying projectile")
           game.removeChild(this)
           this.destroy()
       }
@@ -32,7 +30,7 @@ export default class Projectile extends Pixi.Sprite {
   onCollision(collidedWith) {
       game.removeChild(this)
       this.destroy()
-      console.log("hit")
+      // console.log("hit")
   }
 
 

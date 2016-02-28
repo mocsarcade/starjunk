@@ -13,7 +13,7 @@ export default class PowerUp {
     }
 
     fire(curShip) {
-        console.log("nope")
+        console.log("Error: Calling default fire()")
     }
 }
 
@@ -389,7 +389,6 @@ export class BFG extends PowerUp {
               curShip.position.y + curShip.height/2,
               this.vector, curShip, this.bulletSpeed, this.projectileType))
 
-// This may need to go in a variable
           curShip.move(this.kickbackFactor*delta, "x")
       }
 
