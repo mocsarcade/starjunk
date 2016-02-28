@@ -17,6 +17,7 @@ export default class GameContainer extends Pixi.Container {
     }
 
     gameOver() {
+        // TODO High score and stat reporting logic
     }
 
     spawnWave() {
@@ -26,7 +27,6 @@ export default class GameContainer extends Pixi.Container {
     untilJunk(x, y) {
         if (this.countdownToJunk == 0) {
             this.countdownToJunk = Utility.randomNumber(Reference.JUNK_FREQUENCY_RANGE.lower, Reference.JUNK_FREQUENCY_RANGE.upper)
-            // console.log(this.countdownToJunk)
             this.addChild(new Junk(x, y))
         } else this.countdownToJunk--
     }
@@ -37,7 +37,8 @@ export default class GameContainer extends Pixi.Container {
                 Keyb.isDown(Reference.ControlScheme.keys[i].up) ||
                 Keyb.isDown(Reference.ControlScheme.keys[i].down) ||
                 Keyb.isDown(Reference.ControlScheme.keys[i].left) ||
-                Keyb.isDown(Reference.ControlScheme.keys[i].right))) {
+                Keyb.isDown(Reference.ControlScheme.keys[i].right) ||
+                Keyb.isDown(Reference.ControlScheme.keys[i].fire))) {
                 Reference.ControlScheme.keys[i].inUse = true
 
                 game.addChild(new Junkership(i))
