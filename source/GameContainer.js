@@ -18,7 +18,7 @@ export default class GameContainer extends Pixi.Container {
         this.difficulty = Reference.DIFFICULTY[0]
         Textures.initTex()
     }
-
+ 
     gameOver() {
         console.log("Respawning Junkership")
         game.addChild(new Junkership())
