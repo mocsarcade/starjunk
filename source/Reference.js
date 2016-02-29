@@ -12,7 +12,7 @@ module.exports.ControlScheme = {
     keys: {
         0: {up: "W", down: "S", left: "A", right: "D", fire: "<space>", inUse: false},
         1: {up: "<num-8>", down: "<num-2>", left: "<num-4>", right: "<num-6>", fire: "<num-0>", inUse: false},
-        2: {up: "<up>", down: "<down>", left: "<left>", right: "<right>", fire: "<control>", inUse: false}
+        2: {up: "<up>", down: "<down>", left: "<left>", right: "<right>", fire: ".", inUse: false}
     }
 }
 module.exports.controlTypeCount = Object.keys(module.exports.ControlScheme).length -1
