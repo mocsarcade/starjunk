@@ -11,7 +11,6 @@ import {PowerUp, PeaShoota, TriShoota, FiveShoota, RapidFire, RapidSprayShot, Sp
 export default class Junkership extends Pixi.Sprite {
     constructor(controlSet) {
         super(checkTex())
-        game.playerCount++
         this.speed = 60
         this.score = new Score()
         this.powerUp = new PeaShoota()
@@ -113,7 +112,6 @@ export default class Junkership extends Pixi.Sprite {
         game.removeChild(this)
         Junkership.Inventory.splice(Junkership.Inventory.indexOf(this), 1)
         super.destroy()
-        game.playerCount--
     }
 
     move(distance, direction) {
@@ -142,7 +140,7 @@ export default class Junkership extends Pixi.Sprite {
 Junkership.Inventory = []
 
 var checkTex = function() {
-    switch (game.playerCount) {
+    switch (Junkership.Inventory.length) {
     case 0:
         return PIXI.loader.resources.redJunkership.texture
     case 1:
