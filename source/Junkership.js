@@ -4,69 +4,74 @@ var Keyb = require("keyb")
 import Reference from "./Reference.js"
 import Projectile from "./Projectile.js"
 import Score from "./Score.js"
-import {PeaShoota, PowerUp, TriShoota, FiveShoota, RapidFire, SprayShot,SuperSprayShot, CrazySprayShot, VertSprayShot, VertShoota, RapidSprayShot, BFG} from "./PowerUp.js"
-
+import {PeaShoota, PowerUp, TriShoota, FiveShoota, RapidFire, SprayShot,
+        SuperSprayShot, CrazySprayShot, VertSprayShot, VertShoota,
+        RapidSprayShot, BFG} from "./PowerUp.js"
 
 export default class Junkership extends Pixi.Sprite {
-    constructor() {
-        super(PIXI.loader.resources.redJunkership.texture)
+    constructor(controlSet) {
+        super(checkTex())
         game.playerCount++
         this.speed = 60
         this.score = new Score()
         this.powerUp = new PeaShoota()
         this.reloadTime = 0
+        this.controls = Reference.ControlScheme.keys[controlSet]
         this.hitBox = new Pixi.Rectangle(
             this.x + 1 , // Left offset
             this.y + 1 , // Top offset
             this.width - 3 , // Right offset + left offset
             this.height - 3 )// Bottom offset + top offset
-        this.WeaponList = [PeaShoota, TriShoota, FiveShoota, RapidFire, SprayShot, SuperSprayShot, CrazySprayShot, VertSprayShot, VertShoota, RapidSprayShot, BFG]
+        this.WeaponList = [PeaShoota, TriShoota, FiveShoota, RapidFire,
+                           SprayShot, SuperSprayShot, CrazySprayShot,
+                           VertSprayShot, VertShoota, RapidSprayShot, BFG]
     }
-    
-    update(delta) {
-        // Ugly kludge
-        if (this.width === 1) {
-            this.onCollision()
-        }
 
+    update(delta) {
         var relativeSpeed = this.speed * delta
 
-        if (Keyb.isJustDown("<up>")) {
+        if (Keyb.isJustDown(this.controls.up)) {
             this.ignoreY = "down"
         }
-        if (Keyb.isJustDown("<down>")) {
+        if (Keyb.isJustDown(this.controls.down)) {
             this.ignoreY = "up"
         }
-        if (Keyb.isJustDown("<left>")) {
+        if (Keyb.isJustDown(this.controls.left)) {
             this.ignoreX = "right"
         }
-        if (Keyb.isJustDown("<right>")) {
+        if (Keyb.isJustDown(this.controls.right)) {
             this.ignoreX = "left"
         }
-        if (Keyb.isJustUp("<up>") || Keyb.isJustUp("<down>")) {
+        if (Keyb.isJustUp(this.controls.up)
+            || Keyb.isJustUp(this.controls.down)) {
             this.ignoreY = null
         }
-        if (Keyb.isJustUp("<left>") || Keyb.isJustUp("<right>")) {
+        if (Keyb.isJustUp(this.controls.left)
+            || Keyb.isJustUp(this.controls.right)) {
             this.ignoreX = null
         }
-        if(Keyb.isDown("<up>") && this.ignoreY != "up") {
+        if(Keyb.isDown(this.controls.up)
+           && this.ignoreY != "up") {
             this.move(-relativeSpeed, "y")
         }
-        if(Keyb.isDown("<down>") && this.ignoreY != "down") {
+        if(Keyb.isDown(this.controls.down)
+           && this.ignoreY != "down") {
             this.move(relativeSpeed, "y")
         }
-        if(Keyb.isDown("<left>") && this.ignoreX != "left") {
+        if(Keyb.isDown(this.controls.left)
+           && this.ignoreX != "left") {
             this.move(-relativeSpeed, "x")
         }
-        if(Keyb.isDown("<right>") && this.ignoreX != "right") {
+        if(Keyb.isDown(this.controls.right)
+           && this.ignoreX != "right") {
             this.move(relativeSpeed, "x")
         }
 
-        if(Keyb.isJustDown("<space>")) {
+        if(Keyb.isJustDown(this.controls.fire)) {
             this.powerUp.fire(this)
         }
 
-        if(Keyb.isDown("<space>")) {
+        if(Keyb.isDown(this.controls.fire)) {
             this.reloadTime += 1
             if(this.powerUp.rapidFire == true) {
                 if(this.reloadTime >= 10) {
@@ -83,9 +88,10 @@ export default class Junkership extends Pixi.Sprite {
             }
         }
     }
-    
+
     onCollision(collidedWith) {
         game.removeChild(this)
+        this.controls.inUse = false
         this.score.reset()
         this.destroy()
         game.playerCount--
@@ -111,5 +117,18 @@ export default class Junkership extends Pixi.Sprite {
 
     changePowerUp(newPowerUp) {
         this.powerUp = new this.WeaponList[newPowerUp]
+    }
+}
+
+var checkTex = function() {
+    switch (game.playerCount) {
+    case 0:
+        return PIXI.loader.resources.redJunkership.texture
+    case 1:
+        return PIXI.loader.resources.yellowJunkership.texture
+    case 2:
+        return PIXI.loader.resources.greenJunkership.texture
+    case 3:
+        return PIXI.loader.resources.blueJunkership.texture
     }
 }
