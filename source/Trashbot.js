@@ -13,7 +13,7 @@ export default class Trashbot extends Pixi.Sprite {
         this.health = health * game.difficulty.HEALTH_MULTIPLIER
         this.position = position
         this.position.t = 0
-        this.initial = {
+        this.INITIAL = {
             x: position.x,
             y: position.y
         }
@@ -24,7 +24,7 @@ export default class Trashbot extends Pixi.Sprite {
         this.position.t += this.speed * delta
         if (this.position.x + this.width < 0) {
             this.position.x = Reference.GAME_WIDTH
-            this.position.y = this.initial.y
+            this.position.y = this.INITIAL.y
             this.position.t = 0
             if (!this.rage) {
                 this.rage = true
@@ -33,53 +33,55 @@ export default class Trashbot extends Pixi.Sprite {
         }
 
         var killedBy
-        game.children.forEach((child) => {
-            if (child instanceof Projectile) {
-                if (Utility.hasCollision(this, child)) {
-                    killedBy = child
-                    child.onCollision(this)
-                }
-            } else if (child instanceof Junkership) {
-                if (Utility.hasCollision(this, child.hitBox)) {
-                    child.onCollision(this)
-                }
+        var junkershipProjectile
+        for(var i = 0; i < Projectile.FriendlyInventory.length; i++ ) {
+            junkershipProjectile = Projectile.FriendlyInventory[i]
+            if (Utility.hasCollision(this, junkershipProjectile)) {
+                killedBy = junkershipProjectile
+                junkershipProjectile.onCollision(this)
+                break
             }
-        })
+        }
+        for(var i = 0; i < Junkership.Inventory.length; i++ ) {
+            if (Utility.hasCollision(this, Junkership.Inventory[i].hitBox)) {
+                Junkership.Inventory[i].onCollision(this)
+                break
+            }
+        }
         if (killedBy) {
             this.onCollision(killedBy)
         }
     }
 
-    die() {
+    destroy() {
         var finalPosition = this.position
         game.removeChild(this)
-        this.destroy()
+        Trashbot.Inventory.splice(Trashbot.Inventory.indexOf(this), 1)
+        super.destroy()
         game.untilJunk(finalPosition.x, finalPosition.y)
-
     }
 
     onCollision(collidedWith) {
         this.health--
         if (this.health === 0) {
-            this.die()
+            this.destroy()
         }
 
     }
 }
 
+Trashbot.Inventory = []
 
-
-Trashbot.Movement = {
+Trashbot.MovementStrategy = {
     LINEAR: function(trashbot) {
-        trashbot.position.x = trashbot.initial.x - trashbot.position.t
+        trashbot.position.x = trashbot.INITIAL.x - trashbot.position.t
     },
     SINUSOIDAL: function(trashbot, period, amplitude) {
-        trashbot.position.x = trashbot.initial.x - trashbot.position.t
-        trashbot.position.y = trashbot.initial.y - amplitude * Math.sin(2 * Math.PI * trashbot.position.t / period)
+        trashbot.position.x = trashbot.INITIAL.x - trashbot.position.t
+        trashbot.position.y = trashbot.INITIAL.y - amplitude * Math.sin(2 * Math.PI * trashbot.position.t / period)
     },
     TRIANGLE_WAVE: function(trashbot, period, amplitude) {
-        // var floorInterval = Math.floor(trashbot.position.t / amplitude + 1/2)
-        trashbot.position.x = trashbot.initial.x - trashbot.position.t
+        trashbot.position.x = trashbot.INITIAL.x - trashbot.position.t
 
         if (1/4 * period < (trashbot.position.t % period) && (trashbot.position.t % period) <= 3/4 * period) {
             trashbot.position.y += amplitude / (period / 4)
@@ -91,9 +93,34 @@ Trashbot.Movement = {
         period = period / 2
         var baseT = Math.floor(trashbot.position.t / period) * period
         if ((baseT / period) % 2 === 0) {
-            trashbot.position.x = trashbot.initial.x - trashbot.position.t + baseT/2
+            trashbot.position.x = trashbot.INITIAL.x - trashbot.position.t + baseT/2
         }
-
+    },
+    MOVE_TO_POSITION: function(trashbot, period) {
+        if (trashbot.position.t < period) {
+            trashbot.position.x = trashbot.INITIAL.x - trashbot.position.t
+        }
     }
 
+}
+
+Trashbot.ShootStrategy = {
+    INTERVAL: function(trashbot, period) {
+        period = period / 2
+        var baseT = Math.floor(trashbot.position.t / period) * period
+        if ((baseT / period) % 2 === 0) {
+            this.fired = false
+        } else if (this.fired === false) {
+            this.fired = true
+            var target = Junkership.Inventory[Utility.randomNumber(0, Junkership.Inventory.length - 1)]
+            trashbot.fire(target)
+        }
+    },
+    RANDOM: function(trashbot, period) {
+        var random = Utility.randomNumber(0, period / 2)
+        if (random === 0) {
+            var target = Junkership.Inventory[Utility.randomNumber(0, Junkership.Inventory.length - 1)]
+            trashbot.fire(target)
+        }
+    }
 }

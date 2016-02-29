@@ -1,10 +1,11 @@
 var Pixi = require("pixi.js")
 var Keyb = require("keyb")
+var Utility = require("./Utility")
 
 import Reference from "./Reference.js"
 import Projectile from "./Projectile.js"
 import Score from "./Score.js"
-import {PeaShoota, PowerUp, TriShoota, FiveShoota, RapidFire, SprayShot,SuperSprayShot, CrazySprayShot, VertSprayShot, VertShoota, RapidSprayShot, BFG} from "./PowerUp.js"
+import {PowerUp, PeaShoota, TriShoota, FiveShoota, RapidFire, RapidSprayShot, SprayShot, SuperSprayShot, CrazySprayShot, VertSprayShot, VertShoota, BFG} from "./PowerUp.js"
 
 
 export default class Junkership extends Pixi.Sprite {
@@ -20,9 +21,10 @@ export default class Junkership extends Pixi.Sprite {
             this.y + 1 , // Top offset
             this.width - 3 , // Right offset + left offset
             this.height - 3 )// Bottom offset + top offset
-        this.WeaponList = [PeaShoota, TriShoota, FiveShoota, RapidFire, SprayShot, SuperSprayShot, CrazySprayShot, VertSprayShot, VertShoota, RapidSprayShot, BFG]
+        this.WeaponList = [PeaShoota, TriShoota, FiveShoota, RapidFire, RapidSprayShot, SprayShot, SuperSprayShot, CrazySprayShot, VertSprayShot, VertShoota, BFG]
+        Junkership.Inventory.push(this)
     }
-    
+
     update(delta) {
         // Ugly kludge
         if (this.width === 1) {
@@ -82,12 +84,31 @@ export default class Junkership extends Pixi.Sprite {
                 }
             }
         }
+
+        var killedBy
+        var enemyProjectile
+        for(var i = 0; i < Projectile.EnemyInventory.length; i++ ) {
+            enemyProjectile = Projectile.EnemyInventory[i]
+            if (Utility.hasCollision(this, enemyProjectile)) {
+                killedBy = enemyProjectile
+                enemyProjectile.onCollision(this)
+                break
+            }
+        }
+        if (killedBy) {
+            this.onCollision(killedBy)
+        }
     }
-    
+
     onCollision(collidedWith) {
-        game.removeChild(this)
         this.score.reset()
         this.destroy()
+    }
+
+    destroy() {
+        game.removeChild(this)
+        Junkership.Inventory.splice(Junkership.Inventory.indexOf(this), 1)
+        super.destroy()
         game.playerCount--
     }
 
@@ -113,3 +134,5 @@ export default class Junkership extends Pixi.Sprite {
         this.powerUp = new this.WeaponList[newPowerUp]
     }
 }
+
+Junkership.Inventory = []

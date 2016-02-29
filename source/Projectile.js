@@ -4,7 +4,7 @@ var Victor = require("victor")
 
 export default class Projectile extends Pixi.Sprite {
 
-  constructor(x, y, vector, shotBy, bulletSpeed, projectileType) {
+  constructor(x, y, vector, shotBy, bulletSpeed, projectileType, friendly) {
       super(PIXI.loader.resources.projectile.texture)
       this.x = x
       this.y = y
@@ -13,7 +13,12 @@ export default class Projectile extends Pixi.Sprite {
       this.bulletSpeed = bulletSpeed
       this.shotBy = shotBy
       this.projectileType = projectileType
-      console.log("Creating projectile")
+      this.friendly = (friendly === undefined) ? true : friendly
+      if (this.friendly) {
+          Projectile.FriendlyInventory.push(this)
+      } else {
+          Projectile.EnemyInventory.push(this)
+      }
   }
 
   update(delta) {
@@ -22,20 +27,25 @@ export default class Projectile extends Pixi.Sprite {
 
       if (this.position.x < 0 || this.position.x > Reference.GAME_WIDTH ||
           this.position.y < 0 || this.position.y > Reference.GAME_HEIGHT) {
-          console.log("Destroying projectile")
-          game.removeChild(this)
           this.destroy()
       }
   }
 
 
   onCollision(collidedWith) {
-      game.removeChild(this)
       this.destroy()
-      console.log("hit")
   }
 
-
-
-
+  destroy() {
+      game.removeChild(this)
+      if (this.friendly) {
+          Projectile.FriendlyInventory.splice(Projectile.FriendlyInventory.indexOf(this), 1)
+      } else {
+          Projectile.EnemyInventory.splice(Projectile.EnemyInventory.indexOf(this), 1)
+      }
+      super.destroy()
+  }
 }
+
+Projectile.FriendlyInventory = []
+Projectile.EnemyInventory = []
