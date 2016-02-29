@@ -22,7 +22,7 @@ export default class Junk extends Pixi.Sprite {
                 var junkership = Junkership.Inventory[i]
                 if (Utility.hasCollision(this, junkership)) {
                     junkership.score.incrementScore()
-                    var weaponIndex = Utility.randomNumber(0,child.WeaponList.length - 1)
+                    var weaponIndex = Utility.randomNumber(0, junkership.WeaponList.length - 1)
                     junkership.changePowerUp(weaponIndex)
                     this.destroy()
                     break
