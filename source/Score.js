@@ -1,11 +1,12 @@
 var $ = require("jquery")
 import Reference from "./Reference.js"
+import Junkership from "./Junkership.js"
 
 
 export default class Score {
     constructor(playerNumber) {
         this.count = 0
-        this.playerNumber = (playerNumber === undefined) ? game.playerCount : playerNumber
+        this.playerNumber = playerNumber
         this.domElement = $("#p" + this.playerNumber + "-score")
         this.update()
     }

@@ -5,14 +5,17 @@ var Utility = require("./Utility")
 import Reference from "./Reference.js"
 import Projectile from "./Projectile.js"
 import Score from "./Score.js"
-import {PowerUp, PeaShoota, TriShoota, FiveShoota, RapidFire, RapidSprayShot, SprayShot, SuperSprayShot, CrazySprayShot, VertSprayShot, VertShoota, BFG} from "./PowerUp.js"
+import {PowerUp, PeaShoota, TriShoota, FiveShoota, RapidFire, RapidSprayShot,
+    SprayShot, SuperSprayShot, CrazySprayShot, VertSprayShot,
+    VertShoota, BFG} from "./PowerUp.js"
 
 
 export default class Junkership extends Pixi.Sprite {
     constructor(controlSet) {
         super(checkTex())
+        Junkership.Inventory.push(this)
         this.speed = 60
-        this.score = new Score()
+        this.score = new Score(Junkership.Inventory.length)
         this.powerUp = new PeaShoota()
         this.reloadTime = 0
         this.controls = Reference.ControlScheme.keys[controlSet]
@@ -21,8 +24,9 @@ export default class Junkership extends Pixi.Sprite {
             this.y + 1 , // Top offset
             this.width - 3 , // Right offset + left offset
             this.height - 3 )// Bottom offset + top offset
-        this.WeaponList = [PeaShoota, TriShoota, FiveShoota, RapidFire, RapidSprayShot, SprayShot, SuperSprayShot, CrazySprayShot, VertSprayShot, VertShoota, BFG]
-        Junkership.Inventory.push(this)
+        this.WeaponList = [PeaShoota, TriShoota, FiveShoota, RapidFire,
+            RapidSprayShot, SprayShot, SuperSprayShot,
+            CrazySprayShot, VertSprayShot, VertShoota, BFG]
     }
 
     update(delta) {
