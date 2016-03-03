@@ -16,20 +16,23 @@ export default class Junk extends Pixi.Sprite {
 
     update(delta) {
         if (Date.now() - this.spawnTime >= Reference.TIME_TO_DESPAWN) {
-            game.removeChild(this)
             this.destroy()
-        } else
-            game.children.forEach((child) => {
-                if (child instanceof Junkership) {
-                    if (Utility.hasCollision(this, child)) {
-                        game.removeChild(this)
-                        this.destroy()
-                        child.score.incrementScore()
-                        var weapNum = Utility.randomNumber(0,child.WeaponList.length - 1)
-                        console.log(weapNum)
-                        child.changePowerUp(weapNum)
-                    }
+        } else {
+            for(var i = 0; i < Junkership.Inventory.length; i++) {
+                var junkership = Junkership.Inventory[i]
+                if (Utility.hasCollision(this, junkership)) {
+                    junkership.score.incrementScore()
+                    var weaponIndex = Utility.randomNumber(0, junkership.WeaponList.length - 1)
+                    junkership.changePowerUp(weaponIndex)
+                    this.destroy()
+                    break
                 }
-            })
+            }
+        }
+    }
+
+    destroy() {
+        game.removeChild(this)
+        super.destroy()
     }
 }
