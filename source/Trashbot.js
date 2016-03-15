@@ -1,6 +1,5 @@
 var Pixi = require("pixi.js")
 var Utility = require("./Utility")
-
 import Reference from "./Reference.js"
 import Projectile from "./Projectile.js"
 import Junkership from "./Junkership.js"
@@ -58,6 +57,7 @@ export default class Trashbot extends Pixi.Sprite {
         game.removeChild(this)
         Trashbot.Inventory.splice(Trashbot.Inventory.indexOf(this), 1)
         super.destroy()
+        delete this.position
         game.untilJunk(finalPosition.x, finalPosition.y)
     }
 
@@ -117,7 +117,7 @@ Trashbot.ShootStrategy = {
         }
     },
     RANDOM: function(trashbot, period) {
-        var random = Utility.randomNumber(0, period / 2)
+        var random = Utility.randomNumber(0, period)
         if (random === 0) {
             var target = Junkership.Inventory[Utility.randomNumber(0, Junkership.Inventory.length - 1)]
             trashbot.fire(target)

@@ -34,6 +34,12 @@ module.exports.TRASHBOT = {
 module.exports.DIFFICULTY = [
     {
         HEALTH_MULTIPLIER: 1,
-        SPAWN_INTERVAL: 5
+        SPAWN_WAVE: {
+            INTERVAL: 5,
+            MAX_HEIGHT: 6,
+            MAX_WIDTH: 7,
+            MAX_WAVES: 2
+        },
+
     }
 ]
