@@ -20,13 +20,16 @@ var loop = new Afloop(function(delta) {
     game.children.forEach((child) => {
         child.update(delta)
     })
+    game.waves.forEach((wave) => {
+        wave.update(delta)
+    })
     if (Junkership.Inventory.length < Reference.MAX_PLAYERS) {
         game.checkPlayerSpawn()
     }
     renderer.render(game)
 
     game.spawnWaveInterval += delta
-    if (game.spawnWaveInterval >= game.difficulty.SPAWN_INTERVAL) {
+    if (game.spawnWaveInterval >= game.difficulty.SPAWN_WAVE.INTERVAL) {
         game.spawnWave()
         game.spawnWaveInterval = 0
     }
