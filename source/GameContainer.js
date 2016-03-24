@@ -1,5 +1,7 @@
 var Pixi = require("pixi.js")
 var Keyb = require("keyb")
+
+import Pads from "./Pads.js"
 import Junkership from "./Junkership.js"
 import SpawnWave from "./SpawnWave.js"
 import Reference from "./Reference.js"
@@ -46,7 +48,12 @@ export default class GameContainer extends Pixi.Container {
                 Keyb.isDown(Reference.ControlScheme.keys[i].fire))) {
                 Reference.ControlScheme.keys[i].inUse = true
 
-                game.addChild(new Junkership(i))
+                game.addChild(new Junkership(true, i))
+            }
+        }
+        for (var i = 0; i < Pads.gamepads.length; i++) {
+            if (Pads.gamepads[i]) {
+                // TODO Check for Gamepad input, spawn accordingly
             }
         }
     }

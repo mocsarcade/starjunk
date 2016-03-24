@@ -2,6 +2,7 @@ var Pixi = require("pixi.js")
 var Keyb = require("keyb")
 var Utility = require("./Utility")
 
+import Controls from "./Controls.js"
 import Reference from "./Reference.js"
 import Projectile from "./Projectile.js"
 import Score from "./Score.js"
@@ -11,14 +12,15 @@ import {PowerUp, PeaShoota, TriShoota, FiveShoota, RapidFire, RapidSprayShot,
 
 
 export default class Junkership extends Pixi.Sprite {
-    constructor(controlSet) {
+    constructor(usesKeyb, controlIndex) {
         super(checkTex())
         Junkership.Inventory.push(this)
         this.speed = 60
         this.score = new Score(Junkership.Inventory.length)
         this.powerUp = new PeaShoota()
         this.reloadTime = 0
-        this.controls = Reference.ControlScheme.keys[controlSet]
+        this.usesKeyb = usesKeyb
+        this.controlIndex = controlIndex
         this.hitBox = new Pixi.Rectangle(
             this.x + 1 , // Left offset
             this.y + 1 , // Top offset
@@ -32,48 +34,49 @@ export default class Junkership extends Pixi.Sprite {
     update(delta) {
         var relativeSpeed = this.speed * delta
 
-        if (Keyb.isJustDown(this.controls.up)) {
+
+        if (Controls.justDown(this.usesKeyb, this.controlIndex, "up")) {
             this.ignoreY = "down"
         }
-        if (Keyb.isJustDown(this.controls.down)) {
+        if (Controls.justDown(this.usesKeyb, this.controlIndex, "down")) {
             this.ignoreY = "up"
         }
-        if (Keyb.isJustDown(this.controls.left)) {
+        if (Controls.justDown(this.usesKeyb, this.controlIndex, "left")) {
             this.ignoreX = "right"
         }
-        if (Keyb.isJustDown(this.controls.right)) {
+        if (Controls.justDown(this.usesKeyb, this.controlIndex, "right")) {
             this.ignoreX = "left"
         }
-        if (Keyb.isJustUp(this.controls.up)
-            || Keyb.isJustUp(this.controls.down)) {
+        if (Controls.justUp(this.usesKeyb, this.controlIndex, "up")
+            || Controls.justUp(this.usesKeyb, this.controlIndex, "down")) {
             this.ignoreY = null
         }
-        if (Keyb.isJustUp(this.controls.left)
-            || Keyb.isJustUp(this.controls.right)) {
+        if (Controls.justUp(this.usesKeyb, this.controlIndex, "left")
+            || Controls.justUp(this.usesKeyb, this.controlIndex, "right")) {
             this.ignoreX = null
         }
-        if(Keyb.isDown(this.controls.up)
+        if(Controls.isDown(this.usesKeyb, this.controlIndex, "up")
            && this.ignoreY != "up") {
             this.move(-relativeSpeed, "y")
         }
-        if(Keyb.isDown(this.controls.down)
+        if(Controls.isDown(this.usesKeyb, this.controlIndex, "down")
            && this.ignoreY != "down") {
             this.move(relativeSpeed, "y")
         }
-        if(Keyb.isDown(this.controls.left)
+        if(Controls.isDown(this.usesKeyb, this.controlIndex, "left")
            && this.ignoreX != "left") {
             this.move(-relativeSpeed, "x")
         }
-        if(Keyb.isDown(this.controls.right)
+        if(Controls.isDown(this.usesKeyb, this.controlIndex, "right")
            && this.ignoreX != "right") {
             this.move(relativeSpeed, "x")
         }
 
-        if(Keyb.isJustDown(this.controls.fire)) {
+        if(Controls.justDown(this.usesKeyb, this.controlIndex, "fire")) {
             this.powerUp.fire(this)
         }
 
-        if(Keyb.isDown(this.controls.fire)) {
+        if(Controls.isDown(this.usesKeyb, this.controlIndex, "fire")) {
             this.reloadTime += 1
             if(this.powerUp.rapidFire == true) {
                 if(this.reloadTime >= 10) {
@@ -107,7 +110,9 @@ export default class Junkership extends Pixi.Sprite {
 
     onCollision(collidedWith) {
         game.removeChild(this)
-        this.controls.inUse = false
+        if (this.usesKeyb) {
+            Reference.ControlScheme.keys[this.controlIndex].inUse = false
+        }
         this.score.reset()
         this.destroy()
     }
