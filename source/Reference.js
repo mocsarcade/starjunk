@@ -40,6 +40,7 @@ module.exports.DIFFICULTY = [
             MAX_HEIGHT: 8,
             MAX_WIDTH: 8,
             MAX_WAVES: 6,
+            PATTERNS_PER_WAVE: 1
         },
         JUNK_FREQUENCY_RANGE: { lower: 4, upper: 7},
         SCORE_LIMIT: 3
@@ -52,6 +53,7 @@ module.exports.DIFFICULTY = [
             MAX_HEIGHT: 10,
             MAX_WIDTH: 8,
             MAX_WAVES: 20,
+            PATTERNS_PER_WAVE: 3
         },
         JUNK_FREQUENCY_RANGE: { lower: 3, upper: 5},
         SCORE_LIMIT: 1000000

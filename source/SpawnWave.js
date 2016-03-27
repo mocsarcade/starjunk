@@ -18,7 +18,7 @@ export default class SpawnWave {
         this.currentColumn = 0
         this.transition = 0
         this.emptyMatrix()
-        this.fillMatrix()
+        this.randomWave()
         this.TRANSITION_LAPSE = 0.5
     }
 
@@ -59,6 +59,15 @@ export default class SpawnWave {
                 }
             }
         }
+    }
+
+    randomWave() {
+        for (var i = 0; i < game.difficulty.SPAWN_WAVE.PATTERNS_PER_WAVE; i++) {
+            var column = Math.floor(Utility.randomNumber(0, this.width) / 2)
+            var row = Utility.randomNumber(0, this.height)
+            this.addPattern({x: column, y: row})
+        }
+
     }
 
     displayNextColumn(column) {
