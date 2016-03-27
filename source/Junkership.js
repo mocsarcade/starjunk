@@ -2,7 +2,7 @@ var Pixi = require("pixi.js")
 var Keyb = require("keyb")
 var Utility = require("./Utility")
 
-import Controls from "./Controls.js"
+import {ControlScheme} from "./Controls.js"
 import Reference from "./Reference.js"
 import Projectile from "./Projectile.js"
 import Score from "./Score.js"
@@ -12,15 +12,14 @@ import {PowerUp, PeaShoota, TriShoota, FiveShoota, RapidFire, RapidSprayShot,
 
 
 export default class Junkership extends Pixi.Sprite {
-    constructor(usesKeyb, controlIndex) {
+    constructor(cont) {
         super(checkTex())
         Junkership.Inventory.push(this)
         this.speed = 60
         this.score = new Score(Junkership.Inventory.length)
         this.powerUp = new PeaShoota()
         this.reloadTime = 0
-        this.usesKeyb = usesKeyb
-        this.controlIndex = controlIndex
+        this.controls = cont
         this.hitBox = new Pixi.Rectangle(
             this.x + 1 , // Left offset
             this.y + 1 , // Top offset
@@ -35,60 +34,51 @@ export default class Junkership extends Pixi.Sprite {
     update(delta) {
         var relativeSpeed = this.speed * delta
 
-
-        if (this.usesKeyb && Controls.justDown(this.usesKeyb, this.controlIndex, "up")) {
+        if (this.controls.justDown("up")) {
             this.ignoreY = "down"
         }
-        if (this.usesKeyb && Controls.justDown(this.usesKeyb, this.controlIndex, "down")) {
+        if (this.controls.justDown("down")) {
             this.ignoreY = "up"
         }
-        if (this.usesKeyb && Controls.justDown(this.usesKeyb, this.controlIndex, "left")) {
+        if (this.controls.justDown("left")) {
             this.ignoreX = "right"
         }
-        if (this.usesKeyb && Controls.justDown(this.usesKeyb, this.controlIndex, "right")) {
+        if (this.controls.justDown("right")) {
             this.ignoreX = "left"
         }
-        if (this.usesKeyb && (Controls.justUp(this.usesKeyb, this.controlIndex, "up")
-            || Controls.justUp(this.usesKeyb, this.controlIndex, "down"))) {
+        if (this.controls.justUp("up") || this.controls.justUp("down")) {
             this.ignoreY = null
         }
-        if (this.usesKeyb && (Controls.justUp(this.usesKeyb, this.controlIndex, "left")
-            || Controls.justUp(this.usesKeyb, this.controlIndex, "right"))) {
+        if (this.controls.justUp("left") || this.controls.justUp("right")) {
             this.ignoreX = null
         }
-        if(Controls.isDown(this.usesKeyb, this.controlIndex, "up")
-           && this.ignoreY != "up") {
+        if(this.controls.isDown("up") && this.ignoreY != "up") {
             this.move(-relativeSpeed, "y")
         }
-        if(Controls.isDown(this.usesKeyb, this.controlIndex, "down")
-           && this.ignoreY != "down") {
+        if(this.controls.isDown("down") && this.ignoreY != "down") {
             this.move(relativeSpeed, "y")
         }
-        if(Controls.isDown(this.usesKeyb, this.controlIndex, "left")
-           && this.ignoreX != "left") {
+        if(this.controls.isDown("left") && this.ignoreX != "left") {
             this.move(-relativeSpeed, "x")
         }
-        if(Controls.isDown(this.usesKeyb, this.controlIndex, "right")
-           && this.ignoreX != "right") {
+        if(this.controls.isDown("right") && this.ignoreX != "right") {
             this.move(relativeSpeed, "x")
         }
-        if (this.usesKeyb) {
-            if(Controls.justDown(this.usesKeyb, this.controlIndex, "fire")) {
+        if (this.controls.type == "keyb") {
+            if(this.controls.justDown("fire")) {
                 this.powerUp.fire(this)
             }
         } else {
-            if (this.justFired
-                && !Controls.isDown(this.usesKeyb, this.controlIndex, "fire")) {
+            if (this.justFired && !this.controls.isDown("fire")) {
                 this.justFired = false
             }
-            if (!this.justFired
-                && Controls.isDown(this.usesKeyb, this.controlIndex, "fire")) {
+            if (!this.justFired && this.controls.isDown("fire")) {
                 this.justFired = true
                 this.powerUp.fire(this)
             }
         }
 
-        if(Controls.isDown(this.usesKeyb, this.controlIndex, "fire")) {
+        if(this.controls.isDown("fire")) {
             this.reloadTime += 1
             if(this.powerUp.rapidFire == true) {
                 if(this.reloadTime >= 10) {
@@ -121,17 +111,16 @@ export default class Junkership extends Pixi.Sprite {
     }
 
     onCollision(collidedWith) {
-        game.removeChild(this)
-        if (this.usesKeyb) {
-            Controls.ControlScheme.keys[this.controlIndex].inUse = false
-        } else {
-            Controls.ControlScheme.padsInUse[this.controlIndex] = false
-        }
-        this.score.reset()
         this.destroy()
     }
 
     destroy() {
+        if (this.controls.type == "keyb") {
+            ControlScheme.keys[this.controls.index].inUse = false
+        } else {
+            ControlScheme.padsInUse[this.controls.index] = false
+        }
+        this.score.reset()
         game.removeChild(this)
         Junkership.Inventory.splice(Junkership.Inventory.indexOf(this), 1)
         super.destroy()

@@ -7,7 +7,8 @@ import Reference from "./Reference.js"
 import Textures from "./Textures.js"
 import Junk from "./Junk.js"
 import Utility from "./Utility.js"
-import Controls from "./Controls.js"
+import {ControlScheme, controlTypeCount, padCont, keybCont, keybArray, padArray,
+    isDown, justdown, justUp} from "./Controls.js"
 
 export default class GameContainer extends Pixi.Container {
     constructor() {
@@ -40,29 +41,29 @@ export default class GameContainer extends Pixi.Container {
     }
 
     checkPlayerSpawn() {
-        for (var i = 0; i < Controls.controlTypeCount; i++) {
-            if (!Controls.ControlScheme.keys[i].inUse && (
-                Controls.isDown(true, i, "up") ||
-                Controls.isDown(true, i, "down") ||
-                Controls.isDown(true, i, "left") ||
-                Controls.isDown(true, i, "right") ||
-                Controls.isDown(true, i, "fire"))) {
-                Controls.ControlScheme.keys[i].inUse = true
+        for (var i = 0; i < controlTypeCount; i++) {
+            if (!ControlScheme.keys[i].inUse && (
+                keybArray[i].isDown("up") ||
+                keybArray[i].isDown("down") ||
+                keybArray[i].isDown("left") ||
+                keybArray[i].isDown("right") ||
+                keybArray[i].isDown("fire"))) {
+                ControlScheme.keys[i].inUse = true
 
-                game.addChild(new Junkership(true, i))
+                game.addChild(new Junkership(keybArray[i]))
             }
         }
         for (var i = 0; i < this.gamepads.length; i++) {
             if (this.gamepads[i]) {
-                if (!Controls.ControlScheme.padsInUse[i] && (
-                    Controls.isDown(false, i, "up") ||
-                    Controls.isDown(false, i, "down") ||
-                    Controls.isDown(false, i, "left") ||
-                    Controls.isDown(false, i, "right") ||
-                    Controls.isDown(false, i, "fire"))) {
+                if (!ControlScheme.padsInUse[i] && (
+                    padArray[i].isDown("up") ||
+                    padArray[i].isDown("down") ||
+                    padArray[i].isDown("left") ||
+                    padArray[i].isDown("right") ||
+                    padArray[i].isDown("fire"))) {
 
-                    Controls.ControlScheme.padsInUse[i] = true
-                    game.addChild(new Junkership(false, i))
+                    ControlScheme.padsInUse[i] = true
+                    game.addChild(new Junkership(padArray[i]))
                 }
             }
         }
