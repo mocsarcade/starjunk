@@ -1,5 +1,5 @@
-module.exports.GAME_WIDTH = 230
-module.exports.GAME_HEIGHT = 130
+module.exports.GAME_WIDTH = 480
+module.exports.GAME_HEIGHT = 270
 module.exports.JOIN_GAME_TEXT = "PRESS TO JOIN"
 module.exports.TIME_TO_DESPAWN = 5 * 1000
 module.exports.MAX_PLAYERS = 4
@@ -25,10 +25,10 @@ module.exports.TRASHBOT = {
         TANK: 2
     },
     MOVEMENT: {
-        SPEED: 60,
-        RAGE_MULTIPLIER: 1.5,
+        SPEED: 80,
+        RAGE_MULTIPLIER: 1.75,
         AMPLITUDE: 15,
-        PERIOD: 100
+        PERIOD: 150
     }
 }
 module.exports.DIFFICULTY = [

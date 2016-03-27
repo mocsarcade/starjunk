@@ -8,8 +8,8 @@ import Junk from "./Junk.js"
 export default class Trashbot extends Pixi.Sprite {
     constructor(position, speed, health, texture) {
         super(texture)
-        this.speed = 60
         this.health = health * game.difficulty.HEALTH_MULTIPLIER
+        this.speed =  Reference.TRASHBOT.MOVEMENT.SPEED
         this.position = position
         this.position.t = 0
         this.INITIAL = {

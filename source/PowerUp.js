@@ -7,7 +7,7 @@ import Projectile from "./Projectile.js"
 
 export default class PowerUp {
     constructor() {
-        this.bulletSpeed = 1
+        this.bulletSpeed = 1.75
         this.projectileType = "bullet"
         this.kickbackFactor = -160
     }
@@ -21,7 +21,7 @@ export class PeaShoota extends PowerUp {
       constructor() {
           super()
           this.vector = new Victor(1,0)
-          this.bulletSpeed = 1
+          this.bulletSpeed = 1.75
           this.projectileType = "bullet"
       }
 
@@ -38,7 +38,7 @@ export class TriShoota extends PowerUp {
       constructor() {
           super()
           this.vector = new Victor(1,0)
-          this.bulletSpeed = 1
+          this.bulletSpeed = 1.75
           this.projectileType = "bullet"
       }
 
@@ -63,7 +63,7 @@ export class FiveShoota extends PowerUp {
       constructor() {
           super()
           this.vector = new Victor(1,0)
-          this.bulletSpeed = 1
+          this.bulletSpeed = 1.75
           this.projectileType = "bullet"
       }
 
@@ -97,7 +97,7 @@ export class RapidFire extends PowerUp {
       constructor() {
           super()
           this.vector = new Victor(1,0)
-          this.bulletSpeed = 2
+          this.bulletSpeed = 3
           this.projectileType = "bullet"
           this.rapidFire = true
       }
@@ -119,7 +119,7 @@ export class RapidSprayShot extends PowerUp {
           this.vector = new Victor(1,0)
           this.vectorBottom = new Victor(1,0.25)
           this.vectorTop = new Victor(1,-0.25)
-          this.bulletSpeed = 1
+          this.bulletSpeed = 1.75
           this.projectileType = "bullet"
           this.rapidFire = true
 
@@ -157,7 +157,7 @@ export class SprayShot extends PowerUp {
           this.vector = new Victor(1,0)
           this.vectorBottom = new Victor(1,0.25)
           this.vectorTop = new Victor(1,-0.25)
-          this.bulletSpeed = 1
+          this.bulletSpeed = 1.75
           this.projectileType = "bullet"
       }
 
@@ -196,7 +196,7 @@ export class SuperSprayShot extends PowerUp {
           this.vectorTop = new Victor(1,-0.25)
           this.vectorBottom2 = new Victor(1,0.1)
           this.vectorTop2 = new Victor(1,-0.1)
-          this.bulletSpeed = 1
+          this.bulletSpeed = 1.75
           this.projectileType = "bullet"
 
           this.vector.normalize()
@@ -249,7 +249,7 @@ export class CrazySprayShot extends PowerUp {
           this.vector = new Victor(1,0)
           this.vectorBottom = new Victor(1,0)
           this.vectorTop = new Victor(1,0)
-          this.bulletSpeed = 1
+          this.bulletSpeed = 1.75
           this.projectileType = "bullet"
 
       }
@@ -307,7 +307,7 @@ export class VertSprayShot extends PowerUp {
           this.vectorRight2.normalize()
 
 
-          this.bulletSpeed = 1
+          this.bulletSpeed = 1.75
           this.projectileType = "bullet"
       }
 
@@ -353,7 +353,7 @@ export class VertShoota extends PowerUp {
           super()
           this.vectorDown = new Victor(0,1)
           this.vectorUp = new Victor(0,-1)
-          this.bulletSpeed = 1
+          this.bulletSpeed = 1.75
           this.projectileType = "bullet"
       }
 
@@ -377,7 +377,7 @@ export class BFG extends PowerUp {
       constructor() {
           super()
           this.vector = new Victor(1,0)
-          this.bulletSpeed = 2
+          this.bulletSpeed = 3
           this.projectileType = "bullet"
           this.BFGrapid = true
       }

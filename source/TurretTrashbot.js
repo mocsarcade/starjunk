@@ -13,7 +13,7 @@ export default class TurretTrashbot extends Trashbot {
         this.movement = Trashbot.MovementStrategy.MOVE_TO_POSITION
         this.shoot = shootStyle
         this.bullets = 2
-        this.bulletSpeed = 1.25
+        this.bulletSpeed = 1.8
     }
 
     update(delta) {

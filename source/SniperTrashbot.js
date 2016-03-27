@@ -13,7 +13,7 @@ export default class SniperTrashbot extends Trashbot {
         this.movement = movementStyle
         this.shoot = shootStyle
         this.bullets = 1
-        this.bulletSpeed = 1.25
+        this.bulletSpeed = 1.6
     }
 
     update(delta) {
