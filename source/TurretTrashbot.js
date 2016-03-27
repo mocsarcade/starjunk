@@ -11,7 +11,7 @@ export default class TurretTrashbot extends Trashbot {
             Reference.TRASHBOT.HEALTH.TURRET,
             PIXI.loader.resources.turretTrashbot.texture)
         this.movement = Trashbot.MovementStrategy.MOVE_TO_POSITION
-        this.shoot = shootStyle
+        this.shoot = (shootStyle === undefined) ? Trashbot.ShootStrategy.INTERVAL : shootStyle
         this.bullets = 2
         this.bulletSpeed = 1.8
     }

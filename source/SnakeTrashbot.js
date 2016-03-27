@@ -10,7 +10,7 @@ export default class SnakeTrashbot extends Trashbot {
             Reference.TRASHBOT.HEALTH.SNAKE,
             PIXI.loader.resources.snakeTrashbot.texture
         )
-        this.movement = movementStyle
+        this.movement = (movementStyle === undefined) ? Trashbot.MovementStrategy.SINUSOIDAL : movementStyle
     }
 
     update(delta) {

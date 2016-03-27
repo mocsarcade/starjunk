@@ -100,16 +100,31 @@ export default class SpawnWave {
 
 SpawnWave.Patterns = [
     [
-        [{type: "Snake", movement: Move.SINUSOIDAL}, {type: "Snake", movement: Move.SINUSOIDAL}, {type: "Snake", movement: Move.SINUSOIDAL}]
+        [{type: "Snake"}, {type: "Snake"}, {type: "Snake"}]
     ],
     [
-        [{type: "Turret", shoot: Shoot.INTERVAL}, {type: null}]
+        [{type: "Snake"}, {type: "Snake"}, {type: "Snake"}, {type: "Snake"}, {type: "Snake"}]
     ],
     [
-        [{type: "Sniper", movement: Move.MOVE_STOP, shoot: Shoot.RANDOM}]
+        [{type: "Snake"}, {type: "Snake"}, {type: "Snake"}],
+        [{type: "Snake"}, {type: "Snake"}, {type: "Snake"}]
     ],
     [
-        [{type: "Tank", movement: Move.LINEAR}],
-        [{type: "Tank", movement: Move.LINEAR}]
+        [{type: "Turret"}],
+        [{type: null}],
+        [{type: null}],
+        [{type: "Turret"}]
+    ],
+    [
+        [{type: "Sniper"}],
+        [{type: "Sniper"}]
+    ],
+    [
+        [{type: "Tank"}],
+        [{type: null}],
+        [{type: "Tank"}]
+    ],
+    [
+        [{type: "Tank"}]
     ]
 ]
