@@ -1,7 +1,6 @@
 module.exports.GAME_WIDTH = 230
 module.exports.GAME_HEIGHT = 130
 module.exports.JOIN_GAME_TEXT = "PRESS TO JOIN"
-module.exports.JUNK_FREQUENCY_RANGE = { lower: 5, upper: 10}
 module.exports.TIME_TO_DESPAWN = 5 * 1000
 module.exports.MAX_PLAYERS = 4
 module.exports.MAX_ENEMY_PROJECTILES = 25
@@ -42,5 +41,7 @@ module.exports.DIFFICULTY = [
             MAX_WAVES: 2
         },
 
+        JUNK_FREQUENCY_RANGE: { lower: 4, upper: 7},
+        JUNK_FREQUENCY_RANGE: { lower: 3, upper: 5},
     }
 ]

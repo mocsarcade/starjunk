@@ -23,7 +23,7 @@ export default class SniperTrashbot extends Trashbot {
     }
 
     fire(target) {
-        if (target) {
+        if (target && Projectile.EnemyInventory.length < Reference.MAX_ENEMY_PROJECTILES) {
             var vector = new Victor(target.position.x - this.position.x, target.position.y - this.position.y)
             var bulletDistance = 4
             vector.normalize()
