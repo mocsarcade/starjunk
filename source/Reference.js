@@ -20,9 +20,9 @@ module.exports.controlTypeCount = Object.keys(module.exports.ControlScheme).leng
 module.exports.TRASHBOT = {
     HEALTH: {
         SNAKE: 1,
-        TURRET: 1,
+        TURRET: 2,
         SNIPER: 1,
-        TANK: 2
+        TANK: 4
     },
     MOVEMENT: {
         SPEED: 80,
