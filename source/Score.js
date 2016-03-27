@@ -1,5 +1,4 @@
 var $ = require("jquery")
-import Reference from "./Reference.js"
 import Junkership from "./Junkership.js"
 
 

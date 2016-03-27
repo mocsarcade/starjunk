@@ -5,18 +5,6 @@ module.exports.JUNK_FREQUENCY_RANGE = { lower: 5, upper: 10}
 module.exports.TIME_TO_DESPAWN = 5 * 1000
 module.exports.MAX_PLAYERS = 4
 
-module.exports.ControlScheme = {
-    WASD: 0,
-    NUM_PAD: 1,
-    ARROW_KEYS: 2,
-    keys: {
-        0: {up: "W", down: "S", left: "A", right: "D", fire: "<space>", inUse: false, isKeyb: true},
-        1: {up: "<num-8>", down: "<num-2>", left: "<num-4>", right: "<num-6>", fire: "<num-0>", inUse: false, isKeyb: true},
-        2: {up: "<up>", down: "<down>", left: "<left>", right: "<right>", fire: ".", inUse: false, isKeyb: true},
-    }
-}
-module.exports.controlTypeCount = Object.keys(module.exports.ControlScheme).length -1
-
 module.exports.TRASHBOT = {
     HEALTH: {
         SNAKE: 1,
