@@ -17,4 +17,8 @@ export default class SnakeTrashbot extends Trashbot {
         this.movement(this, Reference.TRASHBOT.MOVEMENT.PERIOD, Reference.TRASHBOT.MOVEMENT.AMPLITUDE)
         super.update(delta)
     }
+
+    respawn() {
+        super.respawn(this.INITIAL.y)
+    }
 }

@@ -16,19 +16,13 @@ export default class Trashbot extends Pixi.Sprite {
             x: position.x,
             y: position.y
         }
-        this.rage = false
+        this.inRage = false
     }
 
     update(delta) {
         this.position.t += this.speed * delta
         if (this.position.x + this.width < 0) {
-            this.position.x = Reference.GAME_WIDTH
-            this.position.y = this.INITIAL.y
-            this.position.t = 0
-            if (!this.rage) {
-                this.rage = true
-                this.speed = this.speed * Reference.TRASHBOT.MOVEMENT.RAGE_MULTIPLIER
-            }
+            this.respawn()
         }
 
         var killedBy
@@ -66,7 +60,21 @@ export default class Trashbot extends Pixi.Sprite {
         if (this.health === 0) {
             this.destroy()
         }
+    }
 
+    respawn(yPosition) {
+        this.position.y = (yPosition === undefined) ? Reference.GAME_HEIGHT * Math.random() : yPosition
+        this.position.x = Reference.GAME_WIDTH
+        this.position.t = 0
+        if (!this.inRage) {
+            this.rage()
+        }
+    }
+
+    rage() {
+        this.inRage = true
+        this.speed = this.speed * Reference.TRASHBOT.MOVEMENT.RAGE_MULTIPLIER
+        this.tint = 0xFF1144
     }
 }
 
