@@ -18,7 +18,7 @@ export default class SpawnWave {
         this.currentColumn = 0
         this.transition = 0
         this.emptyMatrix()
-        this.fillMatrix()
+        this.randomWave()
         this.TRANSITION_LAPSE = 0.5
     }
 
@@ -61,6 +61,15 @@ export default class SpawnWave {
         }
     }
 
+    randomWave() {
+        for (var i = 0; i < game.difficulty.SPAWN_WAVE.PATTERNS_PER_WAVE; i++) {
+            var column = Math.floor(Utility.randomNumber(0, this.width) / 2)
+            var row = Utility.randomNumber(0, this.height)
+            this.addPattern({x: column, y: row})
+        }
+
+    }
+
     displayNextColumn(column) {
         if (Junkership.Inventory.length > 0) {
             var row
@@ -100,16 +109,31 @@ export default class SpawnWave {
 
 SpawnWave.Patterns = [
     [
-        [{type: "Snake", movement: Move.SINUSOIDAL}, {type: "Snake", movement: Move.SINUSOIDAL}, {type: "Snake", movement: Move.SINUSOIDAL}]
+        [{type: "Snake"}, {type: "Snake"}, {type: "Snake"}]
     ],
     [
-        [{type: "Turret", shoot: Shoot.INTERVAL}, {type: null}]
+        [{type: "Snake"}, {type: "Snake"}, {type: "Snake"}, {type: "Snake"}, {type: "Snake"}]
     ],
     [
-        [{type: "Sniper", movement: Move.MOVE_STOP, shoot: Shoot.RANDOM}]
+        [{type: "Snake"}, {type: "Snake"}, {type: "Snake"}],
+        [{type: "Snake"}, {type: "Snake"}, {type: "Snake"}]
     ],
     [
-        [{type: "Tank", movement: Move.LINEAR}],
-        [{type: "Tank", movement: Move.LINEAR}]
+        [{type: "Turret"}],
+        [{type: null}],
+        [{type: null}],
+        [{type: "Turret"}]
+    ],
+    [
+        [{type: "Sniper"}],
+        [{type: "Sniper"}]
+    ],
+    [
+        [{type: "Tank"}],
+        [{type: null}],
+        [{type: "Tank"}]
+    ],
+    [
+        [{type: "Tank"}]
     ]
 ]

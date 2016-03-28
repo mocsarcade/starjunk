@@ -9,7 +9,7 @@ export default class TankTrashbot extends Trashbot {
             Reference.TRASHBOT.MOVEMENT.SPEED,
             Reference.TRASHBOT.HEALTH.TANK,
             PIXI.loader.resources.tankTrashbot.texture)
-        this.movement = movementStyle
+        this.movement = (movementStyle === undefined) ? Trashbot.MovementStrategy.LINEAR : movementStyle
     }
 
     update(delta) {

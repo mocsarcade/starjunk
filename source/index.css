@@ -52,7 +52,7 @@ canvas {
     padding: 8em 10em;
     
     [id$=-score] {
-        font-size: 10em;
+        font-size: 7em;
         line-height: 1em;
         text-align: center;
         width: 1.75em;

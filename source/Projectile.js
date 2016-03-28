@@ -5,7 +5,7 @@ var Victor = require("victor")
 export default class Projectile extends Pixi.Sprite {
 
   constructor(x, y, vector, shotBy, bulletSpeed, projectileType, friendly) {
-      super(PIXI.loader.resources.projectile.texture)
+      super()
       this.x = x
       this.y = y
       this.vecX = vector.x
@@ -16,8 +16,10 @@ export default class Projectile extends Pixi.Sprite {
       this.friendly = (friendly === undefined) ? true : friendly
       if (this.friendly) {
           Projectile.FriendlyInventory.push(this)
+          this.texture = PIXI.loader.resources.projectile.texture
       } else {
           Projectile.EnemyInventory.push(this)
+          this.texture = PIXI.loader.resources.enemyProjectile.texture
       }
   }
 
