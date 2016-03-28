@@ -85,8 +85,13 @@ Trashbot.MovementStrategy = {
         trashbot.position.x = trashbot.INITIAL.x - trashbot.position.t
     },
     SINUSOIDAL: function(trashbot, period, amplitude) {
-        trashbot.position.x = trashbot.INITIAL.x - trashbot.position.t
-        trashbot.position.y = trashbot.INITIAL.y - amplitude * Math.sin(2 * Math.PI * trashbot.position.t / period)
+        var xChange = trashbot.INITIAL.x - trashbot.position.t
+        var yChange = trashbot.INITIAL.y - amplitude * Math.sin(2 * Math.PI * trashbot.position.t / period)
+        var xDifference = trashbot.position.x - xChange
+        var yDifference = trashbot.position.y - yChange
+        trashbot.rotation = yDifference / (Math.abs(yDifference) + Math.abs(xDifference)) * Math.PI / 2
+        trashbot.position.x = xChange
+        trashbot.position.y = yChange
     },
     TRIANGLE_WAVE: function(trashbot, period, amplitude) {
         trashbot.position.x = trashbot.INITIAL.x - trashbot.position.t
