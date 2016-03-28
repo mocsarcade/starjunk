@@ -1,6 +1,6 @@
 var $ = require("jquery")
 import Junkership from "./Junkership.js"
-
+import Reference from "./Reference.js"
 
 export default class Score {
     constructor(playerNumber) {
