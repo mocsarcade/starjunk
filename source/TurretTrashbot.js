@@ -11,9 +11,9 @@ export default class TurretTrashbot extends Trashbot {
             Reference.TRASHBOT.HEALTH.TURRET,
             PIXI.loader.resources.turretTrashbot.texture)
         this.movement = Trashbot.MovementStrategy.MOVE_TO_POSITION
-        this.shoot = shootStyle
+        this.shoot = (shootStyle === undefined) ? Trashbot.ShootStrategy.INTERVAL : shootStyle
         this.bullets = 2
-        this.bulletSpeed = 1.25
+        this.bulletSpeed = 1.8
     }
 
     update(delta) {
@@ -23,7 +23,7 @@ export default class TurretTrashbot extends Trashbot {
     }
 
     fire(target) {
-        if (target) {
+        if (target && Projectile.EnemyInventory.length < Reference.MAX_ENEMY_PROJECTILES) {
             var vector = new Victor(target.position.x - this.position.x, target.position.y - this.position.y)
             var bulletDistance = 6
             vector.normalize()

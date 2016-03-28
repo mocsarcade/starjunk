@@ -8,27 +8,21 @@ import Junk from "./Junk.js"
 export default class Trashbot extends Pixi.Sprite {
     constructor(position, speed, health, texture) {
         super(texture)
-        this.speed = 60
-        this.health = health * game.difficulty.HEALTH_MULTIPLIER
+        this.speed =  Reference.TRASHBOT.MOVEMENT.SPEED
+        this.health = Math.floor(health * game.difficulty.HEALTH_MULTIPLIER)
         this.position = position
         this.position.t = 0
         this.INITIAL = {
             x: position.x,
             y: position.y
         }
-        this.rage = false
+        this.inRage = false
     }
 
     update(delta) {
         this.position.t += this.speed * delta
         if (this.position.x + this.width < 0) {
-            this.position.x = Reference.GAME_WIDTH
-            this.position.y = this.INITIAL.y
-            this.position.t = 0
-            if (!this.rage) {
-                this.rage = true
-                this.speed = this.speed * Reference.TRASHBOT.MOVEMENT.RAGE_MULTIPLIER
-            }
+            this.respawn()
         }
 
         var killedBy
@@ -66,7 +60,21 @@ export default class Trashbot extends Pixi.Sprite {
         if (this.health === 0) {
             this.destroy()
         }
+    }
 
+    respawn(yPosition) {
+        this.position.y = (yPosition === undefined) ? Reference.GAME_HEIGHT * Math.random() : yPosition
+        this.position.x = Reference.GAME_WIDTH
+        this.position.t = 0
+        if (!this.inRage) {
+            this.rage()
+        }
+    }
+
+    rage() {
+        this.inRage = true
+        this.speed = this.speed * Reference.TRASHBOT.MOVEMENT.RAGE_MULTIPLIER
+        this.tint = 0xFF1144
     }
 }
 
@@ -77,8 +85,13 @@ Trashbot.MovementStrategy = {
         trashbot.position.x = trashbot.INITIAL.x - trashbot.position.t
     },
     SINUSOIDAL: function(trashbot, period, amplitude) {
-        trashbot.position.x = trashbot.INITIAL.x - trashbot.position.t
-        trashbot.position.y = trashbot.INITIAL.y - amplitude * Math.sin(2 * Math.PI * trashbot.position.t / period)
+        var xChange = trashbot.INITIAL.x - trashbot.position.t
+        var yChange = trashbot.INITIAL.y - amplitude * Math.sin(2 * Math.PI * trashbot.position.t / period)
+        var xDifference = trashbot.position.x - xChange
+        var yDifference = trashbot.position.y - yChange
+        trashbot.rotation = yDifference / (Math.abs(yDifference) + Math.abs(xDifference)) * Math.PI / 2
+        trashbot.position.x = xChange
+        trashbot.position.y = yChange
     },
     TRIANGLE_WAVE: function(trashbot, period, amplitude) {
         trashbot.position.x = trashbot.INITIAL.x - trashbot.position.t

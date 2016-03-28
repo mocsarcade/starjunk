@@ -7,6 +7,7 @@ exports.initTex = function initTex() {
         .add("greenJunkership", require("./images/green-starship.png"))
         .add("blueJunkership", require("./images/blue-starship.png"))
         .add("projectile", require("./images/projectile.png"))
+        .add("enemyProjectile", require("./images/enemy-projectile.png"))
         .add("snakeTrashbot", require("./images/enemy-snake-starship.png"))
         .add("tankTrashbot", require("./images/enemy-tank-starship.png"))
         .add("sniperTrashbot", require("./images/enemy-sniper-starship.png"))

@@ -13,10 +13,10 @@ import {ControlScheme, controlTypeCount, padCont, keybCont, keybArray, padArray,
 export default class GameContainer extends Pixi.Container {
     constructor() {
         super()
-        this.countdownToJunk = Utility.randomNumber(Reference.JUNK_FREQUENCY_RANGE.lower, Reference.JUNK_FREQUENCY_RANGE.upper)
         this.spawnWaveInterval = 0
         this.waves = []
         this.difficulty = Reference.DIFFICULTY[0]
+        this.countdownToJunk = Utility.randomNumber(this.difficulty.JUNK_FREQUENCY_RANGE.lower, this.difficulty.JUNK_FREQUENCY_RANGE.upper)
         Textures.initTex()
         this.gamepads = navigator.getGamepads()
     }
@@ -27,15 +27,15 @@ export default class GameContainer extends Pixi.Container {
 
     spawnWave() {
         if (Junkership.Inventory.length > 0 && this.waves.length < game.difficulty.SPAWN_WAVE.MAX_WAVES) {
-            var height = Utility.randomNumber(1, game.difficulty.SPAWN_WAVE.MAX_HEIGHT)
-            var width = Utility.randomNumber(1, game.difficulty.SPAWN_WAVE.MAX_WIDTH)
+            var height = game.difficulty.SPAWN_WAVE.MAX_HEIGHT
+            var width = game.difficulty.SPAWN_WAVE.MAX_WIDTH
             this.waves.push(new SpawnWave(height, width))
         }
     }
 
     untilJunk(x, y) {
         if (this.countdownToJunk == 0) {
-            this.countdownToJunk = Utility.randomNumber(Reference.JUNK_FREQUENCY_RANGE.lower, Reference.JUNK_FREQUENCY_RANGE.upper)
+            this.countdownToJunk = Utility.randomNumber(this.difficulty.JUNK_FREQUENCY_RANGE.lower, this.difficulty.JUNK_FREQUENCY_RANGE.upper)
             this.addChild(new Junk(x, y))
         } else this.countdownToJunk--
     }

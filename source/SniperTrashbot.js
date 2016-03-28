@@ -10,10 +10,10 @@ export default class SniperTrashbot extends Trashbot {
             Reference.TRASHBOT.MOVEMENT.SPEED,
             Reference.TRASHBOT.HEALTH.SNIPER,
             PIXI.loader.resources.sniperTrashbot.texture)
-        this.movement = movementStyle
-        this.shoot = shootStyle
+        this.movement = (movementStyle === undefined) ? Trashbot.MovementStrategy.MOVE_STOP : movementStyle
+        this.shoot = (shootStyle === undefined) ? Trashbot.ShootStrategy.RANDOM : shootStyle
         this.bullets = 1
-        this.bulletSpeed = 1.25
+        this.bulletSpeed = 1.6
     }
 
     update(delta) {
@@ -23,7 +23,7 @@ export default class SniperTrashbot extends Trashbot {
     }
 
     fire(target) {
-        if (target) {
+        if (target && Projectile.EnemyInventory.length < Reference.MAX_ENEMY_PROJECTILES) {
             var vector = new Victor(target.position.x - this.position.x, target.position.y - this.position.y)
             var bulletDistance = 4
             vector.normalize()
