@@ -1,9 +1,11 @@
-module.exports.GAME_WIDTH = 480
-module.exports.GAME_HEIGHT = 270
+module.exports.GAME_WIDTH = 400
+module.exports.GAME_HEIGHT = 225
 module.exports.JOIN_GAME_TEXT = "PRESS TO JOIN"
 module.exports.TIME_TO_DESPAWN = 5 * 1000
 module.exports.MAX_PLAYERS = 4
 module.exports.MAX_ENEMY_PROJECTILES = 25
+module.exports.NORMAL_BULLET_SPEED = 1.75
+module.exports.FAST_BULLET_SPEED = 3
 
 module.exports.ControlScheme = {
     WASD: 0,
