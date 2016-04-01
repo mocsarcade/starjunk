@@ -17,6 +17,7 @@ mount.insertBefore(renderer.view, mount.firstChild)
 window.game = new GameContainer()
 
 var loop = new Afloop(function(delta) {
+    navigator.getGamepads()
     game.children.forEach((child) => {
         child.update(delta)
     })

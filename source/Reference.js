@@ -7,18 +7,6 @@ module.exports.MAX_ENEMY_PROJECTILES = 25
 module.exports.NORMAL_BULLET_SPEED = 1.75
 module.exports.FAST_BULLET_SPEED = 3
 
-module.exports.ControlScheme = {
-    WASD: 0,
-    NUM_PAD: 1,
-    ARROW_KEYS: 2,
-    keys: {
-        0: {up: "W", down: "S", left: "A", right: "D", fire: "<space>", inUse: false},
-        1: {up: "<num-8>", down: "<num-2>", left: "<num-4>", right: "<num-6>", fire: "<num-0>", inUse: false},
-        2: {up: "<up>", down: "<down>", left: "<left>", right: "<right>", fire: ".", inUse: false}
-    }
-}
-module.exports.controlTypeCount = Object.keys(module.exports.ControlScheme).length -1
-
 module.exports.TRASHBOT = {
     HEALTH: {
         SNAKE: 1,
