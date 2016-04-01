@@ -18,7 +18,7 @@ export default class Junk extends Pixi.Sprite {
         if (Date.now() - this.spawnTime >= Reference.TIME_TO_DESPAWN) {
             this.destroy()
         } else {
-            for(var i = 0; i < Junkership.Inventory.length; i++) {
+            for (var i = 0; i < Junkership.Inventory.length; i++) {
                 var junkership = Junkership.Inventory[i]
                 if (Utility.hasCollision(this, junkership)) {
                     junkership.score.incrementScore()

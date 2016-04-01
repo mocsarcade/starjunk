@@ -16,14 +16,16 @@ var mount = document.getElementById("mount")
 mount.insertBefore(renderer.view, mount.firstChild)
 window.game = new GameContainer()
 
-var loop = new Afloop(function(delta) {
+var loop = new Afloop(function (delta) {
     navigator.getGamepads()
+    game.starfield()
     game.children.forEach((child) => {
         child.update(delta)
     })
     game.waves.forEach((wave) => {
         wave.update(delta)
     })
+
     if (Junkership.Inventory.length < Reference.MAX_PLAYERS) {
         game.checkPlayerSpawn()
     }

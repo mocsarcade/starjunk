@@ -6,6 +6,13 @@ module.exports.MAX_PLAYERS = 4
 module.exports.MAX_ENEMY_PROJECTILES = 25
 module.exports.NORMAL_BULLET_SPEED = 1.75
 module.exports.FAST_BULLET_SPEED = 3
+module.exports.STAR_COUNT = 50
+module.exports.STAR_COLORS = [0xFFFF00, 0x00FFFF, 0x7FFF00, 0xEE82EE, 0xFF69B4] // Yellow Aqua Chartreuse Violet Pink
+module.exports.TIME_TO_STREAK = {
+    lower: 5000,
+    upper: 15000
+}
+
 
 module.exports.TRASHBOT = {
     HEALTH: {
@@ -32,7 +39,10 @@ module.exports.DIFFICULTY = [
             MAX_WAVES: 6,
             PATTERNS_PER_WAVE: 1
         },
-        JUNK_FREQUENCY_RANGE: { lower: 4, upper: 7},
+        JUNK_FREQUENCY_RANGE: {
+            lower: 4,
+            upper: 7
+        },
         SCORE_LIMIT: 3
     },
     {
@@ -45,7 +55,10 @@ module.exports.DIFFICULTY = [
             MAX_WAVES: 20,
             PATTERNS_PER_WAVE: 3
         },
-        JUNK_FREQUENCY_RANGE: { lower: 3, upper: 5},
+        JUNK_FREQUENCY_RANGE: {
+            lower: 3,
+            upper: 5
+        },
         SCORE_LIMIT: 1000000
     }
 ]
