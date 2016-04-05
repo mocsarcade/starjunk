@@ -7,10 +7,10 @@ module.exports.MAX_ENEMY_PROJECTILES = 25
 module.exports.NORMAL_BULLET_SPEED = 1.75
 module.exports.FAST_BULLET_SPEED = 3
 module.exports.STAR_COUNT = 50
-module.exports.STAR_COLORS = [0xFFFF00, 0x00FFFF, 0x7FFF00, 0xEE82EE, 0xFF69B4] // Yellow Aqua Chartreuse Violet Pink
+module.exports.STAR_COLORS = [0xFFFF00, 0x00FFFF, 0x7FFF00] // Yellow Blue Green
 module.exports.TIME_TO_STREAK = {
-    lower: 5000,
-    upper: 15000
+    lower: 7000,
+    upper: 20000
 }
 
 

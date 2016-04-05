@@ -13,6 +13,7 @@ exports.initTex = function initTex() {
         .add("sniperTrashbot", require("./images/enemy-sniper-starship.png"))
         .add("turretTrashbot", require("./images/enemy-turret-starship.png"))
         .add("junk", require("./images/junk.png"))
+        .add("star", require("./images/star.png"))
         .load()
 
     .on("complete", setup)
