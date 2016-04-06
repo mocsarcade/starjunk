@@ -4,7 +4,7 @@ import Reference from "./Reference.js"
 import Utility from "./Utility.js"
 
 export default class StarStreak extends Pixi.Sprite {
-    constructor(parallax) {
+    constructor() {
         super(PIXI.loader.resources.star.texture)
         this.position.x = Math.random() * Reference.GAME_WIDTH
         this.position.y = Math.random() * Reference.GAME_HEIGHT
@@ -20,8 +20,7 @@ export default class StarStreak extends Pixi.Sprite {
         if (this.position.x < -this.width) {
             this.alpha = 1
             if (Date.now() - this.lastStreak >= this.timeToStreak) {
-                this.position.x *= -1
-                this.position.x += Reference.GAME_WIDTH
+                this.position.x = Reference.GAME_WIDTH
                 this.position.y = Math.random() * Reference.GAME_HEIGHT
                 this.tint = Reference.STAR_COLORS[Math.floor(Math.random() * Reference.STAR_COLORS.length)]
                 this.lastStreak = Date.now()

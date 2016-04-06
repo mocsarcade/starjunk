@@ -15,8 +15,7 @@ export default class Star extends Pixi.Sprite {
     update(delta) {
         this.position.x -= this.speed
         if (this.position.x < -this.width) {
-            this.position.x *= -1
-            this.position.x += Reference.GAME_WIDTH
+            this.position.x = Reference.GAME_WIDTH
             this.position.y = Math.random() * Reference.GAME_HEIGHT
         }
     }
