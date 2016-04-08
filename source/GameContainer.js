@@ -9,6 +9,7 @@ import Junk from "./Junk.js"
 import Utility from "./Utility.js"
 import Star from "./Star.js"
 import StarStreak from "./StarStreak.js"
+import Sound from "./Sound.js"
 import {
     ControlScheme, controlTypeCount, padCont, keybCont, keybArray, padArray,
     isDown, justdown, justUp
@@ -65,7 +66,7 @@ export default class GameContainer extends Pixi.Container {
                     keybArray[i].isDown("right") ||
                     keybArray[i].isDown("fire"))) {
                 ControlScheme.keys[i].inUse = true
-
+                Sound.playSFX("spawn")
                 game.addChild(new Junkership(keybArray[i]))
             }
         }
@@ -77,8 +78,8 @@ export default class GameContainer extends Pixi.Container {
                         padArray[i].isDown("left") ||
                         padArray[i].isDown("right") ||
                         padArray[i].isDown("fire"))) {
-
                     ControlScheme.padsInUse[i] = true
+                    Sound.playSFX("spawn")
                     game.addChild(new Junkership(padArray[i]))
                 }
             }
