@@ -6,6 +6,7 @@ import {ControlScheme} from "./Controls.js"
 import Reference from "./Reference.js"
 import Projectile from "./Projectile.js"
 import Score from "./Score.js"
+import Sound from "./Sound.js"
 import {PowerUp, PeaShoota, TriShoota, FiveShoota, RapidFire, RapidSprayShot,
     SprayShot, SuperSprayShot, CrazySprayShot, VertSprayShot,
     VertShoota, BFG} from "./PowerUp.js"
@@ -115,6 +116,7 @@ export default class Junkership extends Pixi.Sprite {
     }
 
     destroy() {
+        Sound.playSFX("bigboom")
         if (this.controls.type == "keyb") {
             ControlScheme.keys[this.controls.index].inUse = false
         } else {

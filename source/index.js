@@ -7,6 +7,7 @@ import Reference from "./Reference.js"
 import Score from "./Score.js"
 import GameContainer from "./GameContainer.js"
 import PowerUp from "./PowerUp.js"
+import Sound from "./Sound.js"
 
 var renderer = Pixi.autoDetectRenderer(Reference.GAME_WIDTH, Reference.GAME_HEIGHT)
 renderer.backgroundColor = 0x222222
@@ -28,6 +29,11 @@ var loop = new Afloop(function (delta) {
 
     if (Junkership.Inventory.length < Reference.MAX_PLAYERS) {
         game.checkPlayerSpawn()
+    }
+    if (Junkership.Inventory.length > 0) {
+        Sound.playBGM()
+    } else {
+        Sound.stopBGM()
     }
     renderer.render(game)
 

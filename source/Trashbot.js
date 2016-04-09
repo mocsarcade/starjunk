@@ -4,6 +4,7 @@ import Reference from "./Reference.js"
 import Projectile from "./Projectile.js"
 import Junkership from "./Junkership.js"
 import Junk from "./Junk.js"
+import Sound from "./Sound.js"
 
 export default class Trashbot extends Pixi.Sprite {
     constructor(position, speed, health, texture) {
@@ -47,6 +48,7 @@ export default class Trashbot extends Pixi.Sprite {
     }
 
     destroy() {
+        Sound.playSFX("smallboom")
         var finalPosition = this.position
         game.removeChild(this)
         Trashbot.Inventory.splice(Trashbot.Inventory.indexOf(this), 1)
@@ -59,6 +61,8 @@ export default class Trashbot extends Pixi.Sprite {
         this.health--
         if (this.health === 0) {
             this.destroy()
+        } else {
+            Sound.playSFX("hit")
         }
     }
 

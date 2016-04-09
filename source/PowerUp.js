@@ -2,13 +2,14 @@ var Pixi = require("pixi.js")
 var Afloop = require("afloop")
 var Keyb = require("keyb")
 var Victor = require("victor")
-import Reference from "./Reference.js"
 
+import Reference from "./Reference.js"
+import Sound from "./Sound.js"
 import Projectile from "./Projectile.js"
 
 export default class PowerUp {
     constructor() {
-        this.bulletSpeed = Reference.NORMAL_BULLET_SPEED 
+        this.bulletSpeed = Reference.NORMAL_BULLET_SPEED
         this.projectileType = "bullet"
         this.kickbackFactor = -160
     }
@@ -22,11 +23,12 @@ export class PeaShoota extends PowerUp {
       constructor() {
           super()
           this.vector = new Victor(1,0)
-          this.bulletSpeed = Reference.NORMAL_BULLET_SPEED 
+          this.bulletSpeed = Reference.NORMAL_BULLET_SPEED
           this.projectileType = "bullet"
       }
 
       fire(curShip) {
+          Sound.playSFX("smallshot")
 
           game.addChild(new Projectile(
               curShip.position.x + curShip.width,
@@ -39,11 +41,13 @@ export class TriShoota extends PowerUp {
       constructor() {
           super()
           this.vector = new Victor(1,0)
-          this.bulletSpeed = Reference.NORMAL_BULLET_SPEED 
+          this.bulletSpeed = Reference.NORMAL_BULLET_SPEED
           this.projectileType = "bullet"
       }
 
       fire(curShip) {
+          Sound.playSFX("bigshot")
+
           game.addChild(new Projectile(
               curShip.position.x + curShip.width,
               curShip.position.y + curShip.height/2,
@@ -64,11 +68,12 @@ export class FiveShoota extends PowerUp {
       constructor() {
           super()
           this.vector = new Victor(1,0)
-          this.bulletSpeed = Reference.NORMAL_BULLET_SPEED 
+          this.bulletSpeed = Reference.NORMAL_BULLET_SPEED
           this.projectileType = "bullet"
       }
 
       fire(curShip) {
+          Sound.playSFX("bigshot")
 
           game.addChild(new Projectile(
               curShip.position.x + curShip.width,
@@ -104,6 +109,7 @@ export class RapidFire extends PowerUp {
       }
 
       fire(curShip) {
+          Sound.playSFX("smallshot")
 
           game.addChild(new Projectile(
               curShip.position.x + curShip.width,
@@ -120,7 +126,7 @@ export class RapidSprayShot extends PowerUp {
           this.vector = new Victor(1,0)
           this.vectorBottom = new Victor(1,0.25)
           this.vectorTop = new Victor(1,-0.25)
-          this.bulletSpeed = Reference.NORMAL_BULLET_SPEED 
+          this.bulletSpeed = Reference.NORMAL_BULLET_SPEED
           this.projectileType = "bullet"
           this.rapidFire = true
 
@@ -130,6 +136,7 @@ export class RapidSprayShot extends PowerUp {
       }
 
         fire(curShip) {
+            Sound.playSFX("bigshot")
 
             game.addChild(new Projectile(
             curShip.position.x + curShip.width,
@@ -158,11 +165,12 @@ export class SprayShot extends PowerUp {
           this.vector = new Victor(1,0)
           this.vectorBottom = new Victor(1,0.25)
           this.vectorTop = new Victor(1,-0.25)
-          this.bulletSpeed = Reference.NORMAL_BULLET_SPEED 
+          this.bulletSpeed = Reference.NORMAL_BULLET_SPEED
           this.projectileType = "bullet"
       }
 
         fire(curShip) {
+            Sound.playSFX("bigshot")
 
             this.vector.normalize()
             this.vectorTop.normalize()
@@ -197,7 +205,7 @@ export class SuperSprayShot extends PowerUp {
           this.vectorTop = new Victor(1,-0.25)
           this.vectorBottom2 = new Victor(1,0.1)
           this.vectorTop2 = new Victor(1,-0.1)
-          this.bulletSpeed = Reference.NORMAL_BULLET_SPEED 
+          this.bulletSpeed = Reference.NORMAL_BULLET_SPEED
           this.projectileType = "bullet"
 
           this.vector.normalize()
@@ -208,6 +216,7 @@ export class SuperSprayShot extends PowerUp {
       }
 
         fire(curShip) {
+            Sound.playSFX("bigshot")
 
             game.addChild(new Projectile(
             curShip.position.x + curShip.width,
@@ -250,12 +259,13 @@ export class CrazySprayShot extends PowerUp {
           this.vector = new Victor(1,0)
           this.vectorBottom = new Victor(1,0)
           this.vectorTop = new Victor(1,0)
-          this.bulletSpeed = Reference.NORMAL_BULLET_SPEED 
+          this.bulletSpeed = Reference.NORMAL_BULLET_SPEED
           this.projectileType = "bullet"
 
       }
 
         fire(curShip) {
+            Sound.playSFX("crazyshot")
 
             this.vector.randomizeY(this.upperBounds,this.lowerBounds)
             this.vectorBottom.randomizeY(this.upperBounds,this.lowerBounds)
@@ -284,9 +294,6 @@ export class CrazySprayShot extends PowerUp {
             curShip.position.y + curShip.height/2,
             this.vectorTop, curShip, this.bulletSpeed, this.projectileType))
         }
-
-
-
 }
 
 export class VertSprayShot extends PowerUp {
@@ -308,11 +315,12 @@ export class VertSprayShot extends PowerUp {
           this.vectorRight2.normalize()
 
 
-          this.bulletSpeed = Reference.NORMAL_BULLET_SPEED 
+          this.bulletSpeed = Reference.NORMAL_BULLET_SPEED
           this.projectileType = "bullet"
       }
 
         fire(curShip) {
+            Sound.playSFX("bigshot")
 
             game.addChild(new Projectile(
             curShip.position.x + curShip.width/2,
@@ -344,9 +352,6 @@ export class VertSprayShot extends PowerUp {
             curShip.position.y + curShip.height/2,
             this.vectorRight2, curShip, this.bulletSpeed, this.projectileType))
         }
-
-
-
 }
 
 export class VertShoota extends PowerUp {
@@ -354,12 +359,12 @@ export class VertShoota extends PowerUp {
           super()
           this.vectorDown = new Victor(0,1)
           this.vectorUp = new Victor(0,-1)
-          this.bulletSpeed = Reference.NORMAL_BULLET_SPEED 
+          this.bulletSpeed = Reference.NORMAL_BULLET_SPEED
           this.projectileType = "bullet"
       }
 
       fire(curShip) {
-
+          Sound.playSFX("smallshot")
 
           game.addChild(new Projectile(
               curShip.position.x + curShip.width/2,
@@ -384,6 +389,7 @@ export class BFG extends PowerUp {
       }
 
       BfgFire(curShip,delta) {
+          Sound.playSFX("BFG")
 
           game.addChild(new Projectile(
               curShip.position.x + curShip.width,

@@ -5,6 +5,7 @@ import Reference from "./Reference.js"
 import Junkership from "./Junkership.js"
 import Trashbot from "./Trashbot.js"
 import Score from "./Score.js"
+import Sound from "./Sound.js"
 
 export default class Junk extends Pixi.Sprite {
     constructor(x, y) {
@@ -21,6 +22,7 @@ export default class Junk extends Pixi.Sprite {
             for (var i = 0; i < Junkership.Inventory.length; i++) {
                 var junkership = Junkership.Inventory[i]
                 if (Utility.hasCollision(this, junkership)) {
+                    Sound.playSFX("getjunk")
                     junkership.score.incrementScore()
                     var weaponIndex = Utility.randomNumber(0, junkership.WeaponList.length - 1)
                     junkership.changePowerUp(weaponIndex)
