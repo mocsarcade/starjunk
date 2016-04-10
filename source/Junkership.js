@@ -9,7 +9,7 @@ import Score from "./Score.js"
 import Sound from "./Sound.js"
 import {PowerUp, PeaShoota, TriShoota, FiveShoota, RapidFire, RapidSprayShot,
     SprayShot, SuperSprayShot, CrazySprayShot, VertSprayShot,
-    VertShoota, BFG} from "./PowerUp.js"
+    VertShoota, BFG, Laser, PiercingLaser, SuperLaser, Mine} from "./PowerUp.js"
 
 
 export default class Junkership extends Pixi.Sprite {
