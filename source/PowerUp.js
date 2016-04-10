@@ -422,7 +422,7 @@ export class Laser extends PowerUp {
       }
 
       fire(curShip) {
-
+          Sound.playSFX("bigshot")
           var laser = new Projectile(
               curShip.position.x + curShip.width,
               curShip.position.y + curShip.height/2, this.vector,
@@ -442,7 +442,7 @@ export class PiercingLaser extends PowerUp {
       }
 
       fire(curShip) {
-
+          Sound.playSFX("bigshot")
           var laser = new Projectile(
               curShip.position.x + curShip.width,
               curShip.position.y + curShip.height/2, this.vector,
@@ -462,6 +462,7 @@ export class SuperLaser extends PowerUp {
       }
 
       fire(curShip) {
+          Sound.playSFX("bigshot")
           var laser2 = new Projectile(
               curShip.position.x + curShip.width,
               curShip.position.y + 10 + curShip.height/2, this.vector,
@@ -496,6 +497,7 @@ export class Mine extends PowerUp {
       }
 
       fire(curShip) {
+          Sound.playSFX("bigshot")
           var mine = new Projectile(
               curShip.position.x + curShip.width,
               curShip.position.y + curShip.height/2, this.vector,
