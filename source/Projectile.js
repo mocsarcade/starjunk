@@ -4,7 +4,7 @@ var Victor = require("victor")
 
 export default class Projectile extends Pixi.Sprite {
 
-  constructor(x, y, vector, shotBy, bulletSpeed, projectileType, friendly) {
+  constructor(x, y, vector, shotBy, bulletSpeed, projectileType, friendly, piercing) {
       super()
       this.x = x
       this.y = y
@@ -13,6 +13,7 @@ export default class Projectile extends Pixi.Sprite {
       this.bulletSpeed = bulletSpeed
       this.shotBy = shotBy
       this.projectileType = projectileType
+      this.piercing = piercing
       this.friendly = (friendly === undefined) ? true : friendly
       if (this.friendly) {
           Projectile.FriendlyInventory.push(this)
@@ -35,7 +36,9 @@ export default class Projectile extends Pixi.Sprite {
 
 
   onCollision(collidedWith) {
-      this.destroy()
+      if(this.piercing != true) {
+          this.destroy()
+      }
   }
 
   destroy() {
