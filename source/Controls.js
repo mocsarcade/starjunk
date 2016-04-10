@@ -100,7 +100,9 @@ export class padCont {
             return (game.gamepads[this.index].buttons[0].pressed ||
                     game.gamepads[this.index].buttons[1].pressed ||
                     game.gamepads[this.index].buttons[2].pressed ||
-                    game.gamepads[this.index].buttons[3].pressed)
+                    game.gamepads[this.index].buttons[3].pressed ||
+                    game.gamepads[this.index].buttons[5].pressed ||
+                    game.gamepads[this.index].buttons[7].pressed)
             break
         default:
             console.log("Invalid padCont isDown call: " + key)
