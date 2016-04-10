@@ -34,7 +34,7 @@ export class PeaShoota extends PowerUp {
           game.addChild(new Projectile(
               curShip.position.x + curShip.width,
               curShip.position.y + curShip.height/2, this.vector,
-              curShip, this.bulletSpeed, this.projectileType, this.piercing))
+              curShip, this.bulletSpeed, this.projectileType, true, this.piercing))
       }
 }
 
@@ -53,15 +53,15 @@ export class TriShoota extends PowerUp {
           game.addChild(new Projectile(
               curShip.position.x + curShip.width,
               curShip.position.y + curShip.height/2,
-              this.vector, curShip, this.bulletSpeed, this.projectileType, this.piercing))
+              this.vector, curShip, this.bulletSpeed, this.projectileType, true, this.piercing))
           game.addChild(new Projectile(
               curShip.position.x + curShip.width,
               curShip.position.y + curShip.height/2 + 3,
-              this.vector, curShip, this.bulletSpeed, this.projectileType, this.piercing))
+              this.vector, curShip, this.bulletSpeed, this.projectileType, true, this.piercing))
           game.addChild(new Projectile(
               curShip.position.x + curShip.width,
               curShip.position.y + curShip.height/2 - 3,
-              this.vector, curShip, this.bulletSpeed, this.projectileType, this.piercing))
+              this.vector, curShip, this.bulletSpeed, this.projectileType, true, this.piercing))
       }
 
 }
@@ -81,23 +81,23 @@ export class FiveShoota extends PowerUp {
           game.addChild(new Projectile(
               curShip.position.x + curShip.width,
               curShip.position.y + curShip.height/2,
-              this.vector, curShip, this.bulletSpeed, this.projectileType, this.piercing))
+              this.vector, curShip, this.bulletSpeed, this.projectileType, true, this.piercing))
           game.addChild(new Projectile(
               curShip.position.x + curShip.width,
               curShip.position.y + curShip.height/2 + 3,
-              this.vector, curShip, this.bulletSpeed, this.projectileType, this.piercing))
+              this.vector, curShip, this.bulletSpeed, this.projectileType, true, this.piercing))
           game.addChild(new Projectile(
               curShip.position.x + curShip.width,
               curShip.position.y + curShip.height/2 - 3,
-              this.vector, curShip, this.bulletSpeed, this.projectileType, this.piercing))
+              this.vector, curShip, this.bulletSpeed, this.projectileType, true, this.piercing))
           game.addChild(new Projectile(
               curShip.position.x + curShip.width,
               curShip.position.y + curShip.height/2 + 6,
-              this.vector, curShip, this.bulletSpeed, this.projectileType, this.piercing))
+              this.vector, curShip, this.bulletSpeed, this.projectileType, true, this.piercing))
           game.addChild(new Projectile(
               curShip.position.x + curShip.width,
               curShip.position.y + curShip.height/2 - 6,
-              this.vector, curShip, this.bulletSpeed, this.projectileType, this.piercing))
+              this.vector, curShip, this.bulletSpeed, this.projectileType, true, this.piercing))
       }
 
 }
@@ -118,7 +118,7 @@ export class RapidFire extends PowerUp {
           game.addChild(new Projectile(
               curShip.position.x + curShip.width,
               curShip.position.y + curShip.height/2,
-              this.vector, curShip, this.bulletSpeed, this.projectileType, this.piercing))
+              this.vector, curShip, this.bulletSpeed, this.projectileType, true, this.piercing))
       }
 
 }
@@ -146,17 +146,17 @@ export class RapidSprayShot extends PowerUp {
             game.addChild(new Projectile(
             curShip.position.x + curShip.width,
             curShip.position.y + curShip.height/2,
-            this.vector, curShip, this.bulletSpeed, this.projectileType, this.piercing))
+            this.vector, curShip, this.bulletSpeed, this.projectileType, true, this.piercing))
 
             game.addChild(new Projectile(
             curShip.position.x + curShip.width,
             curShip.position.y + curShip.height/2,
-            this.vectorTop, curShip, this.bulletSpeed, this.projectileType, this.piercing))
+            this.vectorTop, curShip, this.bulletSpeed, this.projectileType, true, this.piercing))
 
             game.addChild(new Projectile(
             curShip.position.x + curShip.width,
             curShip.position.y + curShip.height/2,
-            this.vectorBottom, curShip, this.bulletSpeed, this.projectileType, this.piercing))
+            this.vectorBottom, curShip, this.bulletSpeed, this.projectileType, true, this.piercing))
         }
 
 
@@ -185,17 +185,17 @@ export class SprayShot extends PowerUp {
             game.addChild(new Projectile(
             curShip.position.x + curShip.width,
             curShip.position.y + curShip.height/2,
-            this.vector, curShip, this.bulletSpeed, this.projectileType, this.piercing))
+            this.vector, curShip, this.bulletSpeed, this.projectileType, true, this.piercing))
 
             game.addChild(new Projectile(
             curShip.position.x + curShip.width,
             curShip.position.y + curShip.height/2,
-            this.vectorTop, curShip, this.bulletSpeed, this.projectileType, this.piercing))
+            this.vectorTop, curShip, this.bulletSpeed, this.projectileType, true, this.piercing))
 
             game.addChild(new Projectile(
             curShip.position.x + curShip.width,
             curShip.position.y + curShip.height/2,
-            this.vectorBottom, curShip, this.bulletSpeed, this.projectileType, this.piercing))
+            this.vectorBottom, curShip, this.bulletSpeed, this.projectileType, true, this.piercing))
         }
 
 
@@ -228,27 +228,27 @@ export class SuperSprayShot extends PowerUp {
             game.addChild(new Projectile(
             curShip.position.x + curShip.width,
             curShip.position.y + curShip.height/2,
-            this.vector, curShip, this.bulletSpeed, this.projectileType, this.piercing))
+            this.vector, curShip, this.bulletSpeed, this.projectileType, true, this.piercing))
 
             game.addChild(new Projectile(
             curShip.position.x + curShip.width,
             curShip.position.y + curShip.height/2,
-            this.vectorBottom, curShip, this.bulletSpeed, this.projectileType, this.piercing))
+            this.vectorBottom, curShip, this.bulletSpeed, this.projectileType, true, this.piercing))
 
             game.addChild(new Projectile(
             curShip.position.x + curShip.width,
             curShip.position.y + curShip.height/2,
-            this.vectorTop, curShip, this.bulletSpeed, this.projectileType, this.piercing))
+            this.vectorTop, curShip, this.bulletSpeed, this.projectileType, true, this.piercing))
 
             game.addChild(new Projectile(
             curShip.position.x + curShip.width,
             curShip.position.y + curShip.height/2,
-            this.vectorBottom2, curShip, this.bulletSpeed, this.projectileType, this.piercing))
+            this.vectorBottom2, curShip, this.bulletSpeed, this.projectileType, true, this.piercing))
 
             game.addChild(new Projectile(
             curShip.position.x + curShip.width,
             curShip.position.y + curShip.height/2,
-            this.vectorTop2, curShip, this.bulletSpeed, this.projectileType, this.piercing))
+            this.vectorTop2, curShip, this.bulletSpeed, this.projectileType, true, this.piercing))
         }
 
 
@@ -290,17 +290,17 @@ export class CrazySprayShot extends PowerUp {
             game.addChild(new Projectile(
             curShip.position.x + curShip.width,
             curShip.position.y + curShip.height/2,
-            this.vector, curShip, this.bulletSpeed, this.projectileType, this.piercing))
+            this.vector, curShip, this.bulletSpeed, this.projectileType, true, this.piercing))
 
             game.addChild(new Projectile(
             curShip.position.x + curShip.width,
             curShip.position.y + curShip.height/2,
-            this.vectorBottom, curShip, this.bulletSpeed, this.projectileType, this.piercing))
+            this.vectorBottom, curShip, this.bulletSpeed, this.projectileType, true, this.piercing))
 
             game.addChild(new Projectile(
             curShip.position.x + curShip.width,
             curShip.position.y + curShip.height/2,
-            this.vectorTop, curShip, this.bulletSpeed, this.projectileType, this.piercing))
+            this.vectorTop, curShip, this.bulletSpeed, this.projectileType, true, this.piercing))
         }
 }
 
@@ -334,32 +334,32 @@ export class VertSprayShot extends PowerUp {
             game.addChild(new Projectile(
             curShip.position.x + curShip.width/2,
             curShip.position.y + curShip.height/2,
-            this.vectorUp, curShip, this.bulletSpeed, this.projectileType, this.piercing))
+            this.vectorUp, curShip, this.bulletSpeed, this.projectileType, true, this.piercing))
 
             game.addChild(new Projectile(
             curShip.position.x + curShip.width/2,
             curShip.position.y + curShip.height/2,
-            this.vectorLeft, curShip, this.bulletSpeed, this.projectileType, this.piercing))
+            this.vectorLeft, curShip, this.bulletSpeed, this.projectileType, true, this.piercing))
 
             game.addChild(new Projectile(
             curShip.position.x + curShip.width/2,
             curShip.position.y + curShip.height/2,
-            this.vectorRight, curShip, this.bulletSpeed, this.projectileType, this.piercing))
+            this.vectorRight, curShip, this.bulletSpeed, this.projectileType, true, this.piercing))
 
             game.addChild(new Projectile(
             curShip.position.x + curShip.width/2,
             curShip.position.y + curShip.height/2,
-            this.vectorDown, curShip, this.bulletSpeed, this.projectileType, this.piercing))
+            this.vectorDown, curShip, this.bulletSpeed, this.projectileType, true, this.piercing))
 
             game.addChild(new Projectile(
             curShip.position.x + curShip.width/2,
             curShip.position.y + curShip.height/2,
-            this.vectorLeft2, curShip, this.bulletSpeed, this.projectileType, this.piercing))
+            this.vectorLeft2, curShip, this.bulletSpeed, this.projectileType, true, this.piercing))
 
             game.addChild(new Projectile(
             curShip.position.x + curShip.width/2,
             curShip.position.y + curShip.height/2,
-            this.vectorRight2, curShip, this.bulletSpeed, this.projectileType, this.piercing))
+            this.vectorRight2, curShip, this.bulletSpeed, this.projectileType, true, this.piercing))
         }
 }
 
@@ -379,12 +379,12 @@ export class VertShoota extends PowerUp {
           game.addChild(new Projectile(
               curShip.position.x + curShip.width/2,
               curShip.position.y + curShip.height/2, this.vectorUp,
-              curShip, this.bulletSpeed, this.projectileType, this.piercing))
+              curShip, this.bulletSpeed, this.projectileType, true, this.piercing))
 
           game.addChild(new Projectile(
               curShip.position.x + curShip.width/2,
               curShip.position.y + curShip.height/2, this.vectorDown,
-              curShip, this.bulletSpeed, this.projectileType, this.piercing))
+              curShip, this.bulletSpeed, this.projectileType, true, this.piercing))
       }
 
 }
@@ -405,7 +405,7 @@ export class BFG extends PowerUp {
           game.addChild(new Projectile(
               curShip.position.x + curShip.width,
               curShip.position.y + curShip.height/2,
-              this.vector, curShip, this.bulletSpeed, this.projectileType, this.piercing))
+              this.vector, curShip, this.bulletSpeed, this.projectileType, true, this.piercing))
 
           curShip.move(this.kickbackFactor*delta, "x")
       }
@@ -426,7 +426,7 @@ export class Laser extends PowerUp {
           var laser = new Projectile(
               curShip.position.x + curShip.width,
               curShip.position.y + curShip.height/2, this.vector,
-              curShip, this.bulletSpeed, this.projectileType, this.piercing)
+              curShip, this.bulletSpeed, this.projectileType, true, this.piercing)
           laser.scale.x = 50
           game.addChild(laser)
       }
@@ -446,7 +446,7 @@ export class PiercingLaser extends PowerUp {
           var laser = new Projectile(
               curShip.position.x + curShip.width,
               curShip.position.y + curShip.height/2, this.vector,
-              curShip, this.bulletSpeed, this.projectileType, this.piercing)
+              curShip, this.bulletSpeed, this.projectileType, true, this.piercing)
           laser.scale.x = Reference.GAME_WIDTH - curShip.position.x
           game.addChild(laser)
       }
@@ -465,21 +465,21 @@ export class SuperLaser extends PowerUp {
           var laser2 = new Projectile(
               curShip.position.x + curShip.width,
               curShip.position.y + 10 + curShip.height/2, this.vector,
-              curShip, this.bulletSpeed, this.projectileType, this.piercing)
+              curShip, this.bulletSpeed, this.projectileType, true, this.piercing)
           laser2.scale.x = Reference.GAME_WIDTH - curShip.position.x
           game.addChild(laser2)
 
           var laser3 = new Projectile(
               curShip.position.x + curShip.width,
               curShip.position.y - 6 + curShip.height/2, this.vector,
-              curShip, this.bulletSpeed, this.projectileType, this.piercing)
+              curShip, this.bulletSpeed, this.projectileType, true, this.piercing)
           laser3.scale.x = Reference.GAME_WIDTH - curShip.position.x
           game.addChild(laser3)
 
           var laser = new Projectile(
               curShip.position.x + curShip.width,
               curShip.position.y + curShip.height/2, this.vector,
-              curShip, this.bulletSpeed, this.projectileType, this.piercing)
+              curShip, this.bulletSpeed, this.projectileType, true, this.piercing)
           laser.scale.x = Reference.GAME_WIDTH - curShip.position.x
           laser.scale.y = 3
           game.addChild(laser)
@@ -499,7 +499,7 @@ export class Mine extends PowerUp {
           var mine = new Projectile(
               curShip.position.x + curShip.width,
               curShip.position.y + curShip.height/2, this.vector,
-              curShip, this.bulletSpeed, this.projectileType, this.piercing)
+              curShip, this.bulletSpeed, this.projectileType, true, this.piercing)
           game.addChild(mine)
       }
 }

@@ -4,7 +4,7 @@ var Victor = require("victor")
 
 export default class Projectile extends Pixi.Sprite {
 
-  constructor(x, y, vector, shotBy, bulletSpeed, projectileType, piercing, friendly) {
+  constructor(x, y, vector, shotBy, bulletSpeed, projectileType, friendly, piercing) {
       super()
       this.x = x
       this.y = y
