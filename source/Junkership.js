@@ -28,7 +28,7 @@ export default class Junkership extends Pixi.Sprite {
             this.height - 3 )// Bottom offset + top offset
         this.WeaponList = [PeaShoota, TriShoota, FiveShoota, RapidFire,
             RapidSprayShot, SprayShot, SuperSprayShot,
-            CrazySprayShot, VertSprayShot, VertShoota, BFG]
+            CrazySprayShot, VertSprayShot, VertShoota, BFG, Laser, PiercingLaser, SuperLaser, Mine]
         this.justFired = false // Only used with gamepad
     }
 
