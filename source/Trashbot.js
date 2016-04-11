@@ -9,6 +9,7 @@ import Sound from "./Sound.js"
 export default class Trashbot extends Pixi.Sprite {
     constructor(position, speed, health, texture) {
         super(texture)
+        Trashbot.Inventory.push(this)
         this.speed =  Reference.TRASHBOT.MOVEMENT.SPEED
         this.health = Math.floor(health * game.difficulty.HEALTH_MULTIPLIER)
         this.position = position

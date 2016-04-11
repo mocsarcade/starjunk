@@ -32,6 +32,7 @@ export default class Junkership extends Pixi.Sprite {
             RapidSprayShot, SprayShot, SuperSprayShot,
             CrazySprayShot, VertSprayShot, VertShoota, BFG]
         this.justFired = false // Only used with gamepad
+        this.createdTime = Date.now()
     }
 
     update(delta) {
@@ -118,14 +119,9 @@ export default class Junkership extends Pixi.Sprite {
     }
 
     destroy() {
-        Sound.playSFX("bigboom")
-        if (this.controls.type == "keyb") {
-            ControlScheme.keys[this.controls.index].inUse = false
-        } else {
-            ControlScheme.padsInUse[this.controls.index] = false
-        }
-        this.score.reset()
         game.removeChild(this)
+        game.gameOver(this)
+        Sound.playSFX("bigboom")
         Junkership.Inventory.splice(Junkership.Inventory.indexOf(this), 1)
         super.destroy()
     }
@@ -150,6 +146,14 @@ export default class Junkership extends Pixi.Sprite {
 
     changePowerUp(newPowerUp) {
         this.powerUp = new this.WeaponList[newPowerUp]
+    }
+
+    releaseControls() {
+        if (this.controls.type == "keyb") {
+            ControlScheme.keys[this.controls.index].inUse = false
+        } else {
+            ControlScheme.padsInUse[this.controls.index] = false
+        }
     }
 }
 
