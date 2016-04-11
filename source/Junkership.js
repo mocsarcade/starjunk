@@ -16,11 +16,13 @@ export default class Junkership extends Pixi.Sprite {
     constructor(cont) {
         super(checkTex())
         Junkership.Inventory.push(this)
-        this.speed = 100
+        this.speed = 115
         this.score = new Score(Junkership.Inventory.length)
         this.powerUp = new PeaShoota()
         this.reloadTime = 0
         this.controls = cont
+        this.x = 10
+        this.y = Reference.GAME_HEIGHT / 2
         this.hitBox = new Pixi.Rectangle(
             this.x + 1 , // Left offset
             this.y + 1 , // Top offset
