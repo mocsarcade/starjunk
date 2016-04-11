@@ -16,7 +16,7 @@ export default class Explosion {
     }
 
     explodePlayer(thisShip) {
-        this.maxParticles = 200
+        this.maxParticles = 100
         for (var i = 0; i < this.maxParticles; i++) {
             game.addChild(new Particle(thisShip.position.x, thisShip.position.y, this.vector = new Victor(Utility.randomFloatNumber(-1.0, 1.0), Utility.randomFloatNumber(-1.0, 1.0)), 0xFF0000))
         }
