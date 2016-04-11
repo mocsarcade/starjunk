@@ -14,11 +14,10 @@ export default class Explosion {
     explodeEnemy(thisShip) {
         this.maxParticles = 300 * Math.random()
         for (var i = 0; i < this.maxParticles; i++) {
-            game.addChild(new Particle(this.large, thisShip.position.x, thisShip.position.y, this.vector = new Victor(Utility.randomFloatNumber(-2, 2), Utility.randomFloatNumber(-2, 2)), 0x000000, .1 * Math.random()))
-            game.addChild(new Particle(this.small, thisShip.position.x, thisShip.position.y, this.vector = new Victor(Utility.randomFloatNumber(-2, 2), Utility.randomFloatNumber(-2, 2)), 0xFF4500, .1 * Math.random()))
-            game.addChild(new Particle(this.small, thisShip.position.x, thisShip.position.y, this.vector = new Victor(Utility.randomFloatNumber(-2, 2), Utility.randomFloatNumber(-2, 2)), 0xFFA500, .15 * Math.random()))
+            game.addChild(new Particle(this.large, thisShip.position.x, thisShip.position.y, this.vector = new Victor(Utility.randomFloatNumber(-1, 1), Utility.randomFloatNumber(-1, 1)), 0x000000, .3 * Math.random()))
+            game.addChild(new Particle(this.small, thisShip.position.x, thisShip.position.y, this.vector = new Victor(Utility.randomFloatNumber(-1, 1), Utility.randomFloatNumber(-1, 1)), 0xFF4500, .4 * Math.random()))
+            game.addChild(new Particle(this.small, thisShip.position.x, thisShip.position.y, this.vector = new Victor(Utility.randomFloatNumber(-1, 1), Utility.randomFloatNumber(-1, 1)), 0xFFA500, .5 * Math.random()))
         }
-
     }
 
     explodePlayer(thisShip) {

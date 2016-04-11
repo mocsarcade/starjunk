@@ -16,7 +16,7 @@ export default class Particle extends Pixi.Sprite {
     update(delta) {
         this.position.x += this.vecX * this.speed
         this.position.y += this.vecY * this.speed
-        this.alpha -= .03 * Math.random()
+        this.alpha -= .04 * Math.random()
         if (this.alpha <= 0) {
             this.destroy()
         }
