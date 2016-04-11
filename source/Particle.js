@@ -1,15 +1,14 @@
 var Pixi = require("pixi.js")
-var Reference = require("Reference.js")
 var Victor = require("victor")
 
 export default class Particle extends Pixi.Sprite {
-    constructor(x, y, vector, tint) {
-        super(PIXI.loader.resources.star.texture)
+    constructor(texture, x, y, vector, tint, speed) {
+        super(texture)
         this.x = x
         this.y = y
         this.vecX = vector.x
         this.vecY = vector.y
-        this.speed = .5 + (Math.random() * .5)
+        this.speed = speed
         this.tint = tint
         this.spawnTime = Date.now()
     }
@@ -17,8 +16,8 @@ export default class Particle extends Pixi.Sprite {
     update(delta) {
         this.position.x += this.vecX * this.speed
         this.position.y += this.vecY * this.speed
-        this.alpha -= .05
-        if (Date.now() - this.spawnTime >= 1000) {
+        this.alpha -= .03 * Math.random()
+        if (this.alpha <= 0) {
             this.destroy()
         }
     }
