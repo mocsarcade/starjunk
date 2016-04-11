@@ -24,6 +24,10 @@ exports.randomNumber = function randomNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
+exports.randomFloatNumber = function randomNumber(min, max) {
+    return Math.random() * (max - min + 1) + min
+}
+
 exports.getCenterPosition = function(sprite) {
     var centerPosition = {
         x: sprite.x + sprite.width / 2,
