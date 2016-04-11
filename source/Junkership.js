@@ -10,6 +10,7 @@ import Sound from "./Sound.js"
 import {PowerUp, PeaShoota, TriShoota, FiveShoota, RapidFire, RapidSprayShot,
     SprayShot, SuperSprayShot, CrazySprayShot, VertSprayShot,
     VertShoota, BFG} from "./PowerUp.js"
+import Explosion from "./Explosion.js"
 
 
 export default class Junkership extends Pixi.Sprite {
@@ -30,6 +31,7 @@ export default class Junkership extends Pixi.Sprite {
             RapidSprayShot, SprayShot, SuperSprayShot,
             CrazySprayShot, VertSprayShot, VertShoota, BFG]
         this.justFired = false // Only used with gamepad
+        this.onDeath = new Explosion()
     }
 
     update(delta) {
@@ -117,6 +119,7 @@ export default class Junkership extends Pixi.Sprite {
 
     destroy() {
         Sound.playSFX("bigboom")
+        this.onDeath.explodePlayer(this)
         if (this.controls.type == "keyb") {
             ControlScheme.keys[this.controls.index].inUse = false
         } else {
