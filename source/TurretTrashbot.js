@@ -2,6 +2,7 @@ var Victor = require("victor")
 import Trashbot from "./Trashbot.js"
 import Reference from "./Reference.js"
 import Projectile from "./Projectile.js"
+import Utility from "./Utility.js"
 
 export default class TurretTrashbot extends Trashbot {
     constructor(position, shootStyle) {
@@ -12,7 +13,7 @@ export default class TurretTrashbot extends Trashbot {
             PIXI.loader.resources.turretTrashbot.texture)
         this.movement = Trashbot.MovementStrategy.MOVE_TO_POSITION
         this.shoot = (shootStyle === undefined) ? Trashbot.ShootStrategy.INTERVAL : shootStyle
-        this.bullets = 2
+        this.bullets = Utility.randomNumber(1,2)
         this.bulletSpeed = 1.8
     }
 
