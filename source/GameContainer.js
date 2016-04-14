@@ -10,6 +10,7 @@ import Utility from "./Utility.js"
 import Star from "./Star.js"
 import StarStreak from "./StarStreak.js"
 import Sound from "./Sound.js"
+import Metrics from "./Metrics.js"
 import {
     ControlScheme, controlTypeCount, padCont, keybCont, keybArray, padArray,
     isDown, justdown, justUp
@@ -26,6 +27,7 @@ export default class GameContainer extends Pixi.Container {
         Textures.initTex()
         this.gamepads = navigator.getGamepads()
         this.stars = 0
+        this.metrics = new Metrics(Reference.FIREBASE_URL)
     }
 
     starfield() {
@@ -38,8 +40,15 @@ export default class GameContainer extends Pixi.Container {
         }
     }
 
-    gameOver() {
-        // TODO High score and stat reporting logic
+    gameOver(junkership) {
+        this.metrics.submitMetrics(junkership)
+        var score = junkership.score.getScore()
+        if (this.metrics.isTopScore(score)) {
+            junkership.score.gainControls(junkership.controls)
+        } else {
+            junkership.releaseControls()
+            junkership.score.reset()
+        }
     }
 
     spawnWave() {
@@ -60,11 +69,11 @@ export default class GameContainer extends Pixi.Container {
     checkPlayerSpawn() {
         for (var i = 0; i < controlTypeCount; i++) {
             if (!ControlScheme.keys[i].inUse && (
-                    keybArray[i].isDown("up") ||
-                    keybArray[i].isDown("down") ||
-                    keybArray[i].isDown("left") ||
-                    keybArray[i].isDown("right") ||
-                    keybArray[i].isDown("fire"))) {
+                    keybArray[i].justDown("up") ||
+                    keybArray[i].justDown("down") ||
+                    keybArray[i].justDown("left") ||
+                    keybArray[i].justDown("right") ||
+                    keybArray[i].justDown("fire"))) {
                 ControlScheme.keys[i].inUse = true
                 Sound.playSFX("spawn")
                 game.addChild(new Junkership(keybArray[i]))
@@ -73,11 +82,11 @@ export default class GameContainer extends Pixi.Container {
         for (var i = 0; i < this.gamepads.length; i++) {
             if (this.gamepads[i]) {
                 if (!ControlScheme.padsInUse[i] && (
-                        padArray[i].isDown("up") ||
-                        padArray[i].isDown("down") ||
-                        padArray[i].isDown("left") ||
-                        padArray[i].isDown("right") ||
-                        padArray[i].isDown("fire"))) {
+                        padArray[i].justDown("up") ||
+                        padArray[i].justDown("down") ||
+                        padArray[i].justDown("left") ||
+                        padArray[i].justDown("right") ||
+                        padArray[i].justDown("fire"))) {
                     ControlScheme.padsInUse[i] = true
                     Sound.playSFX("spawn")
                     game.addChild(new Junkership(padArray[i]))

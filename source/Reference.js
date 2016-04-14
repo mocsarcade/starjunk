@@ -14,6 +14,9 @@ module.exports.TIME_TO_STREAK = {
     upper: 20000
 }
 
+module.exports.FIREBASE_URL = "http://mocsarcade.firebaseio.com/starjunk"
+module.exports.HIGH_SCORE_NAME_VALUES = " ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+
 
 module.exports.TRASHBOT = {
     HEALTH: {
