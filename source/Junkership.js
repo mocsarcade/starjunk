@@ -70,32 +70,15 @@ export default class Junkership extends Pixi.Sprite {
         if(this.controls.isDown("right") && this.ignoreX != "right") {
             this.move(relativeSpeed, "x")
         }
-        if (this.controls.type == "keyb") {
-            if(this.controls.justDown("fire")) {
-                this.powerUp.fire(this)
-            }
-        } else {
-            if (this.justFired && !this.controls.isDown("fire")) {
-                this.justFired = false
-            }
-            if (!this.justFired && this.controls.isDown("fire")) {
-                this.justFired = true
-                this.powerUp.fire(this)
-            }
+        if(this.controls.justDown("fire")) {
+            this.powerUp.fire(this)
         }
 
         if(this.controls.isDown("fire")) {
             this.reloadTime += 1
-            if(this.powerUp.rapidFire == true) {
-                if(this.reloadTime >= 10) {
-                    this.powerUp.fire(this)
-                    this.reloadTime = 0
-                }
-            }
-
-            if(this.powerUp.BFGrapid == true) {
-                if(this.reloadTime >= 2.5) {
-                    this.powerUp.BfgFire(this,delta)
+            if (this.powerUp.reloadInterval !== undefined) {
+                if(this.reloadTime >= this.powerUp.reloadInterval) {
+                    this.powerUp.fire(this, delta)
                     this.reloadTime = 0
                 }
             }
@@ -122,16 +105,10 @@ export default class Junkership extends Pixi.Sprite {
 
     destroy() {
         game.removeChild(this)
+        this.score.reset()
         game.gameOver(this)
         Sound.playSFX("bigboom")
         this.onDeath.explodePlayer(this)
-        if (this.controls.type == "keyb") {
-            ControlScheme.keys[this.controls.index].inUse = false
-        } else {
-            ControlScheme.padsInUse[this.controls.index] = false
-        }
-        this.score.reset()
-        game.removeChild(this)
         Junkership.Inventory.splice(Junkership.Inventory.indexOf(this), 1)
         super.destroy()
     }

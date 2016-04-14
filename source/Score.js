@@ -2,6 +2,7 @@ var $ = require("jquery")
 import Junkership from "./Junkership.js"
 import Reference from "./Reference.js"
 import {ControlScheme} from "./Controls.js"
+import Sound from "./Sound.js"
 
 export default class Score {
     constructor(playerNumber) {
@@ -24,19 +25,24 @@ export default class Score {
                 this.input.indices[this.input.slot]++
                 this.input.indices[this.input.slot] %= Reference.HIGH_SCORE_NAME_VALUES.length
                 this.setText()
+                Sound.playSFX("menu-up")
             }
             if (this.controls.justDown("down")) {
                 this.input.indices[this.input.slot]--
                 this.input.indices[this.input.slot] %= Reference.HIGH_SCORE_NAME_VALUES.length
                 this.setText()
+                Sound.playSFX("menu-down")
             }
             if (this.controls.justDown("left") && this.input.slot > 0) {
                 this.input.slot--
+                this.setText()
             }
             if (this.controls.justDown("right") && this.input.slot < (this.input.indices.length - 1)) {
                 this.input.slot++
+                this.setText()
             }
             if(this.controls.justDown("fire")) {
+                Sound.playSFX("menu-blip")
                 this.releaseControls()
                 game.metrics.submitHighScore(this.input.name, this.count)
             }
@@ -69,8 +75,8 @@ export default class Score {
 
     gainControls(controls) {
         this.controls = controls
-        Score.Inventory.push(this)
         this.setText()
+        Score.Inventory.push(this)
     }
 
     releaseControls() {
@@ -85,12 +91,17 @@ export default class Score {
     }
 
     setText() {
-        var text = ""
-        this.input.indices.forEach((currentSlot) => {
-            text += Reference.HIGH_SCORE_NAME_VALUES.substr(currentSlot, 1)
+        var output = ""
+        this.input.indices.forEach((currentSlot, index) => {
+            var currentCharacter = Reference.HIGH_SCORE_NAME_VALUES.substr(currentSlot, 1)
+            if (index === this.input.slot) {
+                output += "<span class='blink'>" + currentCharacter + "</span>"
+            } else {
+                output += currentCharacter
+            }
         })
-        $(this.domElement).text(text)
-        this.input.name = text
+        $(this.domElement).html(output)
+        this.input.name = output
     }
 }
 

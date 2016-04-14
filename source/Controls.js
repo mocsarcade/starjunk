@@ -77,6 +77,7 @@ export class padCont {
     constructor(index) {
         this.index = index
         this.type = "pad"
+        this.data = []
     }
     isDown(key) {
         switch (key) {
@@ -109,12 +110,26 @@ export class padCont {
             return null
         }
     }
-    // Dummy behavior for compatibility
+
     justDown(key) {
-        return false
+        if (this.isDown(key)) {
+            if (this.data[key]) {
+                return false
+            } else {
+                this.data[key] = true
+                return true
+            }
+        } else {
+            if (this.data[key]) {
+                this.data[key] = false
+                return false
+            } else {
+                return false
+            }
+        }
     }
     justUp(key) {
-        return false
+
     }
 }
 

@@ -110,6 +110,7 @@ export class RapidFire extends PowerUp {
           this.bulletSpeed = Reference.FAST_BULLET_SPEED
           this.projectileType = "bullet"
           this.rapidFire = true
+          this.reloadInterval = 10
           this.name = "Rapid Fire"
       }
 
@@ -397,10 +398,11 @@ export class BFG extends PowerUp {
           this.bulletSpeed = Reference.FAST_BULLET_SPEED
           this.projectileType = "bullet"
           this.BFGrapid = true
+          this.reloadInterval = 2.5
           this.name = "BFG"
       }
 
-      BfgFire(curShip,delta) {
+      fire(curShip,delta) {
           Sound.playSFX("BFG")
 
           game.addChild(new Projectile(
