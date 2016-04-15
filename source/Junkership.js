@@ -70,7 +70,7 @@ export default class Junkership extends Pixi.Sprite {
         if(this.controls.isDown("right") && this.ignoreX != "right") {
             this.move(relativeSpeed, "x")
         }
-        if(this.controls.justDown("fire")) {
+        if(this.controls.justDown("fire") && this.powerUp.reloadInterval === undefined) {
             this.powerUp.fire(this)
         }
 

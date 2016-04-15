@@ -43,8 +43,13 @@ export default class Score {
             }
             if(this.controls.justDown("fire")) {
                 Sound.playSFX("menu-blip")
-                this.releaseControls()
-                game.metrics.submitHighScore(this.input.name, this.count)
+                if (this.input.slot === (this.input.indices.length - 1)) {
+                    this.releaseControls()
+                    game.metrics.submitHighScore(this.input.name, this.count)
+                } else {
+                    this.input.slot++
+                    this.setText()
+                }
             }
         }
     }
