@@ -44,7 +44,10 @@ export default class GameContainer extends Pixi.Container {
         this.metrics.submitMetrics(junkership)
         var score = junkership.score.getScore()
         if (this.metrics.isTopScore(score)) {
-            junkership.score.gainControls(junkership.controls)
+            setTimeout(function() {
+                junkership.score.gainControls(junkership.controls)
+            }, 1500)
+
         } else {
             junkership.releaseControls()
             junkership.score.reset()
