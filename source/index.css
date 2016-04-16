@@ -71,6 +71,12 @@ canvas {
                 content: "PRESS TO JOIN";
             }
         }
+
+        .score-entry {
+            display: block;
+            font-size: 0.5em;
+            line-height: 1em;
+        }
     }
     
     #p1-score {
@@ -95,5 +101,19 @@ canvas {
         float: right;
         border-color: $blue;
         text-shadow: 0.05em 0.05em $blue;
+    }
+}
+
+.blink {
+    animation: blink-animation 1s steps(5, start) infinite;
+}
+@keyframes blink-animation {
+    to {
+        visibility: hidden;
+    }
+}
+@-webkit-keyframes blink-animation {
+    to {
+        visibility: hidden;
     }
 }

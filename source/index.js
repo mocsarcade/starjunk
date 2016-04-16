@@ -35,6 +35,9 @@ var loop = new Afloop(function (delta) {
     } else {
         Sound.stopBGM()
     }
+    Score.Inventory.forEach((score) => {
+        score.update()
+    })
     renderer.render(game)
 
     game.spawnWaveInterval += delta
