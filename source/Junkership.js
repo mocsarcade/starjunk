@@ -7,9 +7,7 @@ import Reference from "./Reference.js"
 import Projectile from "./Projectile.js"
 import Score from "./Score.js"
 import Sound from "./Sound.js"
-import {PowerUp, PeaShoota, TriShoota, FiveShoota, RapidFire, RapidSprayShot,
-    SprayShot, SuperSprayShot, CrazySprayShot, VertSprayShot,
-    VertShoota, BFG} from "./PowerUp.js"
+import {PeaShoota} from "./PowerUp.js"
 import Explosion from "./Explosion.js"
 
 
@@ -29,9 +27,6 @@ export default class Junkership extends Pixi.Sprite {
             this.y + 1 , // Top offset
             this.width - 3 , // Right offset + left offset
             this.height - 3 )// Bottom offset + top offset
-        this.WeaponList = [PeaShoota, TriShoota, FiveShoota, RapidFire,
-            RapidSprayShot, SprayShot, SuperSprayShot,
-            CrazySprayShot, VertSprayShot, VertShoota, BFG]
         this.justFired = false // Only used with gamepad
         this.onDeath = new Explosion()
         this.createdTime = Date.now()
@@ -132,7 +127,7 @@ export default class Junkership extends Pixi.Sprite {
     }
 
     changePowerUp(newPowerUp) {
-        this.powerUp = new this.WeaponList[newPowerUp]
+        this.powerUp = newPowerUp
     }
 
     releaseControls() {

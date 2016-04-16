@@ -7,7 +7,7 @@ import Reference from "./Reference.js"
 import Sound from "./Sound.js"
 import Projectile from "./Projectile.js"
 
-export default class PowerUp {
+class PowerUp {
     constructor() {
         this.bulletSpeed = Reference.NORMAL_BULLET_SPEED
         this.projectileType = "bullet"

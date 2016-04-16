@@ -14,6 +14,7 @@ exports.initTex = function initTex() {
         .add("turretTrashbot", require("./images/enemy-turret-starship.png"))
         .add("junk", require("./images/junk.png"))
         .add("star", require("./images/star.png"))
+        .add("boom", require("./images/boom-sheet.png"))
         .load()
 
     .on("complete", setup)
