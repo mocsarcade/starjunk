@@ -108,6 +108,10 @@ export default class Score {
         $(this.domElement).html(output)
         this.input.name = output
     }
+
+    setTextToPromptHighScore() {
+        $(this.domElement).html("<span class='score-entry'>" + Reference.INITIALS_ENTRY_TEXT) + "</span>"
+    }
 }
 
 Score.Inventory = []
