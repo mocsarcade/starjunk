@@ -16,7 +16,19 @@ export default class Projectile extends Pixi.Sprite {
       this.friendly = (friendly === undefined) ? true : friendly
       if (this.friendly) {
           Projectile.FriendlyInventory.push(this)
-          this.texture = PIXI.loader.resources.projectile.texture
+          if(this.projectileType == "bullet") {
+              this.texture = PIXI.loader.resources.projectile.texture
+          } else if(this.projectileType == "laser") {
+              this.texture = PIXI.loader.resources.laser.texture
+          } else if(this.projectileType == "piercinglaser") {
+              this.piercing = true
+              this.texture = PIXI.loader.resources.plaser.texture
+          } else if(this.projectileType == "superlaser") {
+              this.piercing = true
+              this.despawn = true
+              this.spawnTime = Date.now()
+              this.texture = PIXI.loader.resources.slaser.texture
+          }
       } else {
           Projectile.EnemyInventory.push(this)
           this.texture = PIXI.loader.resources.enemyProjectile.texture
@@ -31,11 +43,23 @@ export default class Projectile extends Pixi.Sprite {
           this.position.y < 0 || this.position.y > Reference.GAME_HEIGHT) {
           this.destroy()
       }
+
+      if(this.despawn == true) {
+          this.scale.y += .05
+          this.position.y += .1
+          if (Date.now() - this.spawnTime >= Reference.SUPER_DESPAWN) {
+              this.destroy()
+          }
+      }
   }
 
 
   onCollision(collidedWith) {
-      this.destroy()
+      if(this.piercing != true)
+          this.destroy()
+      else {
+          console.log("works")
+      }
   }
 
   destroy() {

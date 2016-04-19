@@ -414,3 +414,65 @@ export class BFG extends PowerUp {
       }
 
 }
+
+export class Laser extends PowerUp {
+      constructor() {
+          super()
+          this.vector = new Victor(5,0)
+          this.bullestSpeed = Reference.NORMAL_LASER_SPEED
+          this.projectileType = "laser"
+      }
+
+      fire(curShip) {
+          Sound.playSFX("crazyshot")
+          var laser = new Projectile(
+              curShip.position.x + curShip.width,
+              curShip.position.y + curShip.height/2,
+              this.vector, curShip, this.bulletSpeed, this.projectileType
+          )
+          laser.scale.x = 5
+          game.addChild(laser)
+      }
+}
+
+export class PiercingLaser extends PowerUp {
+     constructor() {
+         super()
+         this.vector = new Victor(5,0)
+         this.bullestSpeed = Reference.NORMAL_LASER_SPEED
+         this.projectileType = "piercinglaser"
+     }
+
+     fire(curShip) {
+         Sound.playSFX("bigshot")
+         var laser = new Projectile(
+             curShip.position.x + curShip.width,
+             curShip.position.y + curShip.height/2,
+             this.vector, curShip, this.bulletSpeed, this.projectileType
+         )
+         laser.scale.x = 5
+         game.addChild(laser)
+     }
+}
+
+export class SuperLaser extends PowerUp {
+    constructor() {
+        super()
+        this.vector = new Victor(0,0)
+        this.bullestSpeed = Reference.NORMAL_LASER_SPEED
+        this.projectileType = "superlaser"
+    }
+
+    fire(curShip) {
+        Sound.playSFX("MAHLAZOR")
+
+        var laser = new Projectile(
+            curShip.position.x + curShip.width,
+            curShip.position.y + curShip.height/2 - 3,
+            this.vector, curShip, this.bulletSpeed, this.projectileType
+        )
+        laser.scale.x = 25
+        laser.scale.y = .05
+        game.addChild(laser)
+    }
+}

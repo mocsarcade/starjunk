@@ -26,6 +26,11 @@ exports.playSFX = function(sound) {
         getjunk.volume = 0.4
         getjunk.play()
         break
+    case "MAHLAZOR":
+        var shoopdawhoop = new Audio(require("./sounds/shoopdawoop.wav"))
+        shoopdawhoop.volume = 1
+        shoopdawhoop.play()
+        break
     case "smallshot":
         var smallshot = new Audio(require("./sounds/shoot-2.wav"))
         smallshot.volume = 0.4
