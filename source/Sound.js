@@ -79,6 +79,21 @@ exports.playSFX = function(sound) {
         hit.volume = 0.4
         hit.play()
         break
+    case "menu-up":
+        var menuUp = new Audio(require("./sounds/menu-up.wav"))
+        menuUp.volume = 0.4
+        menuUp.play()
+        break
+    case "menu-down":
+        var menuDown = new Audio(require("./sounds/menu-down.wav"))
+        menuDown.volume = 0.4
+        menuDown.play()
+        break
+    case "menu-blip":
+        var menuBlip = new Audio(require("./sounds/menu-blip.wav"))
+        menuBlip.volume = 0.4
+        menuBlip.play()
+        break
     case "spawn":
         var spawn
         switch (Junkership.Inventory.length) {
