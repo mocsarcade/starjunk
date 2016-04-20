@@ -46,6 +46,7 @@ export default class Score {
                 if (this.input.slot === (this.input.indices.length - 1)) {
                     this.releaseControls()
                     game.metrics.submitHighScore(this.input.name, this.count)
+                    game.waitingForScores[this.playerNumber - 1] = false
                 } else {
                     this.input.slot++
                     this.setText()
@@ -115,4 +116,3 @@ export default class Score {
 }
 
 Score.Inventory = []
-

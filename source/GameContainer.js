@@ -2,6 +2,7 @@ var Pixi = require("pixi.js")
 var Keyb = require("keyb")
 
 import Junkership from "./Junkership.js"
+import Trashbot from "./Trashbot.js"
 import SpawnWave from "./SpawnWave.js"
 import Reference from "./Reference.js"
 import Textures from "./Textures.js"
@@ -28,6 +29,9 @@ export default class GameContainer extends Pixi.Container {
         this.gamepads = navigator.getGamepads()
         this.stars = 0
         this.metrics = new Metrics(Reference.FIREBASE_URL)
+        this.startedAt = Date.now()
+        this.waitingForScores = [false, false, false, false]
+        this.playerSpawnAllowed = true
     }
 
     starfield() {
@@ -40,7 +44,7 @@ export default class GameContainer extends Pixi.Container {
         }
     }
 
-    gameOver(junkership) {
+    endShip(junkership) {
         this.metrics.submitMetrics(junkership)
         var score = junkership.score.getScore()
         if (this.metrics.isTopScore(score)) {
@@ -48,10 +52,6 @@ export default class GameContainer extends Pixi.Container {
             setTimeout(function() {
                 junkership.score.gainControls(junkership.controls)
             }, 1500)
-
-        } else {
-            junkership.releaseControls()
-            junkership.score.reset()
         }
     }
 
@@ -70,30 +70,70 @@ export default class GameContainer extends Pixi.Container {
         } else this.countdownToJunk--
     }
 
-    checkPlayerSpawn() {
-        for (var i = 0; i < controlTypeCount; i++) {
-            if (!ControlScheme.keys[i].inUse && (
-                    keybArray[i].justDown("up") ||
-                    keybArray[i].justDown("down") ||
-                    keybArray[i].justDown("left") ||
-                    keybArray[i].justDown("right") ||
-                    keybArray[i].justDown("fire"))) {
-                ControlScheme.keys[i].inUse = true
-                Sound.playSFX("spawn")
-                game.addChild(new Junkership(keybArray[i]))
+    gameOver() {
+        for (var i = 0; i < Junkership.Inventory.length; i++) {
+            var ship = Junkership.Inventory[i]
+            ship.releaseControls()
+            ship.score.reset()
+            Junkership.Inventory.splice(Junkership.Inventory.indexOf(ship), 1)
+        }
+        Sound.stopBGM()
+        while (Trashbot.Inventory.length >0) {
+            this.countdownToJunk = 9999999
+            Trashbot.Inventory[0].destroy()
+        }
+        this.spawnWaveInterval = 0
+        this.difficulty = Reference.DIFFICULTY[0]
+        this.countdownToJunk = Utility.randomNumber(this.difficulty.JUNK_FREQUENCY_RANGE.lower, this.difficulty.JUNK_FREQUENCY_RANGE.upper)
+    }
+
+    resetCheck() {
+        var doneCount = 0
+        for (var i = 0; i < Junkership.Inventory.length; i++) {
+            if (!Junkership.Inventory[i].active) {
+                doneCount++
             }
         }
-        for (var i = 0; i < this.gamepads.length; i++) {
-            if (this.gamepads[i]) {
-                if (!ControlScheme.padsInUse[i] && (
-                        padArray[i].justDown("up") ||
-                        padArray[i].justDown("down") ||
-                        padArray[i].justDown("left") ||
-                        padArray[i].justDown("right") ||
-                        padArray[i].justDown("fire"))) {
-                    ControlScheme.padsInUse[i] = true
+        if (doneCount > 0 && doneCount == Junkership.Inventory.length) {
+            this.gameOver()
+            this.playerSpawnAllowed = false
+        }
+    }
+
+    checkPlayerSpawn() {
+        if (!this.playerSpawnAllowed) {
+            if (!this.waitingForScores[0] &&
+                !this.waitingForScores[1] &&
+                !this.waitingForScores[2] &&
+                !this.waitingForScores[3]) {
+                this.playerSpawnAllowed = true
+            }
+        } else if (Date.now() - this.startedAt > 750 // spawn delay
+            && this.playerSpawnAllowed) { // reset check
+            for (var i = 0; i < controlTypeCount; i++) {
+                if (!ControlScheme.keys[i].inUse && (
+                        keybArray[i].justDown("up") ||
+                        keybArray[i].justDown("down") ||
+                        keybArray[i].justDown("left") ||
+                        keybArray[i].justDown("right") ||
+                        keybArray[i].justDown("fire"))) {
+                    ControlScheme.keys[i].inUse = true
                     Sound.playSFX("spawn")
-                    game.addChild(new Junkership(padArray[i]))
+                    game.addChild(new Junkership(keybArray[i]))
+                }
+            }
+            for (var i = 0; i < this.gamepads.length; i++) {
+                if (this.gamepads[i]) {
+                    if (!ControlScheme.padsInUse[i] && (
+                            padArray[i].justDown("up") ||
+                            padArray[i].justDown("down") ||
+                            padArray[i].justDown("left") ||
+                            padArray[i].justDown("right") ||
+                            padArray[i].justDown("fire"))) {
+                        ControlScheme.padsInUse[i] = true
+                        Sound.playSFX("spawn")
+                        game.addChild(new Junkership(padArray[i]))
+                    }
                 }
             }
         }

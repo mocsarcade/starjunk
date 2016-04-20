@@ -10,7 +10,6 @@ import Sound from "./Sound.js"
 import {PeaShoota} from "./PowerUp.js"
 import Explosion from "./Explosion.js"
 
-
 export default class Junkership extends Pixi.Sprite {
     constructor(cont) {
         super(checkTex())
@@ -30,67 +29,70 @@ export default class Junkership extends Pixi.Sprite {
         this.justFired = false // Only used with gamepad
         this.onDeath = new Explosion()
         this.createdTime = Date.now()
+        this.active = true
     }
 
     update(delta) {
-        var relativeSpeed = this.speed * delta
+        if (this.active) {
+            var relativeSpeed = this.speed * delta
 
-        if (this.controls.justDown("up")) {
-            this.ignoreY = "down"
-        }
-        if (this.controls.justDown("down")) {
-            this.ignoreY = "up"
-        }
-        if (this.controls.justDown("left")) {
-            this.ignoreX = "right"
-        }
-        if (this.controls.justDown("right")) {
-            this.ignoreX = "left"
-        }
-        if (this.controls.justUp("up") || this.controls.justUp("down")) {
-            this.ignoreY = null
-        }
-        if (this.controls.justUp("left") || this.controls.justUp("right")) {
-            this.ignoreX = null
-        }
-        if(this.controls.isDown("up") && this.ignoreY != "up") {
-            this.move(-relativeSpeed, "y")
-        }
-        if(this.controls.isDown("down") && this.ignoreY != "down") {
-            this.move(relativeSpeed, "y")
-        }
-        if(this.controls.isDown("left") && this.ignoreX != "left") {
-            this.move(-relativeSpeed, "x")
-        }
-        if(this.controls.isDown("right") && this.ignoreX != "right") {
-            this.move(relativeSpeed, "x")
-        }
-        if(this.controls.justDown("fire") && this.powerUp.reloadInterval === undefined) {
-            this.powerUp.fire(this)
-        }
+            if (this.controls.justDown("up")) {
+                this.ignoreY = "down"
+            }
+            if (this.controls.justDown("down")) {
+                this.ignoreY = "up"
+            }
+            if (this.controls.justDown("left")) {
+                this.ignoreX = "right"
+            }
+            if (this.controls.justDown("right")) {
+                this.ignoreX = "left"
+            }
+            if (this.controls.justUp("up") || this.controls.justUp("down")) {
+                this.ignoreY = null
+            }
+            if (this.controls.justUp("left") || this.controls.justUp("right")) {
+                this.ignoreX = null
+            }
+            if(this.controls.isDown("up") && this.ignoreY != "up") {
+                this.move(-relativeSpeed, "y")
+            }
+            if(this.controls.isDown("down") && this.ignoreY != "down") {
+                this.move(relativeSpeed, "y")
+            }
+            if(this.controls.isDown("left") && this.ignoreX != "left") {
+                this.move(-relativeSpeed, "x")
+            }
+            if(this.controls.isDown("right") && this.ignoreX != "right") {
+                this.move(relativeSpeed, "x")
+            }
+            if(this.controls.justDown("fire") && this.powerUp.reloadInterval === undefined) {
+                this.powerUp.fire(this)
+            }
 
-        if(this.controls.isDown("fire")) {
-            this.reloadTime += 1
-            if (this.powerUp.reloadInterval !== undefined) {
-                if(this.reloadTime >= this.powerUp.reloadInterval) {
-                    this.powerUp.fire(this, delta)
-                    this.reloadTime = 0
+            if(this.controls.isDown("fire")) {
+                this.reloadTime += 1
+                if (this.powerUp.reloadInterval !== undefined) {
+                    if(this.reloadTime >= this.powerUp.reloadInterval) {
+                        this.powerUp.fire(this, delta)
+                        this.reloadTime = 0
+                    }
                 }
             }
-        }
 
-        var killedBy
-        var enemyProjectile
-        for(var i = 0; i < Projectile.EnemyInventory.length; i++ ) {
-            enemyProjectile = Projectile.EnemyInventory[i]
-            if (Utility.hasCollision(this, enemyProjectile)) {
-                killedBy = enemyProjectile
-                enemyProjectile.onCollision(this)
-                break
+            var killedBy
+            var enemyProjectile
+            for(var i = 0; i < Projectile.EnemyInventory.length; i++ ) {
+                enemyProjectile = Projectile.EnemyInventory[i]
+                if (Utility.hasCollision(this, enemyProjectile)) {
+                    killedBy = enemyProjectile
+                    enemyProjectile.onCollision(this)
+                    break
+                }
             }
-        }
-        if (killedBy) {
-            this.onCollision(killedBy)
+            if (killedBy) {
+                this.onCollision(killedBy)
+            }
         }
     }
 
@@ -101,11 +103,11 @@ export default class Junkership extends Pixi.Sprite {
     destroy() {
         game.removeChild(this)
         this.score.reset()
-        game.gameOver(this)
+        game.endShip(this)
         Sound.playSFX("bigboom")
         this.onDeath.explodePlayer(this)
-        Junkership.Inventory.splice(Junkership.Inventory.indexOf(this), 1)
-        super.destroy()
+        this.active = false
+        game.waitingForScores[Junkership.Inventory.indexOf(this)] = true
     }
 
     move(distance, direction) {
