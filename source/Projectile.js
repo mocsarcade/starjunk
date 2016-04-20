@@ -57,9 +57,6 @@ export default class Projectile extends Pixi.Sprite {
   onCollision(collidedWith) {
       if(this.piercing != true)
           this.destroy()
-      else {
-          console.log("works")
-      }
   }
 
   destroy() {
