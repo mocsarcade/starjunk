@@ -85,6 +85,13 @@ export default class GameContainer extends Pixi.Container {
         this.spawnWaveInterval = 0
         this.difficulty = Reference.DIFFICULTY[0]
         this.countdownToJunk = Utility.randomNumber(this.difficulty.JUNK_FREQUENCY_RANGE.lower, this.difficulty.JUNK_FREQUENCY_RANGE.upper)
+
+        for (var i = 0; i < controlTypeCount; i++) {
+            ControlScheme.keys[i].inUse = false
+        }
+        for (var i = 0; i < 4; i++) {
+            ControlScheme.padsInUse[i] = false
+        }
     }
 
     resetCheck() {
