@@ -68,7 +68,7 @@ export default class Projectile extends Pixi.Sprite {
           }
       }
 
-      if(this.despawn == true) {
+      if(this.mineDespawn == true) {
           if (Date.now() - this.spawnTime >= Reference.MINE_DESPAWN) {
               this.destroy()
           }
