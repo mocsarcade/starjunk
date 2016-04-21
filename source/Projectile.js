@@ -68,16 +68,22 @@ export default class Projectile extends Pixi.Sprite {
           }
       }
 
+      if(this.despawn == true) {
+          if (Date.now() - this.spawnTime >= Reference.MINE_DESPAWN) {
+              this.destroy()
+          }
+      }
+
       if(this.projectileType == "mine" || this.projectileType == "superMine") {
           this.rotation += 1
       }
 
       if(this.projectileType == "mine") {
-          this.scale.x = 2
+          this.scale.x = 3
       }
 
       if(this.projectileType == "superMine") {
-          this.scale.x = 3
+          this.scale.x = 5
       }
 
   }

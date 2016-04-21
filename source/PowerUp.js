@@ -482,6 +482,7 @@ export class Mine extends PowerUp {
           this.vector = new Victor(0,0)
           this.bulletSpeed = Reference.NORMAL_BULLET_SPEED
           this.projectileType = "mine"
+          this.mineDespawn = true
       }
 
       fire(curShip) {
@@ -500,6 +501,7 @@ export class SuperMine extends PowerUp {
           this.vector = new Victor(0,0)
           this.bulletSpeed = Reference.NORMAL_BULLET_SPEED
           this.projectileType = "superMine"
+          this.mineDespawn = true
       }
 
       fire(curShip) {
