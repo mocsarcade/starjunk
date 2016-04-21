@@ -20,7 +20,7 @@ export default class Junkership extends Pixi.Sprite {
         Junkership.Inventory.push(this)
         this.speed = 115
         this.score = new Score(Junkership.Inventory.length)
-        this.powerUp = new PeaShoota()
+        this.powerUp = new Mine()
         this.reloadTime = 0
         this.controls = cont
         this.x = 10
@@ -34,7 +34,7 @@ export default class Junkership extends Pixi.Sprite {
             RapidSprayShot, SprayShot, SuperSprayShot,
             CrazySprayShot, VertSprayShot, VertShoota,
             BFG, Laser, PiercingLaser, SuperLaser, Mine,
-            SuperMine, PaintShot]
+            SuperMine, PaintShot, PeaShoota]
         this.justFired = false // Only used with gamepad
         this.onDeath = new Explosion()
         this.createdTime = Date.now()
