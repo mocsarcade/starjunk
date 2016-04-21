@@ -24,6 +24,19 @@ export default class Projectile extends Pixi.Sprite {
           if(this.projectileType == "bullet" || this.projectileType == "mine" || this.projectileType == "superMine"
               || this.projectileType == "paintShot" || this.projectileType == "sineBullet") {
               this.texture = PIXI.loader.resources.projectile.texture
+
+              if(this.projectileType == "mine" || this.projectileType == "superMine") {
+                  shotBy.mineArray.push(this)
+                  console.log(shotBy.mineArray.length)
+                  if(shotBy.mineArray.length > 5) {
+                      console.log("here")
+                      var mine = shotBy.mineArray.shift()
+                      if(mine != null) {
+                          mine.destroy()
+                      }
+
+                  }
+              }
           } else if(this.projectileType == "laser") {
               this.texture = PIXI.loader.resources.laser.texture
           } else if(this.projectileType == "piercinglaser") {
@@ -68,12 +81,6 @@ export default class Projectile extends Pixi.Sprite {
           }
       }
 
-      if(this.mineDespawn == true) {
-          if (Date.now() - this.spawnTime >= Reference.MINE_DESPAWN) {
-              this.destroy()
-          }
-      }
-
       if(this.projectileType == "mine" || this.projectileType == "superMine") {
           this.rotation += 1
       }
@@ -92,9 +99,13 @@ export default class Projectile extends Pixi.Sprite {
   onCollision(collidedWith) {
       if(this.projectileType == "mine") {
           this.onHit.explodeEnemy(this)
+          var curMine = this.shotBy.mineArray.indexOf(this)
+          delete this.shotBy.mineArray[curMine]
           this.destroy()
       } else if(this.projectileType == "superMine") {
           this.onHit.explodeEnemy(this)
+          var curMine = this.shotBy.mineArray.indexOf(this)
+          delete this.shotBy.mineArray[curMine]
           this.destroy()
       } else if(this.piercing != true) {
           this.destroy()

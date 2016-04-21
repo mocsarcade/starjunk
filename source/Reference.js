@@ -4,7 +4,7 @@ module.exports.JOIN_GAME_TEXT = "PRESS TO JOIN"
 module.exports.INITIALS_ENTRY_TEXT = "HIGH SCORE"
 module.exports.TIME_TO_DESPAWN = 7.5 * 1000
 module.exports.SUPER_DESPAWN = .5 * 1000
-module.exports.MINE_DESPAWN - 5 * 1000
+module.exports.MINE_DESPAWN - .5 * 1000
 module.exports.MAX_PLAYERS = 4
 module.exports.MAX_ENEMY_PROJECTILES = 25
 module.exports.NORMAL_BULLET_SPEED = 2

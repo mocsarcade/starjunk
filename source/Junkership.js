@@ -17,9 +17,10 @@ export default class Junkership extends Pixi.Sprite {
     constructor(cont) {
         super(checkTex())
         Junkership.Inventory.push(this)
+        this.mineArray = []
         this.speed = 115
         this.score = new Score(Junkership.Inventory.length)
-        this.powerUp = new Mine()
+        this.powerUp = new PaintShot()
         this.reloadTime = 0
         this.controls = cont
         this.x = 10
