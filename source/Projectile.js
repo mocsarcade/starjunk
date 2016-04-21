@@ -89,7 +89,7 @@ export default class Projectile extends Pixi.Sprite {
           this.destroy()
           collidedWith.destroy()
       }
-      if(this.projectileType == "superMine") {
+      else if(this.projectileType == "superMine") {
           this.onHit.explodeEnemy(this)
           this.destroy()
           collidedWith.destroy()
