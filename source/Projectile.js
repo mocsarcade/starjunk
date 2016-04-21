@@ -103,10 +103,16 @@ export default class Projectile extends Pixi.Sprite {
           delete this.shotBy.mineArray[curMine]
           this.destroy()
       } else if(this.projectileType == "superMine") {
-          this.onHit.explodeEnemy(this)
+          this.onHit.explodePlayer(this)
           var curMine = this.shotBy.mineArray.indexOf(this)
           delete this.shotBy.mineArray[curMine]
           this.destroy()
+          this.explosionRadius = new Pixi.Rectangle(
+              this.x + 1 ,
+              this.y + 1 ,
+              5 ,
+              5 )
+          this.explosionRadius.destroy()
       } else if(this.piercing != true) {
           this.destroy()
       } else {
