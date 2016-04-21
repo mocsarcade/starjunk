@@ -72,8 +72,8 @@ export default class Projectile extends Pixi.Sprite {
           this.rotation += 1
       }
 
-      if(this.projectileType == "superMine") {
-          this.scale.x = 1
+      if(this.projectileType == "mine") {
+          this.scale.x = 2
       }
 
       if(this.projectileType == "superMine") {
@@ -87,11 +87,9 @@ export default class Projectile extends Pixi.Sprite {
       if(this.projectileType == "mine") {
           this.onHit.explodeEnemy(this)
           this.destroy()
-          collidedWith.destroy()
       } else if(this.projectileType == "superMine") {
           this.onHit.explodeEnemy(this)
           this.destroy()
-          collidedWith.destroy()
       } else if(this.piercing != true) {
           this.destroy()
       } else {
