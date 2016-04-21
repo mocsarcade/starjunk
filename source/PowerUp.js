@@ -465,7 +465,10 @@ export class SuperLaser extends PowerUp {
 
     fire(curShip) {
         Sound.playSFX("bigshot")
+<<<<<<< HEAD
 
+=======
+>>>>>>> c14be69e3abffdb69988220c5f158786eb108ed9
         var laser = new Projectile(
             curShip.position.x + curShip.width,
             curShip.position.y + curShip.height/2 - 3,

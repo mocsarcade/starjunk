@@ -40,7 +40,8 @@ export default class Trashbot extends Pixi.Sprite {
             }
         }
         for(var i = 0; i < Junkership.Inventory.length; i++ ) {
-            if (Utility.hasCollision(this, Junkership.Inventory[i].hitBox)) {
+            var thisShip = Junkership.Inventory[i]
+            if (thisShip.active && Utility.hasCollision(this, thisShip.hitBox)) {
                 Junkership.Inventory[i].onCollision(this)
                 break
             }
