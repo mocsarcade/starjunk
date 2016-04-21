@@ -20,9 +20,10 @@ export default class Junkership extends Pixi.Sprite {
         this.mineArray = []
         this.speed = 115
         this.score = new Score(Junkership.Inventory.length)
-        this.powerUp = new SuperMine()
+        this.powerUp = new PaintShot()
         this.reloadTime = 0
         this.controls = cont
+        this.cooldownTimer = 1000
         this.x = 10
         this.y = Reference.GAME_HEIGHT / 2
         this.hitBox = new Pixi.Rectangle(
@@ -76,7 +77,19 @@ export default class Junkership extends Pixi.Sprite {
                 this.move(relativeSpeed, "x")
             }
             if(this.controls.justDown("fire") && this.powerUp.reloadInterval === undefined) {
-                this.powerUp.fire(this)
+                if(this.powerUp.projectileType == "paintShot") {
+                    if(this.cooldownTimer > Reference.SHORT_COOLDOWN) {
+                        this.powerUp.fire(this)
+                        this.cooldownTimer = 0
+                    }
+                } else if(this.powerUp.projectileType == "superlaser") {
+                    if(this.cooldownTimer > Reference.LONG_COOLDOWN) {
+                        this.powerUp.fire(this)
+                        this.cooldownTimer = 0
+                    }
+                } else {
+                    this.powerUp.fire(this)
+                }
             }
 
             if(this.controls.isDown("fire")) {
@@ -88,7 +101,7 @@ export default class Junkership extends Pixi.Sprite {
                     }
                 }
             }
-
+            this.cooldownTimer++
             var killedBy
             var enemyProjectile
             for(var i = 0; i < Projectile.EnemyInventory.length; i++ ) {

@@ -534,7 +534,6 @@ export class PaintShot extends PowerUp {
           this.bulletSpeed = Reference.NORMAL_BULLET_SPEED
           this.projectileType = "paintShot"
           this.name = "Paint Gun"
-
       }
 
         fire(curShip) {
@@ -594,4 +593,5 @@ export class PaintShot extends PowerUp {
             curShip.position.y + curShip.height/2,
             this.vectorTop2, curShip, this.bulletSpeed, this.projectileType))
         }
+
 }
