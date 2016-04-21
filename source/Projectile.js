@@ -90,11 +90,8 @@ export default class Projectile extends Pixi.Sprite {
       }
       else if(this.piercing != true)
           this.destroy()
-<<<<<<< HEAD
       else {
       }
-=======
->>>>>>> c14be69e3abffdb69988220c5f158786eb108ed9
   }
 
   destroy() {
