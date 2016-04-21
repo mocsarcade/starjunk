@@ -11,7 +11,6 @@ import {PowerUp, PeaShoota, TriShoota, FiveShoota, RapidFire, RapidSprayShot,
     SprayShot, SuperSprayShot, CrazySprayShot, VertSprayShot,
     VertShoota, BFG, Laser, PiercingLaser, SuperLaser, Mine,
     SuperMine, PaintShot} from "./PowerUp.js"
-import {PeaShoota} from "./PowerUp.js"
 import Explosion from "./Explosion.js"
 
 export default class Junkership extends Pixi.Sprite {
