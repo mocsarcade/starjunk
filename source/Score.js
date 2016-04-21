@@ -46,6 +46,7 @@ export default class Score {
                 if (this.input.slot === (this.input.indices.length - 1)) {
                     this.releaseControls()
                     game.metrics.submitHighScore(this.input.name, this.count)
+                    game.waitingForScores[this.playerNumber - 1] = false
                 } else {
                     this.input.slot++
                     this.setText()
@@ -85,11 +86,12 @@ export default class Score {
     }
 
     releaseControls() {
+        /*
         if (this.controls.type == "keyb") {
             ControlScheme.keys[this.controls.index].inUse = false
         } else {
             ControlScheme.padsInUse[this.controls.index] = false
-        }
+        } */
         this.controls = undefined
         Score.Inventory.splice(Score.Inventory.indexOf(this), 1)
         this.reset()
@@ -115,4 +117,3 @@ export default class Score {
 }
 
 Score.Inventory = []
-
