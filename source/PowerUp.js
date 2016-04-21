@@ -500,10 +500,15 @@ export class SuperMine extends PowerUp {
           this.vector = new Victor(0,0)
           this.bulletSpeed = Reference.NORMAL_BULLET_SPEED
           this.projectileType = "superMine"
+          this.x
+          this.y
       }
 
       fire(curShip) {
           Sound.playSFX("bigshot")
+
+          this.x = curShip.position.x
+          this.y = curShip.position.y
 
           game.addChild(new Projectile(
               curShip.position.x + curShip.width,

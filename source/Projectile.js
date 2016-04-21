@@ -91,6 +91,7 @@ export default class Projectile extends Pixi.Sprite {
 
       if(this.projectileType == "superMine") {
           this.scale.x = 5
+          this.scale.y = 3
       }
 
   }
@@ -107,12 +108,6 @@ export default class Projectile extends Pixi.Sprite {
           var curMine = this.shotBy.mineArray.indexOf(this)
           delete this.shotBy.mineArray[curMine]
           this.destroy()
-          this.explosionRadius = new Pixi.Rectangle(
-              this.x + 1 ,
-              this.y + 1 ,
-              5 ,
-              5 )
-          this.explosionRadius.destroy()
       } else if(this.piercing != true) {
           this.destroy()
       } else {
