@@ -3,7 +3,7 @@ var Utility = require("./Utility")
 import Reference from "./Reference.js"
 import Projectile from "./Projectile.js"
 import Junkership from "./Junkership.js"
-import Junk from "./Junk.js"
+import {Junk} from "./Junk.js"
 import Sound from "./Sound.js"
 import Explosion from "./Explosion.js"
 

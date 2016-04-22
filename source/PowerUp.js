@@ -73,7 +73,7 @@ export class FiveShoota extends PowerUp {
           this.vector = new Victor(1,0)
           this.bulletSpeed = Reference.NORMAL_BULLET_SPEED
           this.projectileType = "bullet"
-          this.name = "FiveShoota"
+          this.name = "Five Shoota"
       }
 
       fire(curShip) {
@@ -135,7 +135,7 @@ export class RapidSprayShot extends PowerUp {
           this.bulletSpeed = Reference.NORMAL_BULLET_SPEED
           this.projectileType = "bullet"
           this.rapidFire = true
-          this.name = "Rapid Spray Shot"
+          this.name = "Rapid Spray"
 
           this.vector.normalize()
           this.vectorTop.normalize()
@@ -215,7 +215,7 @@ export class SuperSprayShot extends PowerUp {
           this.vectorTop2 = new Victor(1,-0.1)
           this.bulletSpeed = Reference.NORMAL_BULLET_SPEED
           this.projectileType = "bullet"
-          this.name = "Super Spray Shot"
+          this.name = "Super Spray"
 
           this.vector.normalize()
           this.vectorBottom.normalize()
@@ -270,7 +270,7 @@ export class CrazySprayShot extends PowerUp {
           this.vectorTop = new Victor(1,0)
           this.bulletSpeed = Reference.NORMAL_BULLET_SPEED
           this.projectileType = "bullet"
-          this.name = "Crazy Spray Shot"
+          this.name = "Crazy Spray"
 
       }
 
@@ -310,7 +310,7 @@ export class VertSprayShot extends PowerUp {
 
       constructor() {
           super()
-          this.name = "Vertical Spray Shot"
+          this.name = "Vertical Spray"
 
           this.vectorDown = new Victor(0,1)
           this.vectorLeft = new Victor(0.25,1)
@@ -421,6 +421,7 @@ export class Laser extends PowerUp {
           this.vector = new Victor(5,0)
           this.bullestSpeed = Reference.NORMAL_LASER_SPEED
           this.projectileType = "laser"
+          this.name = "Laser"
       }
 
       fire(curShip) {
@@ -441,6 +442,7 @@ export class PiercingLaser extends PowerUp {
          this.vector = new Victor(5,0)
          this.bullestSpeed = Reference.NORMAL_LASER_SPEED
          this.projectileType = "piercinglaser"
+         this.name = "Piercing Laser"
      }
 
      fire(curShip) {
@@ -461,6 +463,7 @@ export class SuperLaser extends PowerUp {
         this.vector = new Victor(0,0)
         this.bullestSpeed = Reference.NORMAL_LASER_SPEED
         this.projectileType = "superlaser"
+        this.name = "Super Laser"
     }
 
     fire(curShip) {
