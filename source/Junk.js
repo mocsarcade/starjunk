@@ -8,12 +8,13 @@ import Score from "./Score.js"
 import Sound from "./Sound.js"
 import * as WeaponList from "./PowerUp.js"
 
-export default class Junk extends Pixi.Sprite {
+export class Junk extends Pixi.Sprite {
     constructor(x, y) {
         super(PIXI.loader.resources.junk.texture)
         this.position.x = x
         this.position.y = y
         this.spawnTime = Date.now()
+        Junk.Inventory.push(this)
     }
 
     update(delta) {
@@ -43,4 +44,12 @@ export default class Junk extends Pixi.Sprite {
     }
 
     static weaponKeys = Object.keys(WeaponList);
+}
+
+Junk.Inventory = []
+
+exports.purgeJunk = function() {
+    for (var i = 0; i < Junk.Inventory.length; i++) {
+        Junk.Inventory[i].destroy()
+    }
 }

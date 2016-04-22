@@ -6,7 +6,7 @@ import Trashbot from "./Trashbot.js"
 import SpawnWave from "./SpawnWave.js"
 import Reference from "./Reference.js"
 import Textures from "./Textures.js"
-import Junk from "./Junk.js"
+import {Junk, purgeJunk} from "./Junk.js"
 import Utility from "./Utility.js"
 import Star from "./Star.js"
 import StarStreak from "./StarStreak.js"
@@ -92,6 +92,7 @@ export default class GameContainer extends Pixi.Container {
         for (var i = 0; i < 4; i++) {
             ControlScheme.padsInUse[i] = false
         }
+        purgeJunk()
     }
 
     resetCheck() {

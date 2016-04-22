@@ -9,6 +9,7 @@ import Score from "./Score.js"
 import Sound from "./Sound.js"
 import {PeaShoota} from "./PowerUp.js"
 import Explosion from "./Explosion.js"
+import JunkName from "./JunkName.js"
 
 export default class Junkership extends Pixi.Sprite {
     constructor(cont) {
@@ -130,6 +131,7 @@ export default class Junkership extends Pixi.Sprite {
 
     changePowerUp(newPowerUp) {
         this.powerUp = newPowerUp
+        game.addChild(new JunkName(newPowerUp.name, this.x, this.y))
     }
 
     releaseControls() {
