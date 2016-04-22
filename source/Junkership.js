@@ -21,7 +21,7 @@ export default class Junkership extends Pixi.Sprite {
         this.mineArray = []
         this.speed = 115
         this.score = new Score(Junkership.Inventory.length)
-        this.powerUp = new PaintShot()
+        this.powerUp = new PeaShoota()
         this.reloadTime = 0
         this.controls = cont
         this.cooldownTimer = 1000
