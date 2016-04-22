@@ -2,6 +2,9 @@ var Pixi = require("pixi.js")
 var Reference = require("Reference.js")
 var Victor = require("victor")
 
+import Explosion from "./Explosion.js"
+import Particle from "./Particle.js"
+
 export default class Projectile extends Pixi.Sprite {
 
   constructor(x, y, vector, shotBy, bulletSpeed, projectileType, friendly) {
@@ -12,12 +15,26 @@ export default class Projectile extends Pixi.Sprite {
       this.vecY = vector.y
       this.bulletSpeed = bulletSpeed
       this.shotBy = shotBy
+      this.timer = 0
       this.projectileType = projectileType
+      this.onHit = new Explosion()
       this.friendly = (friendly === undefined) ? true : friendly
       if (this.friendly) {
           Projectile.FriendlyInventory.push(this)
-          if(this.projectileType == "bullet") {
+          if(this.projectileType == "bullet" || this.projectileType == "mine" || this.projectileType == "superMine"
+              || this.projectileType == "paintShot" || this.projectileType == "sineBullet") {
               this.texture = PIXI.loader.resources.projectile.texture
+
+              if(this.projectileType == "mine" || this.projectileType == "superMine") {
+                  shotBy.mineArray.push(this)
+                  if(shotBy.mineArray.length > 5) {
+                      var mine = shotBy.mineArray.shift()
+                      if(mine != null) {
+                          mine.destroy()
+                      }
+
+                  }
+              }
           } else if(this.projectileType == "laser") {
               this.texture = PIXI.loader.resources.laser.texture
           } else if(this.projectileType == "piercinglaser") {
@@ -36,8 +53,18 @@ export default class Projectile extends Pixi.Sprite {
   }
 
   update(delta) {
+
       this.position.x += this.vecX * this.bulletSpeed
       this.position.y += this.vecY * this.bulletSpeed
+
+      if(this.projectileType == "paintShot") {
+          this.rotation += 1
+          this.scale.x = Math.random() * 3
+          this.scale.y = Math.random() * 3
+
+          this.vecY += .05
+
+      }
 
       if (this.position.x < 0 || this.position.x > Reference.GAME_WIDTH ||
           this.position.y < 0 || this.position.y > Reference.GAME_HEIGHT) {
@@ -51,12 +78,38 @@ export default class Projectile extends Pixi.Sprite {
               this.destroy()
           }
       }
+
+      if(this.projectileType == "mine" || this.projectileType == "superMine") {
+          this.rotation += 1
+      }
+
+      if(this.projectileType == "mine") {
+          this.scale.x = 3
+      }
+
+      if(this.projectileType == "superMine") {
+          this.scale.x = 5
+          this.scale.y = 3
+      }
+
   }
 
 
   onCollision(collidedWith) {
-      if(this.piercing != true)
+      if(this.projectileType == "mine") {
+          this.onHit.explodeEnemy(this)
+          var curMine = this.shotBy.mineArray.indexOf(this)
+          delete this.shotBy.mineArray[curMine]
           this.destroy()
+      } else if(this.projectileType == "superMine") {
+          this.onHit.explodePlayer(this)
+          var curMine = this.shotBy.mineArray.indexOf(this)
+          delete this.shotBy.mineArray[curMine]
+          this.destroy()
+      } else if(this.piercing != true) {
+          this.destroy()
+      } else {
+      }
   }
 
   destroy() {
