@@ -39,6 +39,7 @@ export class Junk extends Pixi.Sprite {
     }
 
     destroy() {
+        Junk.Inventory.splice(Junk.Inventory.indexOf(this), 1)
         game.removeChild(this)
         super.destroy()
     }
@@ -47,9 +48,3 @@ export class Junk extends Pixi.Sprite {
 }
 
 Junk.Inventory = []
-
-exports.purgeJunk = function() {
-    for (var i = 0; i < Junk.Inventory.length; i++) {
-        Junk.Inventory[i].destroy()
-    }
-}
