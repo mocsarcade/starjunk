@@ -7,7 +7,10 @@ import Reference from "./Reference.js"
 import Projectile from "./Projectile.js"
 import Score from "./Score.js"
 import Sound from "./Sound.js"
-import {PeaShoota} from "./PowerUp.js"
+import {PowerUp, PeaShoota, TriShoota, FiveShoota, RapidFire, RapidSprayShot,
+    SprayShot, SuperSprayShot, CrazySprayShot, VertSprayShot,
+    VertShoota, BFG, Laser, PiercingLaser, SuperLaser, Mine,
+    SuperMine, PaintShot} from "./PowerUp.js"
 import Explosion from "./Explosion.js"
 import JunkName from "./JunkName.js"
 
@@ -15,11 +18,13 @@ export default class Junkership extends Pixi.Sprite {
     constructor(cont) {
         super(checkTex())
         Junkership.Inventory.push(this)
+        this.mineArray = []
         this.speed = 115
         this.score = new Score(Junkership.Inventory.length)
-        this.powerUp = new PeaShoota()
+        this.powerUp = new PaintShot()
         this.reloadTime = 0
         this.controls = cont
+        this.cooldownTimer = 1000
         this.x = 10
         this.y = Reference.GAME_HEIGHT / 2
         this.hitBox = new Pixi.Rectangle(
@@ -27,6 +32,11 @@ export default class Junkership extends Pixi.Sprite {
             this.y + 1 , // Top offset
             this.width - 3 , // Right offset + left offset
             this.height - 3 )// Bottom offset + top offset
+        this.WeaponList = [PeaShoota, TriShoota, FiveShoota, RapidFire,
+            RapidSprayShot, SprayShot, SuperSprayShot,
+            CrazySprayShot, VertSprayShot, VertShoota,
+            BFG, Laser, PiercingLaser, SuperLaser, Mine,
+            SuperMine, PaintShot, PeaShoota]
         this.justFired = false // Only used with gamepad
         this.onDeath = new Explosion()
         this.createdTime = Date.now()
@@ -68,7 +78,19 @@ export default class Junkership extends Pixi.Sprite {
                 this.move(relativeSpeed, "x")
             }
             if(this.controls.justDown("fire") && this.powerUp.reloadInterval === undefined) {
-                this.powerUp.fire(this)
+                if(this.powerUp.projectileType == "paintShot") {
+                    if(this.cooldownTimer > Reference.SHORT_COOLDOWN) {
+                        this.powerUp.fire(this)
+                        this.cooldownTimer = 0
+                    }
+                } else if(this.powerUp.projectileType == "superlaser") {
+                    if(this.cooldownTimer > Reference.LONG_COOLDOWN) {
+                        this.powerUp.fire(this)
+                        this.cooldownTimer = 0
+                    }
+                } else {
+                    this.powerUp.fire(this)
+                }
             }
 
             if(this.controls.isDown("fire")) {
@@ -80,7 +102,7 @@ export default class Junkership extends Pixi.Sprite {
                     }
                 }
             }
-
+            this.cooldownTimer++
             var killedBy
             var enemyProjectile
             for(var i = 0; i < Projectile.EnemyInventory.length; i++ ) {
