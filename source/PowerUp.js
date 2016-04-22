@@ -135,6 +135,7 @@ export class RapidSprayShot extends PowerUp {
           this.bulletSpeed = Reference.NORMAL_BULLET_SPEED
           this.projectileType = "bullet"
           this.rapidFire = true
+          this.reloadInterval = 10
           this.name = "RAPID SPRAY"
 
           this.vector.normalize()
