@@ -15,7 +15,6 @@ export default class JunkName {
         setTimeout(
             function() {
                 $(this.domElement).remove()
-                this.destroy()
             }.bind(this),
             Reference.NAME_DESPAWN
         )
