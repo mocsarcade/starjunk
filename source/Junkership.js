@@ -125,7 +125,10 @@ export default class Junkership extends Pixi.Sprite {
 
     destroy() {
         while (this.mineArray.length > 0) {
-            this.mineArray.pop().destroy()
+            var mine = this.mineArray.pop()
+            if (mine != null) {
+                mine.destroy()
+            }
         }
         game.removeChild(this)
         this.score.reset()

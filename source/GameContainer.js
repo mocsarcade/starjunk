@@ -17,6 +17,7 @@ import {
     isDown, justdown, justUp
 }
 from "./Controls.js"
+import Title from "./Title.js"
 
 export default class GameContainer extends Pixi.Container {
     constructor() {
@@ -93,6 +94,12 @@ export default class GameContainer extends Pixi.Container {
         for (var i = 0; i < 4; i++) {
             ControlScheme.padsInUse[i] = false
         }
+        this.title.showTitle()
+    }
+
+    loadTitle() {
+        this.title = new Title()
+        this.addChild(this.title)
     }
 
     resetCheck() {
@@ -125,6 +132,7 @@ export default class GameContainer extends Pixi.Container {
                         keybArray[i].justDown("left") ||
                         keybArray[i].justDown("right") ||
                         keybArray[i].justDown("fire"))) {
+                    this.title.hideTitle()
                     ControlScheme.keys[i].inUse = true
                     Sound.playSFX("spawn")
                     game.addChild(new Junkership(keybArray[i]))
@@ -138,6 +146,7 @@ export default class GameContainer extends Pixi.Container {
                             padArray[i].justDown("left") ||
                             padArray[i].justDown("right") ||
                             padArray[i].justDown("fire"))) {
+                        this.title.hideTitle()
                         ControlScheme.padsInUse[i] = true
                         Sound.playSFX("spawn")
                         game.addChild(new Junkership(padArray[i]))
