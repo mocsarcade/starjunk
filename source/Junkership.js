@@ -10,7 +10,7 @@ import Sound from "./Sound.js"
 import {PowerUp, PeaShoota, TriShoota, FiveShoota, RapidFire, RapidSprayShot,
     SprayShot, SuperSprayShot, CrazySprayShot, VertSprayShot,
     VertShoota, BFG, Laser, PiercingLaser, SuperLaser, Mine,
-    SuperMine, PaintShot} from "./PowerUp.js"
+    SuperMine, PaintShot, Sword, Shield} from "./PowerUp.js"
 import Explosion from "./Explosion.js"
 import JunkName from "./JunkName.js"
 
@@ -21,7 +21,7 @@ export default class Junkership extends Pixi.Sprite {
         this.mineArray = []
         this.speed = 115
         this.score = new Score(Junkership.Inventory.length)
-        this.powerUp = new PeaShoota()
+        this.powerUp = new Sword()
         this.reloadTime = 0
         this.controls = cont
         this.cooldownTimer = 1000
@@ -36,7 +36,7 @@ export default class Junkership extends Pixi.Sprite {
             RapidSprayShot, SprayShot, SuperSprayShot,
             CrazySprayShot, VertSprayShot, VertShoota,
             BFG, Laser, PiercingLaser, SuperLaser, Mine,
-            SuperMine, PaintShot, PeaShoota]
+            SuperMine, PaintShot, Sword, PeaShoota]
         this.justFired = false // Only used with gamepad
         this.onDeath = new Explosion()
         this.createdTime = Date.now()
@@ -160,6 +160,7 @@ export default class Junkership extends Pixi.Sprite {
     changePowerUp(newPowerUp) {
         this.powerUp = newPowerUp
         game.addChild(new JunkName(newPowerUp.name, this.x, this.y))
+        game.removeChildAt(25)
     }
 
     releaseControls() {

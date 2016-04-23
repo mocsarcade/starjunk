@@ -601,3 +601,60 @@ export class PaintShot extends PowerUp {
         }
 
 }
+
+export class Sword extends PowerUp {
+
+  constructor(curShip) {
+      super()
+      this.vector = new Victor(0,0)
+      this.bulletSpeed = Reference.NORMAL_BULLET_SPEED
+      this.projectileType = "sword"
+      this.name = "SWORD"
+      this.active = false
+  }
+
+  fire(curShip) {
+      if(this.active != true) {
+          Sound.playSFX("crazyshot")
+          game.addChildAt(new Projectile(
+              curShip.position.x + curShip.width,
+              curShip.position.y + curShip.height/2, this.vector,
+              curShip, this.bulletSpeed, this.projectileType),25)
+          this.active = true
+      }
+
+  }
+
+}
+
+export class Shield extends PowerUp {
+
+  constructor(curShip) {
+      super()
+      this.vector = new Victor(0,0)
+      this.vector2 = new Victor(1,0)
+      this.bulletSpeed = Reference.NORMAL_BULLET_SPEED
+      this.projectileType = "bullet"
+      this.name = "SHIELD"
+      this.active = false
+  }
+
+  fire(curShip) {
+      if(this.active != true) {
+          Sound.playSFX("crazyshot")
+          game.addChild(new Projectile(
+              curShip.position.x + curShip.width,
+              curShip.position.y + curShip.height/2, this.vector,
+              curShip, this.bulletSpeed, this.projectileType))
+          this.active = true
+      }
+
+      Sound.playSFX("smallshot")
+
+      game.addChild(new Projectile(
+          curShip.position.x + curShip.width,
+          curShip.position.y + curShip.height/2, this.vector,
+          curShip, this.bulletSpeed, this.projectileType))
+  }
+
+}
