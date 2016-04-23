@@ -2,6 +2,7 @@ module.exports.GAME_WIDTH = 400
 module.exports.GAME_HEIGHT = 225
 module.exports.JOIN_GAME_TEXT = "PRESS TO JOIN"
 module.exports.INITIALS_ENTRY_TEXT = "HIGH SCORE"
+module.exports.TITLE_DELAY = 1500
 module.exports.TIME_TO_DESPAWN = 7.5 * 1000
 module.exports.SUPER_DESPAWN = .5 * 1000
 module.exports.NAME_DESPAWN = 1.75 * 1000

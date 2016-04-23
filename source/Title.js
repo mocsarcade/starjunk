@@ -2,11 +2,12 @@ var Pixi = require("pixi.js")
 
 import Reference from "./Reference.js"
 
-export default class Junkership extends Pixi.Sprite {
+export default class Title extends Pixi.Sprite {
     constructor(cont) {
         super(PIXI.loader.resources.title.texture)
         this.x = 0
         this.y = Reference.GAME_HEIGHT / 10
+        this.delayTimestamp = -1
     }
 
     update() {
@@ -15,6 +16,10 @@ export default class Junkership extends Pixi.Sprite {
             var parent = this.parent
             parent.removeChild(this)
             parent.addChild(this)
+        } else if (this.delayTimestamp > 0 &&
+            Date.now() - this.delayTimestamp > Reference.TITLE_DELAY) {
+            this.visible = true
+            this.delayTimestamp = -1
         }
     }
 
@@ -23,6 +28,6 @@ export default class Junkership extends Pixi.Sprite {
     }
 
     showTitle() {
-        this.visible=true
+        this.delayTimestamp = Date.now()
     }
 }
