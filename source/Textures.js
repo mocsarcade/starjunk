@@ -15,6 +15,7 @@ exports.initTex = function initTex() {
         .add("junk", require("./images/junk.png"))
         .add("star", require("./images/star.png"))
         .add("laser", require("./images/laser.png"))
+        .add("shield", require("./images/shield.png"))
         .add("plaser", require("./images/plaser.png"))
         .add("slaser", require("./images/slaser.png"))
         .add("boom", require("./images/boom-sheet.png"))

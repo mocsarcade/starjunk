@@ -37,7 +37,7 @@ export default class Projectile extends Pixi.Sprite {
               }
           } else if(this.projectileType == "laser") {
               this.texture = PIXI.loader.resources.laser.texture
-          } else if(this.projectileType == "piercinglaser") {
+          } else if(this.projectileType == "piercinglaser" || this.projectileType == "sword") {
               this.piercing = true
               this.texture = PIXI.loader.resources.plaser.texture
           } else if(this.projectileType == "superlaser") {
@@ -54,8 +54,15 @@ export default class Projectile extends Pixi.Sprite {
 
   update(delta) {
 
-      this.position.x += this.vecX * this.bulletSpeed
-      this.position.y += this.vecY * this.bulletSpeed
+
+      if(this.projectileType == "sword") {
+          this.position.x = this.shotBy.x + this.shotBy.width
+          this.position.y = this.shotBy.y + this.shotBy.height / 2
+      } else {
+          this.position.x += this.vecX * this.bulletSpeed
+          this.position.y += this.vecY * this.bulletSpeed
+      }
+
 
       if(this.projectileType == "paintShot") {
           this.rotation += 1
@@ -63,8 +70,8 @@ export default class Projectile extends Pixi.Sprite {
           this.scale.y = Math.random() * 3
 
           this.vecY += .05
-
       }
+
 
       if (this.position.x < 0 || this.position.x > Reference.GAME_WIDTH ||
           this.position.y < 0 || this.position.y > Reference.GAME_HEIGHT) {
@@ -85,6 +92,10 @@ export default class Projectile extends Pixi.Sprite {
 
       if(this.projectileType == "mine") {
           this.scale.x = 3
+      }
+
+      if(this.projectileType == "sword") {
+          this.scale.x = 2
       }
 
       if(this.projectileType == "superMine") {
