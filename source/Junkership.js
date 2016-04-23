@@ -12,6 +12,7 @@ import {PowerUp, PeaShoota, TriShoota, FiveShoota, RapidFire, RapidSprayShot,
     VertShoota, BFG, Laser, PiercingLaser, SuperLaser, Mine,
     SuperMine, PaintShot} from "./PowerUp.js"
 import Explosion from "./Explosion.js"
+import JunkName from "./JunkName.js"
 
 export default class Junkership extends Pixi.Sprite {
     constructor(cont) {
@@ -20,7 +21,7 @@ export default class Junkership extends Pixi.Sprite {
         this.mineArray = []
         this.speed = 115
         this.score = new Score(Junkership.Inventory.length)
-        this.powerUp = new PaintShot()
+        this.powerUp = new PeaShoota()
         this.reloadTime = 0
         this.controls = cont
         this.cooldownTimer = 1000
@@ -123,6 +124,9 @@ export default class Junkership extends Pixi.Sprite {
     }
 
     destroy() {
+        while (this.mineArray.length > 0) {
+            this.mineArray.pop().destroy()
+        }
         game.removeChild(this)
         this.score.reset()
         game.endShip(this)
@@ -152,6 +156,7 @@ export default class Junkership extends Pixi.Sprite {
 
     changePowerUp(newPowerUp) {
         this.powerUp = newPowerUp
+        game.addChild(new JunkName(newPowerUp.name, this.x, this.y))
     }
 
     releaseControls() {

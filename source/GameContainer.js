@@ -6,7 +6,7 @@ import Trashbot from "./Trashbot.js"
 import SpawnWave from "./SpawnWave.js"
 import Reference from "./Reference.js"
 import Textures from "./Textures.js"
-import Junk from "./Junk.js"
+import {Junk} from "./Junk.js"
 import Utility from "./Utility.js"
 import Star from "./Star.js"
 import StarStreak from "./StarStreak.js"
@@ -79,13 +79,14 @@ export default class GameContainer extends Pixi.Container {
         }
         Sound.stopBGM()
         while (Trashbot.Inventory.length >0) {
-            this.countdownToJunk = 9999999
             Trashbot.Inventory[0].destroy()
+        }
+        while (Junk.Inventory.length >0) {
+            Junk.Inventory[0].destroy()
         }
         this.spawnWaveInterval = 0
         this.difficulty = Reference.DIFFICULTY[0]
         this.countdownToJunk = Utility.randomNumber(this.difficulty.JUNK_FREQUENCY_RANGE.lower, this.difficulty.JUNK_FREQUENCY_RANGE.upper)
-
         for (var i = 0; i < controlTypeCount; i++) {
             ControlScheme.keys[i].inUse = false
         }
