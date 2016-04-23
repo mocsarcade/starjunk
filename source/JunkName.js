@@ -1,22 +1,23 @@
-var Pixi = require("pixi.js")
-
 import Reference from "./Reference.js"
+var Pixi = require("pixi.js")
+var $ = require("jquery")
 
-export default class JunkName extends Pixi.Text {
+export default class JunkName {
     constructor(name, x, y) {
-        super(name,{font: "12pt box", fill: "white"})
-        this.x = x
-        this.y = y
-        this.scale.x = this.scale.y = .75
-        this.spawnTime = Date.now()
-        this.blendMode = Pixi.BLEND_MODES.ADD
-        this.texture.baseTexture.scaleMode = Pixi.SCALE_MODES.NEAREST
-    }
+        this.domElement = $("<div class='junk-text'></div>")
+        this.domElement.text(name)
+        this.domElement.css({
+            left: x /2.25 + "vh",
+            top: y /2.25 + "vh"
+        })
+        $("#mount").append(this.domElement)
 
-    update() {
-        if (Date.now() - this.spawnTime > Reference.NAME_DESPAWN) {
-            game.removeChild(this)
-            this.destroy()
-        }
+        setTimeout(
+            function() {
+                $(this.domElement).remove()
+                this.destroy()
+            }.bind(this),
+            Reference.NAME_DESPAWN
+        )
     }
 }
