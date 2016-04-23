@@ -601,3 +601,48 @@ export class PaintShot extends PowerUp {
         }
 
 }
+
+export class SineShot extends PowerUp {
+    constructor() {
+        super()
+        this.vector = new Victor(1,0)
+        this.bulletSpeed = Reference.NORMAL_BULLET_SPEED
+        this.rapidFire = true
+        this.reloadInterval = 12
+        this.name = "SINE SHOT"
+    }
+
+    fire(curShip) {
+        Sound.playSFX("smallshot")
+
+        game.addChild(new Projectile(
+            curShip.position.x + curShip.width,
+            curShip.position.y + curShip.height/2,
+            this.vector, curShip, this.bulletSpeed, "sineup"))
+    }
+}
+
+export class DoubleSineShot extends PowerUp {
+    constructor() {
+        super()
+        this.vector = new Victor(1,0)
+        this.bulletSpeed = Reference.NORMAL_BULLET_SPEED
+        this.rapidFire = true
+        this.reloadInterval = 12
+        this.name = "DOUBLE SINE SHOT"
+    }
+
+    fire(curShip) {
+        Sound.playSFX("smallshot")
+
+        game.addChild(new Projectile(
+            curShip.position.x + curShip.width,
+            curShip.position.y + curShip.height/2,
+            this.vector, curShip, this.bulletSpeed, "sineup"))
+
+        game.addChild(new Projectile(
+            curShip.position.x + curShip.width,
+            curShip.position.y + curShip.height/2,
+            this.vector, curShip, this.bulletSpeed, "sinedown"))
+    }
+}

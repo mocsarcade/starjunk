@@ -13,6 +13,10 @@ module.exports.MAX_ENEMY_PROJECTILES = 25
 module.exports.NORMAL_BULLET_SPEED = 2
 module.exports.NORMAL_LASER_SPEED = 5000
 module.exports.FAST_BULLET_SPEED = 3.5
+module.exports.SINE_PROJECTILES = {
+    FREQUENCY: 1,
+    AMPLITUDE: 0.1
+}
 module.exports.BG_VOLUME = 1
 module.exports.STAR_COUNT = 50
 module.exports.STAR_COLORS = [0xFFFF00, 0x00FFFF, 0x7FFF00] // Yellow Blue Green
