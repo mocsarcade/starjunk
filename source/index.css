@@ -104,6 +104,13 @@ canvas {
     }
 }
 
+.junk-text {
+    font-family: "box";
+    font-size: 4em;
+    color: white;
+    position: absolute;
+}
+
 .blink {
     animation: blink-animation 1s steps(5, start) infinite;
 }

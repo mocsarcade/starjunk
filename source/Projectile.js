@@ -11,8 +11,7 @@ export default class Projectile extends Pixi.Sprite {
       super()
       this.x = x
       this.y = y
-      this.vecX = vector.x
-      this.vecY = vector.y
+      this.vector = vector
       this.bulletSpeed = bulletSpeed
       this.shotBy = shotBy
       this.timer = 0
@@ -45,24 +44,30 @@ export default class Projectile extends Pixi.Sprite {
               this.despawn = true
               this.spawnTime = Date.now()
               this.texture = PIXI.loader.resources.slaser.texture
+          } else {
+              this.texture = PIXI.loader.resources.projectile.texture
           }
       } else {
           Projectile.EnemyInventory.push(this)
           this.texture = PIXI.loader.resources.enemyProjectile.texture
       }
+
+      if (this.projectileType === "sineup" || this.projectileType === "sinedown") {
+          this.t = 0
+      }
   }
 
   update(delta) {
 
-      this.position.x += this.vecX * this.bulletSpeed
-      this.position.y += this.vecY * this.bulletSpeed
+      this.position.x += this.vector.x * this.bulletSpeed
+      this.position.y += this.vector.y * this.bulletSpeed
 
       if(this.projectileType == "paintShot") {
           this.rotation += 1
           this.scale.x = Math.random() * 3
           this.scale.y = Math.random() * 3
 
-          this.vecY += .05
+          this.vector.y += .05
 
       }
 
@@ -90,6 +95,18 @@ export default class Projectile extends Pixi.Sprite {
       if(this.projectileType == "superMine") {
           this.scale.x = 5
           this.scale.y = 3
+      }
+
+      if (this.projectileType === "sineup" || this.projectileType === "sinedown") {
+          this.t += delta
+          var coefficient = 2 * Math.PI * Reference.SINE_PROJECTILES.FREQUENCY
+          var m = Reference.SINE_PROJECTILES.AMPLITUDE * coefficient * Math.cos(coefficient * this.t)
+          if (this.projectileType === "sinedown") {
+              m = -m
+          }
+          var vector = Victor(1, m)
+          vector.normalize()
+          this.vector = vector
       }
 
   }
