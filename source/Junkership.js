@@ -128,7 +128,6 @@ export default class Junkership extends Pixi.Sprite {
         Sound.playSFX("bigboom")
         this.onDeath.explodePlayer(this)
         this.active = false
-        game.waitingForScores[Junkership.Inventory.indexOf(this)] = true
     }
 
     move(distance, direction) {
