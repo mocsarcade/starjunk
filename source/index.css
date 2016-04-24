@@ -124,3 +124,23 @@ canvas {
         visibility: hidden;
     }
 }
+
+#high-score-list {
+    position: absolute;
+    font-size: 5em;
+    width: 70%;
+    top: 65%;
+    left: 15%;
+    column-count: 2;
+    -webkit-column-count: 2;
+    -moz-column-count: 2;
+    column-gap: 8em;
+    -moz-column-gap: 8em;
+    -webkit-column-gap: 8em;
+    .high-score .name {
+        float: left;
+    }
+    .high-score .score {
+        text-align: right;
+    }
+}

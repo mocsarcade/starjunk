@@ -26,7 +26,8 @@ module.exports.TIME_TO_STREAK = {
     upper: 20000
 }
 
-module.exports.FIREBASE_URL = "http://mocsarcade.firebaseio.com/starjunk"
+// module.exports.FIREBASE_URL = "http://mocsarcade.firebaseio.com/starjunk"
+module.exports.FIREBASE_URL = "https://amber-torch-9326.firebaseio.com/"
 module.exports.HIGH_SCORE_NAME_VALUES = " ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
 
 

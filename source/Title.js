@@ -1,4 +1,5 @@
 var Pixi = require("pixi.js")
+var $ = require("jquery")
 
 import Reference from "./Reference.js"
 
@@ -19,12 +20,14 @@ export default class Title extends Pixi.Sprite {
         } else if (this.delayTimestamp > 0 &&
             Date.now() - this.delayTimestamp > Reference.TITLE_DELAY) {
             this.visible = true
+            $("#high-score-list").show()
             this.delayTimestamp = -1
         }
     }
 
     hideTitle() {
         this.visible=false
+        $("#high-score-list").hide()
     }
 
     showTitle() {

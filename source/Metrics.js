@@ -13,6 +13,7 @@ export default class Metrics {
             this.highScores = $.map(snapshot.val(), function(each) {
                 return each
             })
+            this.updateScoreList()
         })
     }
 
@@ -52,5 +53,17 @@ export default class Metrics {
             isTopScore = true
         }
         return isTopScore
+    }
+
+    updateScoreList() {
+        $("#high-score-list").empty()
+        this.highScores.sort(function(a, b) {
+            return b.score - a.score
+        }).forEach(function(each) {
+            $("#high-score-list").append("<div class='high-score'> \
+            <div class='name'>" + each.name + "</div> \
+                <div class='score'>" + each.score + "</div> \
+                </div>")
+        })
     }
 }

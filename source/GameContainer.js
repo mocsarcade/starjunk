@@ -53,6 +53,9 @@ export default class GameContainer extends Pixi.Container {
             setTimeout(function() {
                 junkership.score.gainControls(junkership.controls)
             }, 1500)
+            game.waitingForScores[junkership.score.playerNumber - 1] = true
+        } else {
+            this.waitingForScores[junkership.score.playerNumber - 1] = false
         }
     }
 
