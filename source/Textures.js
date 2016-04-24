@@ -18,11 +18,12 @@ exports.initTex = function initTex() {
         .add("plaser", require("./images/plaser.png"))
         .add("slaser", require("./images/slaser.png"))
         .add("boom", require("./images/boom-sheet.png"))
+        .add("title", require("./images/title.png"))
         .load()
 
     .on("complete", setup)
 }
 
 function setup() {
-    game.spawnWave()
+    game.loadTitle()
 }
