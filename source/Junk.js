@@ -30,7 +30,13 @@ export class Junk extends Pixi.Sprite {
                     weaponKeys.splice(weaponKeys.indexOf(junkership.powerUp.constructor.name), 1)
                     var weaponIndex = Utility.randomNumber(0, weaponKeys.length - 1)
                     var powerUp = WeaponList[weaponKeys[weaponIndex]]
+                    if(junkership.powerUp.projectileType == "sword" && powerUp.projectileType != "sword") {
+                        junkership.powerUp.curSword.destroy()
+                    }
                     junkership.changePowerUp(new powerUp())
+                    if(powerUp.projectileType == "sword") {
+                        powerUp.fire(junkership)
+                    }
                     this.destroy()
                     break
                 }

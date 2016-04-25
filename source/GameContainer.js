@@ -80,6 +80,9 @@ export default class GameContainer extends Pixi.Container {
             ship.score.reset()
             Junkership.Inventory.splice(Junkership.Inventory.indexOf(ship), 1)
         }
+        if(ship.powerUp.curSword !== undefined) {
+            ship.powerUp.curSword.destroy()
+        }
         Sound.stopBGM()
         while (Trashbot.Inventory.length >0) {
             Trashbot.Inventory[0].destroy()

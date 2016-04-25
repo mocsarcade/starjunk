@@ -44,6 +44,10 @@ export default class Projectile extends Pixi.Sprite {
               this.despawn = true
               this.spawnTime = Date.now()
               this.texture = PIXI.loader.resources.slaser.texture
+          } else if(this.projectileType == "sword") {
+              this.texture = PIXI.loader.resources.plaser.texture
+              this.scale.x = 2
+              this.piercing = true
           } else {
               this.texture = PIXI.loader.resources.projectile.texture
           }
@@ -58,9 +62,13 @@ export default class Projectile extends Pixi.Sprite {
   }
 
   update(delta) {
-
-      this.position.x += this.vector.x * this.bulletSpeed
-      this.position.y += this.vector.y * this.bulletSpeed
+      if(this.projectileType == "sword") {
+          this.position.x = this.shotBy.x + this.shotBy.width
+          this.position.y = this.shotBy.y + this.shotBy.height / 2
+      } else {
+          this.position.x += this.vector.x * this.bulletSpeed
+          this.position.y += this.vector.y * this.bulletSpeed
+      }
 
       if(this.projectileType == "paintShot") {
           this.rotation += 1
@@ -68,7 +76,6 @@ export default class Projectile extends Pixi.Sprite {
           this.scale.y = Math.random() * 3
 
           this.vector.y += .05
-
       }
 
       if (this.position.x < 0 || this.position.x > Reference.GAME_WIDTH ||
