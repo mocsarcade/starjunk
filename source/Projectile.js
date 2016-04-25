@@ -48,6 +48,10 @@ export default class Projectile extends Pixi.Sprite {
               this.texture = PIXI.loader.resources.plaser.texture
               this.scale.x = 2
               this.piercing = true
+          } else if(this.projectileType == "shield") {
+              this.texture = PIXI.loader.resources.shield.texture
+              this.scale.x = .75
+              this.scale.y = .75
           } else {
               this.texture = PIXI.loader.resources.projectile.texture
           }
@@ -65,6 +69,9 @@ export default class Projectile extends Pixi.Sprite {
       if(this.projectileType == "sword") {
           this.position.x = this.shotBy.x + this.shotBy.width
           this.position.y = this.shotBy.y + this.shotBy.height / 2
+      } else if(this.projectileType == "shield") {
+          this.position.x = this.shotBy.x + 5
+          this.position.y = this.shotBy.y + this.shotBy.height / 2
       } else {
           this.position.x += this.vector.x * this.bulletSpeed
           this.position.y += this.vector.y * this.bulletSpeed
@@ -76,6 +83,10 @@ export default class Projectile extends Pixi.Sprite {
           this.scale.y = Math.random() * 3
 
           this.vector.y += .05
+      }
+
+      if(this.projectileType == "shield") {
+          this.rotation += 1
       }
 
       if (this.position.x < 0 || this.position.x > Reference.GAME_WIDTH ||
