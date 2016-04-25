@@ -53,7 +53,7 @@ export default class GameContainer extends Pixi.Container {
             setTimeout(function() {
                 junkership.score.gainControls(junkership.controls)
             }, 1500)
-            game.waitingForScores[junkership.score.playerNumber - 1] = true
+            this.waitingForScores[junkership.score.playerNumber - 1] = true
         } else {
             this.waitingForScores[junkership.score.playerNumber - 1] = false
         }
@@ -77,7 +77,6 @@ export default class GameContainer extends Pixi.Container {
     gameOver() {
         for (var i = 0; i < Junkership.Inventory.length; i++) {
             var ship = Junkership.Inventory[i]
-            ship.releaseControls()
             ship.score.reset()
             Junkership.Inventory.splice(Junkership.Inventory.indexOf(ship), 1)
         }
@@ -124,7 +123,9 @@ export default class GameContainer extends Pixi.Container {
                 !this.waitingForScores[1] &&
                 !this.waitingForScores[2] &&
                 !this.waitingForScores[3]) {
-                this.playerSpawnAllowed = true
+                setTimeout(function() {
+                    this.playerSpawnAllowed = true
+                }.bind(this), Reference.TITLE_DELAY)
             }
         } else if (Date.now() - this.startedAt > 750 // spawn delay
             && this.playerSpawnAllowed) { // reset check

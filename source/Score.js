@@ -86,6 +86,11 @@ export default class Score {
     }
 
     releaseControls() {
+        if (this.controls.type == "keyb") {
+            ControlScheme.keys[this.controls.index].inUse = false
+        } else {
+            ControlScheme.padsInUse[this.controls.index] = false
+        }
         this.controls = undefined
         Score.Inventory.splice(Score.Inventory.indexOf(this), 1)
         this.reset()
