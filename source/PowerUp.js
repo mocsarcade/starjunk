@@ -667,3 +667,24 @@ export class Sword extends PowerUp {
 
 
 }
+
+export class Shield extends PowerUp {
+    constructor() {
+        super()
+        this.vector = new Victor(0,0)
+        this.bulletSpeed = Reference.NORMAL_BULLET_SPEED
+        this.name = "shield"
+        this.projectileType = "shield"
+    }
+
+    fire(curShip) {
+        Sound.playSFX("crazyshot")
+        this.curShield = new Projectile(
+            curShip.position.x - 25,
+            curShip.position.y - 20, this.vector,
+            curShip, this.bulletSpeed, this.projectileType)
+        game.addChild(this.curShield)
+    }
+
+
+}
