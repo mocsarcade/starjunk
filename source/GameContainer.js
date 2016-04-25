@@ -52,8 +52,8 @@ export default class GameContainer extends Pixi.Container {
             junkership.score.setTextToPromptHighScore()
             setTimeout(function() {
                 junkership.score.gainControls(junkership.controls)
-                this.waitingForScores[junkership.score.playerNumber - 1] = true
             }, 1500)
+            this.waitingForScores[junkership.score.playerNumber - 1] = true
         } else {
             this.waitingForScores[junkership.score.playerNumber - 1] = false
         }
@@ -77,7 +77,6 @@ export default class GameContainer extends Pixi.Container {
     gameOver() {
         for (var i = 0; i < Junkership.Inventory.length; i++) {
             var ship = Junkership.Inventory[i]
-            ship.releaseControls()
             ship.score.reset()
             Junkership.Inventory.splice(Junkership.Inventory.indexOf(ship), 1)
         }
