@@ -52,8 +52,8 @@ export default class GameContainer extends Pixi.Container {
             junkership.score.setTextToPromptHighScore()
             setTimeout(function() {
                 junkership.score.gainControls(junkership.controls)
+                this.waitingForScores[junkership.score.playerNumber - 1] = true
             }, 1500)
-            game.waitingForScores[junkership.score.playerNumber - 1] = true
         } else {
             this.waitingForScores[junkership.score.playerNumber - 1] = false
         }
@@ -124,7 +124,9 @@ export default class GameContainer extends Pixi.Container {
                 !this.waitingForScores[1] &&
                 !this.waitingForScores[2] &&
                 !this.waitingForScores[3]) {
-                this.playerSpawnAllowed = true
+                setTimeout(function() {
+                    this.playerSpawnAllowed = true
+                }.bind(this), Reference.TITLE_DELAY)
             }
         } else if (Date.now() - this.startedAt > 750 // spawn delay
             && this.playerSpawnAllowed) { // reset check
