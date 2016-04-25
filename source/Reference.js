@@ -6,14 +6,15 @@ module.exports.TITLE_DELAY = 1500
 module.exports.TIME_TO_DESPAWN = 7.5 * 1000
 module.exports.SUPER_DESPAWN = .5 * 1000
 module.exports.NAME_DESPAWN = 1.75 * 1000
-module.exports.MINE_DESPAWN - .5 * 1000
 module.exports.SHORT_COOLDOWN = 25
 module.exports.LONG_COOLDOWN = 50
 module.exports.MAX_PLAYERS = 4
 module.exports.MAX_ENEMY_PROJECTILES = 25
-module.exports.NORMAL_BULLET_SPEED = 2
+module.exports.NORMAL_BULLET_SPEED = 3
 module.exports.NORMAL_LASER_SPEED = 5000
-module.exports.FAST_BULLET_SPEED = 3.5
+module.exports.FAST_BULLET_SPEED = 4.5
+module.exports.PLAYER_SPEED = 150
+module.exports.MAX_MINES = 10
 module.exports.SINE_PROJECTILES = {
     FREQUENCY: 1,
     AMPLITUDE: 0.1

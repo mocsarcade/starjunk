@@ -26,7 +26,7 @@ export default class Projectile extends Pixi.Sprite {
 
               if(this.projectileType == "mine" || this.projectileType == "superMine") {
                   shotBy.mineArray.push(this)
-                  if(shotBy.mineArray.length > 5) {
+                  if(shotBy.mineArray.length > Reference.MAX_MINES) {
                       var mine = shotBy.mineArray.shift()
                       if(mine != null) {
                           mine.destroy()

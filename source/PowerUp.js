@@ -657,7 +657,12 @@ export class Sword extends PowerUp {
     }
 
     fire(curShip) {
-        Sound.playSFX("crazyshot")
+        if (this.curSword != null) {
+            game.removeChild(this.curSword)
+            this.curSword.destroy()
+        } else {
+            Sound.playSFX("crazyshot")
+        }
         this.curSword = new Projectile(
             curShip.position.x + curShip.width,
             curShip.position.y + curShip.height/2, this.vector,

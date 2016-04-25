@@ -7,7 +7,7 @@ import Reference from "./Reference.js"
 import Projectile from "./Projectile.js"
 import Score from "./Score.js"
 import Sound from "./Sound.js"
-import {Sword} from "./PowerUp.js"
+import {PeaShoota} from "./PowerUp.js"
 import Explosion from "./Explosion.js"
 import JunkName from "./JunkName.js"
 
@@ -16,9 +16,9 @@ export default class Junkership extends Pixi.Sprite {
         super(checkTex())
         Junkership.Inventory.push(this)
         this.mineArray = []
-        this.speed = 115
+        this.speed = Reference.PLAYER_SPEED
         this.score = new Score(Junkership.Inventory.length)
-        this.powerUp = new Sword()
+        this.powerUp = new PeaShoota()
         this.reloadTime = 0
         this.swordActive = false
         this.controls = cont
