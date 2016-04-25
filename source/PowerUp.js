@@ -646,3 +646,24 @@ export class DoubleSineShot extends PowerUp {
             this.vector, curShip, this.bulletSpeed, "sinedown"))
     }
 }
+
+export class Sword extends PowerUp {
+    constructor() {
+        super()
+        this.vector = new Victor(0,0)
+        this.bulletSpeed = Reference.NORMAL_BULLET_SPEED
+        this.name = "SWORD"
+        this.projectileType = "sword"
+    }
+
+    fire(curShip) {
+        Sound.playSFX("crazyshot")
+        this.curSword = new Projectile(
+            curShip.position.x + curShip.width,
+            curShip.position.y + curShip.height/2, this.vector,
+            curShip, this.bulletSpeed, this.projectileType)
+        game.addChild(this.curSword)
+    }
+
+
+}
