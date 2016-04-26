@@ -7,7 +7,7 @@ import Reference from "./Reference.js"
 import Projectile from "./Projectile.js"
 import Score from "./Score.js"
 import Sound from "./Sound.js"
-import {PeaShoota} from "./PowerUp.js"
+import {PeaShoota, Shield} from "./PowerUp.js"
 import Explosion from "./Explosion.js"
 import JunkName from "./JunkName.js"
 
@@ -18,7 +18,7 @@ export default class Junkership extends Pixi.Sprite {
         this.mineArray = []
         this.speed = Reference.PLAYER_SPEED
         this.score = new Score(Junkership.Inventory.length)
-        this.powerUp = new PeaShoota()
+        this.powerUp = new Shield()
         this.reloadTime = 0
         this.swordActive = false
         this.controls = cont
@@ -119,13 +119,18 @@ export default class Junkership extends Pixi.Sprite {
     }
 
     onCollision(collidedWith) {
-        this.destroy()
+        if (this.powerUp.name === "SHIELD") {
+            this.changePowerUp(new PeaShoota())
+            collidedWith.destroy()
+        } else {
+            this.destroy()
+        }
     }
 
     destroy() {
         while (this.mineArray.length > 0) {
             var mine = this.mineArray.pop()
-            if (mine != null) {
+            if (mine != null && mine !== undefined) {
                 mine.destroy()
             }
         }

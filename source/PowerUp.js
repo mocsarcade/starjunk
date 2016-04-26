@@ -20,25 +20,6 @@ class PowerUp {
     }
 }
 
-export class PeaShoota extends PowerUp {
-      constructor() {
-          super()
-          this.vector = new Victor(1,0)
-          this.bulletSpeed = Reference.NORMAL_BULLET_SPEED
-          this.projectileType = "bullet"
-          this.name = "PEA SHOOTER"
-      }
-
-      fire(curShip) {
-          Sound.playSFX("smallshot")
-
-          game.addChild(new Projectile(
-              curShip.position.x + curShip.width,
-              curShip.position.y + curShip.height/2, this.vector,
-              curShip, this.bulletSpeed, this.projectileType))
-      }
-}
-
 export class TriShoota extends PowerUp {
       constructor() {
           super()
@@ -669,6 +650,42 @@ export class Sword extends PowerUp {
             curShip, this.bulletSpeed, this.projectileType)
         game.addChild(this.curSword)
     }
+}
 
+export class Shield extends PowerUp {
+      constructor() {
+          super()
+          this.vector = new Victor(1,0)
+          this.bulletSpeed = Reference.NORMAL_BULLET_SPEED
+          this.projectileType = "bullet"
+          this.name = "SHIELD"
+      }
 
+      fire(curShip) {
+          Sound.playSFX("smallshot")
+
+          game.addChild(new Projectile(
+              curShip.position.x + curShip.width,
+              curShip.position.y + curShip.height/2, this.vector,
+              curShip, this.bulletSpeed, this.projectileType))
+      }
+}
+
+export class PeaShoota extends PowerUp {
+      constructor() {
+          super()
+          this.vector = new Victor(1,0)
+          this.bulletSpeed = Reference.NORMAL_BULLET_SPEED
+          this.projectileType = "bullet"
+          this.name = "PEA SHOOTER"
+      }
+
+      fire(curShip) {
+          Sound.playSFX("smallshot")
+
+          game.addChild(new Projectile(
+              curShip.position.x + curShip.width,
+              curShip.position.y + curShip.height/2, this.vector,
+              curShip, this.bulletSpeed, this.projectileType))
+      }
 }
