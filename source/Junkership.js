@@ -122,10 +122,11 @@ export default class Junkership extends Pixi.Sprite {
     onCollision(collidedWith) {
         if (this.shield) {
             game.removeChild(this.shield)
-            this.shield.destroy()
             this.shield = null
             this.changePowerUp(new PeaShoota())
-            collidedWith.destroy()
+            if (!collidedWith.projectileType) {
+                collidedWith.destroy()
+            }
         } else {
             this.destroy()
         }
@@ -167,7 +168,6 @@ export default class Junkership extends Pixi.Sprite {
     changePowerUp(newPowerUp) {
         if (this.shield) {
             game.removeChild(this.shield)
-            this.shield.destroy()
             this.shield = null
         }
         this.powerUp = newPowerUp
