@@ -652,7 +652,7 @@ export class Sword extends PowerUp {
     }
 }
 
-export class Shield extends PowerUp {
+export class ShieldWeap extends PowerUp {
       constructor() {
           super()
           this.vector = new Victor(1,0)

@@ -19,6 +19,7 @@ exports.initTex = function initTex() {
         .add("slaser", require("./images/slaser.png"))
         .add("boom", require("./images/boom-sheet.png"))
         .add("title", require("./images/title.png"))
+        .add("shield", require("./images/shield.png"))
         .load()
 
     .on("complete", setup)
