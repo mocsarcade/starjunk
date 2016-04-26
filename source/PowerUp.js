@@ -19,7 +19,7 @@ class PowerUp {
         console.log("Error: Calling default fire()")
     }
 }
-/*
+
 export class TriShoota extends PowerUp {
       constructor() {
           super()
@@ -651,7 +651,7 @@ export class Sword extends PowerUp {
         game.addChild(this.curSword)
     }
 }
-*/
+
 export class ShieldWeap extends PowerUp {
       constructor() {
           super()
