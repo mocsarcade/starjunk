@@ -26,6 +26,11 @@ exports.playSFX = function(sound) {
         getjunk.volume = 0.4
         getjunk.play()
         break
+    case "shield":
+        var shield = new Audio(require("./sounds/shoot-b-1.wav"))
+        shield.volume = 0.4
+        shield.play()
+        break
     case "smallshot":
         var smallshot = new Audio(require("./sounds/shoot-2.wav"))
         smallshot.volume = 0.4
