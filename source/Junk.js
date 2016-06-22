@@ -18,7 +18,7 @@ export class Junk extends Pixi.Sprite {
     }
 
     update(delta) {
-        if (Date.now() - this.spawnTime >= Reference.TIME_TO_DESPAWN) {
+        if (Date.now() - this.spawnTime >= Reference.TIME_TO_DESPAWN * 1000) {
             this.destroy()
         } else {
             for (var i = 0; i < Junkership.Inventory.length; i++) {
@@ -30,13 +30,7 @@ export class Junk extends Pixi.Sprite {
                     weaponKeys.splice(weaponKeys.indexOf(junkership.powerUp.constructor.name), 1)
                     var weaponIndex = Utility.randomNumber(0, weaponKeys.length - 1)
                     var powerUp = WeaponList[weaponKeys[weaponIndex]]
-                    if(junkership.powerUp.projectileType == "sword" && powerUp.projectileType != "sword") {
-                        junkership.powerUp.curSword.destroy()
-                    }
-                    junkership.changePowerUp(new powerUp())
-                    if(powerUp.projectileType == "sword") {
-                        powerUp.fire(junkership)
-                    }
+                    junkership.changePowerUp(new powerUp(junkership))
                     this.destroy()
                     break
                 }
@@ -50,7 +44,7 @@ export class Junk extends Pixi.Sprite {
         super.destroy()
     }
 
-    static weaponKeys = Object.keys(WeaponList);
+    static weaponKeys = Object.keys(WeaponList)
 }
 
 Junk.Inventory = []

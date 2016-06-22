@@ -20,7 +20,6 @@ export default class Trashbot extends Pixi.Sprite {
             y: position.y
         }
         this.inRage = false
-        this.onDeath = new Explosion()
     }
 
     update(delta) {
@@ -53,7 +52,7 @@ export default class Trashbot extends Pixi.Sprite {
 
     destroy() {
         Sound.playSFX("smallboom")
-        this.onDeath.explodeEnemy(this)
+        new Explosion().explodeEnemy(this)
         var finalPosition = this.position
         game.removeChild(this)
         Trashbot.Inventory.splice(Trashbot.Inventory.indexOf(this), 1)

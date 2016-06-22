@@ -16,14 +16,10 @@ export default class Junkership extends Pixi.Sprite {
     constructor(cont) {
         super(checkTex())
         Junkership.Inventory.push(this)
-        this.mineArray = []
         this.speed = Reference.PLAYER_SPEED
         this.score = new Score(Junkership.Inventory.length)
         this.powerUp = new PeaShoota()
-        this.reloadTime = 0
-        this.swordActive = false
         this.controls = cont
-        this.cooldownTimer = 1000
         this.x = 10
         this.y = Reference.GAME_HEIGHT / 2
         this.hitBox = new Pixi.Rectangle(
@@ -31,8 +27,6 @@ export default class Junkership extends Pixi.Sprite {
             this.y + 1 , // Top offset
             this.width - 3 , // Right offset + left offset
             this.height - 3 )// Bottom offset + top offset
-        this.justFired = false // Only used with gamepad
-        this.onDeath = new Explosion()
         this.createdTime = Date.now()
         this.active = true
     }
@@ -41,68 +35,41 @@ export default class Junkership extends Pixi.Sprite {
         if (this.active) {
             var relativeSpeed = this.speed * delta
 
-            if (this.controls.justDown("up")) {
-                this.ignoreY = "down"
-            }
-            if (this.controls.justDown("down")) {
-                this.ignoreY = "up"
-            }
-            if (this.controls.justDown("left")) {
-                this.ignoreX = "right"
-            }
-            if (this.controls.justDown("right")) {
-                this.ignoreX = "left"
-            }
-            if (this.controls.justUp("up") || this.controls.justUp("down")) {
-                this.ignoreY = null
-            }
-            if (this.controls.justUp("left") || this.controls.justUp("right")) {
-                this.ignoreX = null
-            }
-            if(this.controls.isDown("up") && this.ignoreY != "up") {
+            this.controls.resolveConflicts()
+            if(this.controls.isDown("up")) {
                 this.move(-relativeSpeed, "y")
             }
-            if(this.controls.isDown("down") && this.ignoreY != "down") {
+            if(this.controls.isDown("down")) {
                 this.move(relativeSpeed, "y")
             }
-            if(this.controls.isDown("left") && this.ignoreX != "left") {
+            if(this.controls.isDown("left")) {
                 this.move(-relativeSpeed, "x")
             }
-            if(this.controls.isDown("right") && this.ignoreX != "right") {
+            if(this.controls.isDown("right")) {
                 this.move(relativeSpeed, "x")
             }
-            if(this.controls.justDown("fire") && this.powerUp.reloadInterval === undefined) {
-                if(this.powerUp.projectileType == "paintShot") {
-                    if(this.cooldownTimer > Reference.SHORT_COOLDOWN) {
+            if(this.controls.justDown("fire") && this.powerUp.reload === undefined) {
+                if (this.powerUp.cooldown !== undefined) {
+                    if (this.powerUp.cooldown.time > this.powerUp.cooldown.limit) {
                         this.powerUp.fire(this)
-                        this.cooldownTimer = 0
+                        this.powerUp.cooldown.time = 0
                     }
-                } else if(this.powerUp.projectileType == "superlaser") {
-                    if(this.cooldownTimer > Reference.LONG_COOLDOWN) {
-                        this.powerUp.fire(this)
-                        this.cooldownTimer = 0
-                    }
+                    this.powerUp.cooldown.time++
                 } else {
                     this.powerUp.fire(this)
                 }
             }
 
             if(this.controls.isDown("fire")) {
-                this.reloadTime += 1
-                if (this.powerUp.reloadInterval !== undefined) {
-                    if(this.reloadTime >= this.powerUp.reloadInterval) {
+                if (this.powerUp.reload !== undefined) {
+                    if(this.powerUp.reload.time >= this.powerUp.reload.limit) {
                         this.powerUp.fire(this, delta)
-                        this.reloadTime = 0
+                        this.powerUp.reload.time = 0
                     }
+                    this.powerUp.reload.time++
                 }
             }
 
-            if(this.powerUp.projectileType == "sword" && this.swordActive != true) {
-                this.powerUp.fire(this)
-                this.swordActive = true
-            }
-
-            this.cooldownTimer++
             var killedBy
             var enemyProjectile
             for(var i = 0; i < Projectile.EnemyInventory.length; i++ ) {
@@ -133,17 +100,12 @@ export default class Junkership extends Pixi.Sprite {
     }
 
     destroy() {
-        while (this.mineArray.length > 0) {
-            var mine = this.mineArray.pop()
-            if (mine != null && mine !== undefined) {
-                mine.destroy()
-            }
-        }
+        this.powerUp.destroy()
         game.removeChild(this)
         this.score.reset()
         game.endShip(this)
         Sound.playSFX("bigboom")
-        this.onDeath.explodePlayer(this)
+        new Explosion().explodePlayer(this)
         this.active = false
     }
 
@@ -166,17 +128,8 @@ export default class Junkership extends Pixi.Sprite {
     }
 
     changePowerUp(newPowerUp) {
-        if (this.shield) {
-            game.removeChild(this.shield)
-            this.shield = null
-        }
+        this.powerUp.destroy()
         this.powerUp = newPowerUp
-        if (newPowerUp.name == "SHIELD") {
-            Sound.playSFX("shield")
-            this.shield=new Shield(this)
-            game.addChild(this.shield)
-        }
-        this.swordActive = false
         new JunkName(newPowerUp.name, this.x, this.y)
     }
 

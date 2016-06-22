@@ -3,9 +3,10 @@ module.exports.GAME_HEIGHT = 225
 module.exports.JOIN_GAME_TEXT = "PRESS TO JOIN"
 module.exports.INITIALS_ENTRY_TEXT = "HIGH SCORE"
 module.exports.TITLE_DELAY = 1500
-module.exports.TIME_TO_DESPAWN = 7.5 * 1000
-module.exports.SUPER_DESPAWN = .5 * 1000
-module.exports.NAME_DESPAWN = 1.75 * 1000
+module.exports.TIME_TO_DESPAWN = 7.5
+module.exports.SUPER_DESPAWN = 0.5
+module.exports.NAME_DESPAWN = 1.75
+module.exports.SPAWN_DELAY = 0.75
 module.exports.SHORT_COOLDOWN = 25
 module.exports.LONG_COOLDOWN = 50
 module.exports.MAX_PLAYERS = 4
@@ -23,8 +24,8 @@ module.exports.BG_VOLUME = 1
 module.exports.STAR_COUNT = 50
 module.exports.STAR_COLORS = [0xC44040, 0xD89000, 0x339D33, 0x4A508A] // Red Yellow Green Blue
 module.exports.TIME_TO_STREAK = {
-    lower: 7000,
-    upper: 20000
+    lower: 7,
+    upper: 20
 }
 
 // module.exports.FIREBASE_URL = "http://mocsarcade.firebaseio.com/starjunk"
