@@ -6,145 +6,148 @@ import Explosion from "./Explosion.js"
 import Particle from "./Particle.js"
 
 export default class Projectile extends Pixi.Sprite {
+    constructor(x, y, vector, shotBy, bulletSpeed, projectileType, friendly) {
+        super()
+        this.x = x
+        this.y = y
+        this.vector = vector
+        this.bulletSpeed = bulletSpeed
+        this.shotBy = shotBy
+        this.projectileType = projectileType
+        this.friendly = (friendly === undefined) ? true : friendly
+        if (this.friendly) {
+            Projectile.FriendlyInventory.push(this)
+            this.texture = PIXI.loader.resources.projectile.texture
+        } else {
+            Projectile.EnemyInventory.push(this)
+            this.texture = PIXI.loader.resources.enemyProjectile.texture
+        }
+    }
 
-  constructor(x, y, vector, shotBy, bulletSpeed, projectileType, friendly) {
-      super()
-      this.x = x
-      this.y = y
-      this.vector = vector
-      this.bulletSpeed = bulletSpeed
-      this.shotBy = shotBy
-      this.timer = 0
-      this.projectileType = projectileType
-      this.onHit = new Explosion()
-      this.friendly = (friendly === undefined) ? true : friendly
-      if (this.friendly) {
-          Projectile.FriendlyInventory.push(this)
-          if(this.projectileType == "bullet" || this.projectileType == "mine" || this.projectileType == "superMine"
-              || this.projectileType == "paintShot" || this.projectileType == "sineBullet") {
-              this.texture = PIXI.loader.resources.projectile.texture
+    update(delta) {
+        this.position.x += this.vector.x * this.bulletSpeed
+        this.position.y += this.vector.y * this.bulletSpeed
 
-              if(this.projectileType == "mine" || this.projectileType == "superMine") {
-                  shotBy.mineArray.push(this)
-                  if(shotBy.mineArray.length > Reference.MAX_MINES) {
-                      var mine = shotBy.mineArray.shift()
-                      if(mine != null) {
-                          mine.destroy()
-                      }
+        if (this.position.x < 0 || this.position.x > Reference.GAME_WIDTH ||
+            this.position.y < 0 || this.position.y > Reference.GAME_HEIGHT) {
+            this.destroy()
+        }
+    }
 
-                  }
-              }
-          } else if(this.projectileType == "laser") {
-              this.texture = PIXI.loader.resources.laser.texture
-          } else if(this.projectileType == "piercinglaser") {
-              this.piercing = true
-              this.texture = PIXI.loader.resources.plaser.texture
-          } else if(this.projectileType == "superlaser") {
-              this.piercing = true
-              this.despawn = true
-              this.spawnTime = Date.now()
-              this.texture = PIXI.loader.resources.slaser.texture
-          } else if(this.projectileType == "sword") {
-              this.texture = PIXI.loader.resources.plaser.texture
-              this.scale.x = 2
-              this.piercing = true
-          } else {
-              this.texture = PIXI.loader.resources.projectile.texture
-          }
-      } else {
-          Projectile.EnemyInventory.push(this)
-          this.texture = PIXI.loader.resources.enemyProjectile.texture
-      }
+    onCollision(collidedWith) {
+        if(this.piercing != true) {
+            this.destroy()
+        }
+    }
 
-      if (this.projectileType === "sineup" || this.projectileType === "sinedown") {
-          this.t = 0
-      }
-  }
+    destroy() {
+        game.removeChild(this)
+        var index = -1
+        if (this.friendly) {
+            index = Projectile.FriendlyInventory.indexOf(this)
+            Projectile.FriendlyInventory.splice(index, 1)
+        } else {
+            index = Projectile.EnemyInventory.indexOf(this)
+            Projectile.EnemyInventory.splice(index, 1)
+        }
+        if (index >= 0) {
+            super.destroy()
+        }
+    }
+}
 
-  update(delta) {
-      if(this.projectileType == "sword") {
-          this.position.x = this.shotBy.x + this.shotBy.width
-          this.position.y = this.shotBy.y + this.shotBy.height / 2
-      } else {
-          this.position.x += this.vector.x * this.bulletSpeed
-          this.position.y += this.vector.y * this.bulletSpeed
-      }
+export class MineProjectile extends Projectile {
+    constructor(x, y, vector, shotBy, bulletSpeed, projectileType, friendly) {
+        super(x, y, vector, shotBy, bulletSpeed, projectileType, friendly)
+        this.texture = PIXI.loader.resources.projectile.texture
+    }
 
-      if(this.projectileType == "paintShot") {
-          this.rotation += 1
-          this.scale.x = Math.random() * 3
-          this.scale.y = Math.random() * 3
+    update(delta) {
+        super.update(delta)
+        this.rotation += 1
+    }
 
-          this.vector.y += .05
-      }
+    onCollision(collidedWith) {
+        if(this.projectileType == "mine") {
+            new Explosion().explodeEnemy(this)
+        } else if(this.projectileType == "superMine") {
+            new Explosion().explodePlayer(this)
+        }
+        var curMine = this.shotBy.powerUp.mines.indexOf(this)
+        delete this.shotBy.powerUp.mines[curMine]
+        this.destroy()
+    }
+}
 
-      if (this.position.x < 0 || this.position.x > Reference.GAME_WIDTH ||
-          this.position.y < 0 || this.position.y > Reference.GAME_HEIGHT) {
-          this.destroy()
-      }
+export class SineProjectile extends Projectile {
+    constructor(x, y, vector, shotBy, bulletSpeed, projectileType, friendly) {
+        super(x, y, vector, shotBy, bulletSpeed, projectileType, friendly)
+        this.t = 0
+    }
 
-      if(this.despawn == true) {
-          this.scale.y += .05
-          this.position.y += .1
-          if (Date.now() - this.spawnTime >= Reference.SUPER_DESPAWN) {
-              this.destroy()
-          }
-      }
+    update(delta) {
+        this.t += delta
+        var coefficient = 2 * Math.PI * Reference.SINE_PROJECTILES.FREQUENCY
+        var m = Reference.SINE_PROJECTILES.AMPLITUDE * coefficient * Math.cos(coefficient * this.t)
+        if (this.projectileType === "sinedown") {
+            m = -m
+        }
+        var vector = Victor(1, m)
+        vector.normalize()
+        this.vector = vector
+    }
+}
 
-      if(this.projectileType == "mine" || this.projectileType == "superMine") {
-          this.rotation += 1
-      }
+export class PaintProjectile extends Projectile {
+    update(delta) {
+        super.update(delta)
+        this.rotation += 1
+        this.scale.x = Math.random() * 3
+        this.scale.y = Math.random() * 3
+        this.vector.y += .05
+    }
+}
 
-      if(this.projectileType == "mine") {
-          this.scale.x = 3
-      }
+export class SwordProjectile extends Projectile {
+    constructor(x, y, vector, shotBy, bulletSpeed, projectileType, friendly) {
+        super(x, y, vector, shotBy, bulletSpeed, projectileType, friendly)
+        this.texture = PIXI.loader.resources.plaser.texture
+        this.scale.x = 2
+        this.piercing = true
+    }
 
-      if(this.projectileType == "superMine") {
-          this.scale.x = 5
-          this.scale.y = 3
-      }
+    update(delta) {
+        this.position.x = this.shotBy.x + this.shotBy.width
+        this.position.y = this.shotBy.y + this.shotBy.height / 2
+    }
+}
 
-      if (this.projectileType === "sineup" || this.projectileType === "sinedown") {
-          this.t += delta
-          var coefficient = 2 * Math.PI * Reference.SINE_PROJECTILES.FREQUENCY
-          var m = Reference.SINE_PROJECTILES.AMPLITUDE * coefficient * Math.cos(coefficient * this.t)
-          if (this.projectileType === "sinedown") {
-              m = -m
-          }
-          var vector = Victor(1, m)
-          vector.normalize()
-          this.vector = vector
-      }
+export class LaserProjectile extends Projectile {
+    constructor(x, y, vector, shotBy, bulletSpeed, projectileType, friendly) {
+        super(x, y, vector, shotBy, bulletSpeed, projectileType, friendly)
+        if(this.projectileType == "laser") {
+            this.texture = PIXI.loader.resources.laser.texture
+        } else if(this.projectileType == "piercinglaser") {
+            this.piercing = true
+            this.texture = PIXI.loader.resources.plaser.texture
+        } else if(this.projectileType == "superlaser") {
+            this.piercing = true
+            this.despawn = true
+            this.spawnTime = Date.now()
+            this.texture = PIXI.loader.resources.slaser.texture
+        }
+    }
 
-  }
-
-
-  onCollision(collidedWith) {
-      if(this.projectileType == "mine") {
-          this.onHit.explodeEnemy(this)
-          var curMine = this.shotBy.mineArray.indexOf(this)
-          delete this.shotBy.mineArray[curMine]
-          this.destroy()
-      } else if(this.projectileType == "superMine") {
-          this.onHit.explodePlayer(this)
-          var curMine = this.shotBy.mineArray.indexOf(this)
-          delete this.shotBy.mineArray[curMine]
-          this.destroy()
-      } else if(this.piercing != true) {
-          this.destroy()
-      } else {
-      }
-  }
-
-  destroy() {
-      game.removeChild(this)
-      if (this.friendly) {
-          Projectile.FriendlyInventory.splice(Projectile.FriendlyInventory.indexOf(this), 1)
-      } else {
-          Projectile.EnemyInventory.splice(Projectile.EnemyInventory.indexOf(this), 1)
-      }
-      super.destroy()
-  }
+    update(delta) {
+        super.update(delta)
+        if (this.despawn == true) {
+            this.scale.y += .05
+            this.position.y += .1
+            if (Date.now() - this.spawnTime >= Reference.SUPER_DESPAWN * 1000) {
+                this.destroy()
+            }
+        }
+    }
 }
 
 Projectile.FriendlyInventory = []

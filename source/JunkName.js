@@ -16,7 +16,7 @@ export default class JunkName {
             function() {
                 $(this.domElement).remove()
             }.bind(this),
-            Reference.NAME_DESPAWN
+            Reference.NAME_DESPAWN * 1000
         )
     }
 }

@@ -4,20 +4,38 @@ export class keybCont {
     constructor(index) {
         this.index = index
         this.type = "keyb"
+        this.ignoreX = null
+        this.ignoreY = null
     }
     isDown(key) {
         switch (key) {
         case "up":
-            return Keyb.isDown(exports.ControlScheme.keys[this.index].up)
+            if(this.ignoreY != key) {
+                return Keyb.isDown(exports.ControlScheme.keys[this.index].up)
+            } else {
+                return false
+            }
             break
         case "down":
-            return Keyb.isDown(exports.ControlScheme.keys[this.index].down)
+            if(this.ignoreY != key) {
+                return Keyb.isDown(exports.ControlScheme.keys[this.index].down)
+            } else {
+                return false
+            }
             break
         case "left":
-            return Keyb.isDown(exports.ControlScheme.keys[this.index].left)
+            if(this.ignoreX != key) {
+                return Keyb.isDown(exports.ControlScheme.keys[this.index].left)
+            } else {
+                return false
+            }
             break
         case "right":
-            return Keyb.isDown(exports.ControlScheme.keys[this.index].right)
+            if(this.ignoreX != key) {
+                return Keyb.isDown(exports.ControlScheme.keys[this.index].right)
+            } else {
+                return false
+            }
             break
         case "fire":
             return Keyb.isDown(exports.ControlScheme.keys[this.index].fire)
@@ -69,6 +87,27 @@ export class keybCont {
         default:
             console.log("Invalid keybCont.justUp call: " + key)
             return null
+        }
+    }
+
+    resolveConflicts() {
+        if (this.justDown("up")) {
+            this.ignoreY = "down"
+        }
+        if (this.justDown("down")) {
+            this.ignoreY = "up"
+        }
+        if (this.justDown("left")) {
+            this.ignoreX = "right"
+        }
+        if (this.justDown("right")) {
+            this.ignoreX = "left"
+        }
+        if (this.justUp("up") || this.justUp("down")) {
+            this.ignoreY = null
+        }
+        if (this.justUp("left") || this.justUp("right")) {
+            this.ignoreX = null
         }
     }
 }
@@ -131,21 +170,50 @@ export class padCont {
     justUp(key) {
 
     }
-}
 
-export var ControlScheme = {
-    WASD: 0,
-    NUM_PAD: 1,
-    ARROW_KEYS: 2,
-    keys: {
-        0: {up: "W", down: "S", left: "A", right: "D", fire: "<space>", inUse: false, isKeyb: true},
-        1: {up: "<num-8>", down: "<num-2>", left: "<num-4>", right: "<num-6>", fire: "<num-0>", inUse: false, isKeyb: true},
-        2: {up: "<up>", down: "<down>", left: "<left>", right: "<right>", fire: ".", inUse: false, isKeyb: true},
-    },
-    padsInUse: [false, false, false, false]
+    resolveConflicts() {
+    }
 }
 
 export var keybArray = [new keybCont(0), new keybCont(1), new keybCont(2)]
 export var padArray = [new padCont(0), new padCont(1), new padCont(2), new padCont(3)]
 
-export var controlTypeCount = Object.keys(exports.ControlScheme).length -2
+export var ControlScheme = {
+    WASD: 0,
+    NUM_PAD: 1,
+    ARROW_KEYS: 2,
+    keys: [
+        {up: "W", down: "S", left: "A", right: "D", fire: "<space>", inUse: false, isKeyb: true},
+        {up: "<num-8>", down: "<num-2>", left: "<num-4>", right: "<num-6>", fire: "<num-0>", inUse: false, isKeyb: true},
+        {up: "<up>", down: "<down>", left: "<left>", right: "<right>", fire: ".", inUse: false, isKeyb: true},
+    ],
+    padsInUse: [false, false, false, false],
+    activateControls: function () {
+        for (var i = 0; i < exports.keybArray.length; i++) {
+            if (!this.keys[i].inUse && (
+                exports.keybArray[i].justDown("up") ||
+                exports.keybArray[i].justDown("down") ||
+                exports.keybArray[i].justDown("left") ||
+                exports.keybArray[i].justDown("right") ||
+                exports.keybArray[i].justDown("fire"))) {
+                this.keys[i].inUse = true
+                return exports.keybArray[i]
+            }
+        }
+        for (var i = 0; i < exports.padArray.length; i++) {
+            if (game.gamepads[i]) {
+                if (!ControlScheme.padsInUse[i] && (
+                    exports.padArray[i].justDown("up") ||
+                    exports.padArray[i].justDown("down") ||
+                    exports.padArray[i].justDown("left") ||
+                    exports.padArray[i].justDown("right") ||
+                    exports.padArray[i].justDown("fire"))) {
+                    this.padsInUse[i] = true
+                    return exports.padArray[i]
+                }
+            }
+        }
+
+        return null
+    }
+}

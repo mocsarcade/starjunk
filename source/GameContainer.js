@@ -13,7 +13,7 @@ import StarStreak from "./StarStreak.js"
 import Sound from "./Sound.js"
 import Metrics from "./Metrics.js"
 import {
-    ControlScheme, controlTypeCount, padCont, keybCont, keybArray, padArray,
+    ControlScheme, padCont, keybCont, keybArray, padArray,
     isDown, justdown, justUp
 }
 from "./Controls.js"
@@ -31,7 +31,7 @@ export default class GameContainer extends Pixi.Container {
         this.stars = 0
         this.metrics = new Metrics(Reference.FIREBASE_URL)
         this.startedAt = Date.now()
-        this.waitingForScores = [false, false, false, false]
+        this.waitingForScores = Array(4).fill(false)
         this.playerSpawnAllowed = true
     }
 
@@ -93,10 +93,10 @@ export default class GameContainer extends Pixi.Container {
         this.spawnWaveInterval = 0
         this.difficulty = Reference.DIFFICULTY[0]
         this.countdownToJunk = Utility.randomNumber(this.difficulty.JUNK_FREQUENCY_RANGE.lower, this.difficulty.JUNK_FREQUENCY_RANGE.upper)
-        for (var i = 0; i < controlTypeCount; i++) {
+        for (var i = 0; i < ControlScheme.keys.length; i++) {
             ControlScheme.keys[i].inUse = false
         }
-        for (var i = 0; i < 4; i++) {
+        for (var i = 0; i < ControlScheme.padsInUse.length; i++) {
             ControlScheme.padsInUse[i] = false
         }
         this.title.showTitle()
@@ -122,43 +122,20 @@ export default class GameContainer extends Pixi.Container {
 
     checkPlayerSpawn() {
         if (!this.playerSpawnAllowed) {
-            if (!this.waitingForScores[0] &&
-                !this.waitingForScores[1] &&
-                !this.waitingForScores[2] &&
-                !this.waitingForScores[3]) {
+            if (this.waitingForScores.every(e => !e)) {
                 setTimeout(function() {
                     this.playerSpawnAllowed = true
                 }.bind(this), Reference.TITLE_DELAY)
             }
-        } else if (Date.now() - this.startedAt > 750 // spawn delay
+        } else if (Date.now() - this.startedAt > Reference.SPAWN_DELAY * 1000 // spawn delay
             && this.playerSpawnAllowed) { // reset check
-            for (var i = 0; i < controlTypeCount; i++) {
-                if (!ControlScheme.keys[i].inUse && (
-                        keybArray[i].justDown("up") ||
-                        keybArray[i].justDown("down") ||
-                        keybArray[i].justDown("left") ||
-                        keybArray[i].justDown("right") ||
-                        keybArray[i].justDown("fire"))) {
-                    this.title.hideTitle()
-                    ControlScheme.keys[i].inUse = true
-                    Sound.playSFX("spawn")
-                    game.addChild(new Junkership(keybArray[i]))
-                }
-            }
-            for (var i = 0; i < this.gamepads.length; i++) {
-                if (this.gamepads[i]) {
-                    if (!ControlScheme.padsInUse[i] && (
-                            padArray[i].justDown("up") ||
-                            padArray[i].justDown("down") ||
-                            padArray[i].justDown("left") ||
-                            padArray[i].justDown("right") ||
-                            padArray[i].justDown("fire"))) {
-                        this.title.hideTitle()
-                        ControlScheme.padsInUse[i] = true
-                        Sound.playSFX("spawn")
-                        game.addChild(new Junkership(padArray[i]))
-                    }
-                }
+            // Check for button press on all keyboard controls and gamepads, and return
+            // which one was used, then add a new junkership with these controls
+            var controls = ControlScheme.activateControls()
+            if (controls !== null) {
+                this.title.hideTitle()
+                Sound.playSFX("spawn")
+                game.addChild(new Junkership(controls))
             }
         }
     }

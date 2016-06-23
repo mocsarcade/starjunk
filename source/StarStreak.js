@@ -12,7 +12,7 @@ export default class StarStreak extends Pixi.Sprite {
         this.scale.x = 50
         this.alpha = 0
         this.lastStreak = Date.now()
-        this.timeToStreak = Utility.randomNumber(Reference.TIME_TO_STREAK.lower, Reference.TIME_TO_STREAK.upper)
+        this.timeToStreak = Utility.randomNumber(Reference.TIME_TO_STREAK.lower * 1000, Reference.TIME_TO_STREAK.upper * 1000)
     }
 
     update(delta) {
