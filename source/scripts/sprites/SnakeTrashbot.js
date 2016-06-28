@@ -1,6 +1,6 @@
-import Trashbot from "./Trashbot.js"
-import Reference from "./Reference.js"
-import Projectile from "./Projectile.js"
+import Trashbot from "scripts/sprites/Trashbot.js"
+import Reference from "scripts/data/Reference.js"
+import Projectile from "scripts/sprites/Projectile.js"
 
 export default class SnakeTrashbot extends Trashbot {
     constructor(position, movementStyle) {

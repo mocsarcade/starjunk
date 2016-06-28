@@ -55,7 +55,9 @@ rimraf("./builds", function() {
             fs: "empty"
         },
         resolve: {
-            root: ["./source"]
+            root: [
+                path.resolve("./source")
+            ]
         },
         plugins: [
             new WebpackExtract("css", "index.css"),

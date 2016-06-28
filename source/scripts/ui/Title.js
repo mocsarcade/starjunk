@@ -1,7 +1,7 @@
 var Pixi = require("pixi.js")
 var $ = require("jquery")
 
-import Reference from "./Reference.js"
+import Reference from "scripts/data/Reference.js"
 
 export default class Title extends Pixi.Sprite {
     constructor(cont) {

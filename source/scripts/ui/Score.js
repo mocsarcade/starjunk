@@ -1,8 +1,8 @@
 var $ = require("jquery")
-import Junkership from "./Junkership.js"
-import Reference from "./Reference.js"
-import {ControlScheme} from "./Controls.js"
-import Sound from "./Sound.js"
+import Junkership from "scripts/sprites/Junkership.js"
+import Reference from "scripts/data/Reference.js"
+import {ControlScheme} from "scripts/layers/Controls.js"
+import Sound from "scripts/layers/Sound.js"
 
 export default class Score {
     constructor(playerNumber) {

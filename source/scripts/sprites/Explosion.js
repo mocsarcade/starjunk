@@ -1,9 +1,9 @@
 var Pixi = require("pixi.js")
 var Victor = require("victor")
 
-import Utility from "./Utility.js"
-import Particle from "./Particle.js"
-import Reference from "./Reference.js"
+import Utility from "scripts/data/Utility.js"
+import Particle from "scripts/sprites/Particle.js"
+import Reference from "scripts/data/Reference.js"
 
 export default class Explosion {
     constructor() {

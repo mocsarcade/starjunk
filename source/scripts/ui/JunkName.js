@@ -1,4 +1,4 @@
-import Reference from "./Reference.js"
+import Reference from "scripts/data/Reference.js"
 var Pixi = require("pixi.js")
 var $ = require("jquery")
 

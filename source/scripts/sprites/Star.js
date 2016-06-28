@@ -1,6 +1,6 @@
 var Pixi = require("pixi.js")
 
-import Reference from "./Reference.js"
+import Reference from "scripts/data/Reference.js"
 
 export default class Star extends Pixi.Sprite {
     constructor(parallax) {

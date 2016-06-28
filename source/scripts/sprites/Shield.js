@@ -1,6 +1,6 @@
 var Pixi = require("pixi.js")
 
-import Utility from "./Utility.js"
+import Utility from "scripts/data/Utility.js"
 
 export default class Shield extends Pixi.Sprite {
     constructor(ship) {
