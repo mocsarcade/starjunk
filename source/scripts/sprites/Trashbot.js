@@ -1,11 +1,11 @@
 var Pixi = require("pixi.js")
-var Utility = require("./Utility")
-import Reference from "./Reference.js"
-import Projectile from "./Projectile.js"
-import Junkership from "./Junkership.js"
-import {Junk} from "./Junk.js"
-import Sound from "./Sound.js"
-import Explosion from "./Explosion.js"
+var Utility = require("scripts/data/Utility")
+import Reference from "scripts/data/Reference.js"
+import Projectile from "scripts/sprites/Projectile.js"
+import Junkership from "scripts/sprites/Junkership.js"
+import {Junk} from "scripts/sprites/Junk.js"
+import Sound from "scripts/layers/Sound.js"
+import Explosion from "scripts/sprites/Explosion.js"
 
 export default class Trashbot extends Pixi.Sprite {
     constructor(position, speed, health, texture) {

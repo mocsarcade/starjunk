@@ -1,9 +1,9 @@
 var Pixi = require("pixi.js")
-var Reference = require("Reference.js")
+var Reference = require("scripts/data/Reference.js")
 var Victor = require("victor")
 
-import Explosion from "./Explosion.js"
-import Particle from "./Particle.js"
+import Explosion from "scripts/sprites/Explosion.js"
+import Particle from "scripts/sprites/Particle.js"
 
 export default class Projectile extends Pixi.Sprite {
     constructor(x, y, vector, shotBy, bulletSpeed, projectileType, friendly) {

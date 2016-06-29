@@ -1,7 +1,7 @@
 var Victor = require("victor")
-import Reference from "./Reference.js"
-import Sound from "./Sound.js"
-import Projectile, * as Projectiles from "./Projectile.js"
+import Reference from "scripts/data/Reference.js"
+import Sound from "scripts/layers/Sound.js"
+import Projectile, * as Projectiles from "scripts/sprites/Projectile.js"
 
 class PowerUp {
     constructor() {

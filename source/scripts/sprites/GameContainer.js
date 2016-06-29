@@ -1,23 +1,23 @@
 var Pixi = require("pixi.js")
 var Keyb = require("keyb")
 
-import Junkership from "./Junkership.js"
-import Trashbot from "./Trashbot.js"
-import SpawnWave from "./SpawnWave.js"
-import Reference from "./Reference.js"
-import Textures from "./Textures.js"
-import {Junk} from "./Junk.js"
-import Utility from "./Utility.js"
-import Star from "./Star.js"
-import StarStreak from "./StarStreak.js"
-import Sound from "./Sound.js"
-import Metrics from "./Metrics.js"
+import Junkership from "scripts/sprites/Junkership.js"
+import Trashbot from "scripts/sprites/Trashbot.js"
+import SpawnWave from "scripts/SpawnWave.js"
+import Reference from "scripts/data/Reference.js"
+import Textures from "scripts/data/Textures.js"
+import {Junk} from "scripts/sprites/Junk.js"
+import Utility from "scripts/data/Utility.js"
+import Star from "scripts/sprites/Star.js"
+import StarStreak from "scripts/sprites/StarStreak.js"
+import Sound from "scripts/layers/Sound.js"
+import Metrics from "scripts/layers/Metrics.js"
 import {
     ControlScheme, padCont, keybCont, keybArray, padArray,
     isDown, justdown, justUp
 }
-from "./Controls.js"
-import Title from "./Title.js"
+from "scripts/layers/Controls.js"
+import Title from "scripts/ui/Title.js"
 
 export default class GameContainer extends Pixi.Container {
     constructor() {

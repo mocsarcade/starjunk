@@ -1,7 +1,8 @@
 var Firebase = require("firebase")
 var $ = require("jquery")
-import Trashbot from "./Trashbot.js"
-import Junkership from "./Junkership.js"
+import Trashbot from "scripts/sprites/Trashbot.js"
+import Junkership from "scripts/sprites/Junkership.js"
+
 
 export default class Metrics {
     constructor(firebaseURL) {

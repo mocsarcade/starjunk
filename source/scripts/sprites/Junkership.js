@@ -1,16 +1,16 @@
 var Pixi = require("pixi.js")
 var Keyb = require("keyb")
-var Utility = require("./Utility")
+var Utility = require("scripts/data/Utility")
 
-import {ControlScheme} from "./Controls.js"
-import Reference from "./Reference.js"
-import Projectile from "./Projectile.js"
-import Score from "./Score.js"
-import Sound from "./Sound.js"
-import {PeaShoota} from "./PowerUp.js"
-import Explosion from "./Explosion.js"
-import JunkName from "./JunkName.js"
-import Shield from "./Shield.js"
+import {ControlScheme} from "scripts/layers/Controls.js"
+import Reference from "scripts/data/Reference.js"
+import Projectile from "scripts/sprites/Projectile.js"
+import Score from "scripts/ui/Score.js"
+import Sound from "scripts/layers/Sound.js"
+import {PeaShoota} from "scripts/PowerUp.js"
+import Explosion from "scripts/sprites/Explosion.js"
+import JunkName from "scripts/ui/JunkName.js"
+import Shield from "scripts/sprites/Shield.js"
 
 export default class Junkership extends Pixi.Sprite {
     constructor(cont) {

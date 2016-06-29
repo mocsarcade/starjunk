@@ -1,12 +1,12 @@
 var Pixi = require("pixi.js")
-var Utility = require("./Utility")
+var Utility = require("scripts/data/Utility")
 
-import Reference from "./Reference.js"
-import Junkership from "./Junkership.js"
-import Trashbot from "./Trashbot.js"
-import Score from "./Score.js"
-import Sound from "./Sound.js"
-import * as WeaponList from "./PowerUp.js"
+import Reference from "scripts/data/Reference.js"
+import Junkership from "scripts/sprites/Junkership.js"
+import Trashbot from "scripts/sprites/Trashbot.js"
+import Score from "scripts/ui/Score.js"
+import Sound from "scripts/layers/Sound.js"
+import * as WeaponList from "scripts/PowerUp.js"
 
 export class Junk extends Pixi.Sprite {
     constructor(x, y) {

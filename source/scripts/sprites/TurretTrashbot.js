@@ -1,8 +1,8 @@
 var Victor = require("victor")
-import Trashbot from "./Trashbot.js"
-import Reference from "./Reference.js"
-import Projectile from "./Projectile.js"
-import Utility from "./Utility.js"
+import Trashbot from "scripts/sprites/Trashbot.js"
+import Reference from "scripts/data/Reference.js"
+import Projectile from "scripts/sprites/Projectile.js"
+import Utility from "scripts/data/Utility.js"
 
 export default class TurretTrashbot extends Trashbot {
     constructor(position, shootStyle) {
