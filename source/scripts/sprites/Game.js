@@ -1,5 +1,5 @@
-var Pixi = require("pixi.js")
-var Keyb = require("keyb")
+import Pixi from "pixi.js"
+import Keyb from "keyb"
 
 import Junkership from "scripts/sprites/Junkership.js"
 import Trashbot from "scripts/sprites/Trashbot.js"
@@ -12,14 +12,16 @@ import Star from "scripts/sprites/Star.js"
 import StarStreak from "scripts/sprites/StarStreak.js"
 import Sound from "scripts/layers/Sound.js"
 import Metrics from "scripts/layers/Metrics.js"
+
+import PowerUp from "scripts/PowerUp.js"
+import Score from "scripts/ui/Score.js"
 import {
     ControlScheme, padCont, keybCont, keybArray, padArray,
     isDown, justdown, justUp
-}
-from "scripts/layers/Controls.js"
+} from "scripts/layers/Controls.js"
 import Title from "scripts/ui/Title.js"
 
-export default class GameContainer extends Pixi.Container {
+export default class Game extends Pixi.Container {
     constructor() {
         super()
         this.spawnWaveInterval = 0
@@ -29,11 +31,41 @@ export default class GameContainer extends Pixi.Container {
         Textures.initTex()
         this.gamepads = navigator.getGamepads()
         this.stars = 0
-        this.metrics = new Metrics(Reference.FIREBASE_URL)
+        
+        if(STAGE == "PRODUCTION") {
+            this.metrics = new Metrics(Reference.FIREBASE_URL)
+        }
+        
         this.startedAt = Date.now()
         this.waitingForScores = Array(4).fill(false)
         this.playerSpawnAllowed = true
     }
+    update(delta) {
+        this.starfield()
+        this.children.forEach((child) => {
+            child.update(delta)
+        })
+        this.waves.forEach((wave) => {
+            wave.update(delta)
+        })
+
+        if (Junkership.Inventory.length < Reference.MAX_PLAYERS) {
+            this.checkPlayerSpawn()
+        }
+        if (Junkership.Inventory.length > 0 && this.playerSpawnAllowed) {
+            Sound.playBGM()
+        }
+        Score.Inventory.forEach((score) => {
+            score.update()
+        })
+        this.spawnWaveInterval += delta
+        if (this.spawnWaveInterval >= this.difficulty.SPAWN_WAVE.INTERVAL) {
+            this.spawnWave()
+            this.spawnWaveInterval = 0
+        }
+        this.resetCheck()
+    }
+    
 
     starfield() {
         if (this.stars < Reference.STAR_COUNT) {
