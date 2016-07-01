@@ -86,6 +86,7 @@ export class SineProjectile extends Projectile {
     }
 
     update(delta) {
+        super.update(delta)
         this.t += delta
         var coefficient = 2 * Math.PI * Reference.SINE_PROJECTILES.FREQUENCY
         var m = Reference.SINE_PROJECTILES.AMPLITUDE * coefficient * Math.cos(coefficient * this.t)

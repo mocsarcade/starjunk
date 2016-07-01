@@ -54,20 +54,21 @@ export default class Junkership extends Pixi.Sprite {
                         this.powerUp.fire(this)
                         this.powerUp.cooldown.time = 0
                     }
-                    this.powerUp.cooldown.time++
                 } else {
                     this.powerUp.fire(this)
                 }
             }
-
-            if(this.controls.isDown("fire")) {
-                if (this.powerUp.reload !== undefined) {
-                    if(this.powerUp.reload.time >= this.powerUp.reload.limit) {
-                        this.powerUp.fire(this, delta)
-                        this.powerUp.reload.time = 0
-                    }
-                    this.powerUp.reload.time++
+            if(this.controls.isDown("fire") && this.powerUp.reload !== undefined) {
+                if(this.powerUp.reload.time >= this.powerUp.reload.limit) {
+                    this.powerUp.fire(this, delta)
+                    this.powerUp.reload.time = 0
                 }
+            }
+            if (this.powerUp.cooldown !== undefined) {
+                this.powerUp.cooldown.time++
+            }
+            if (this.powerUp.reload !== undefined) {
+                this.powerUp.reload.time++
             }
 
             var killedBy
