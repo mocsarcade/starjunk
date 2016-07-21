@@ -2,6 +2,7 @@ var Victor = require("victor")
 import Reference from "scripts/data/Reference.js"
 import Sound from "scripts/layers/Sound.js"
 import Projectile, * as Projectiles from "scripts/sprites/Projectile.js"
+import Shield from "scripts/sprites/Shield.js"
 
 class PowerUp {
     constructor() {
@@ -216,7 +217,7 @@ export class BFG extends PowerUp {
         this.BFGrapid = true
         this.reload = {
             time: 0,
-            limit: 2.5
+            limit: 5
         }
         this.kickbackFactor = -160
         this.name = "BFG"
@@ -398,7 +399,7 @@ export class SineShot extends PowerUp {
         this.bulletSpeed = Reference.NORMAL_BULLET_SPEED
         this.reload = {
             time: 0,
-            limit: 12
+            limit: 18
         }
         this.name = "SINE SHOT"
     }
@@ -420,7 +421,7 @@ export class DoubleSineShot extends PowerUp {
         this.bulletSpeed = Reference.NORMAL_BULLET_SPEED
         this.reload = {
             time: 0,
-            limit: 12
+            limit: 18
         }
         this.name = "DOUBLE SINE SHOT"
     }
@@ -433,7 +434,7 @@ export class DoubleSineShot extends PowerUp {
             curShip.position.y + curShip.height/2,
             this.vector, curShip, this.bulletSpeed, "sineup"))
 
-        game.addChild(new Projectile(
+        game.addChild(new Projectiles.SineProjectile(
             curShip.position.x + curShip.width,
             curShip.position.y + curShip.height/2,
             this.vector, curShip, this.bulletSpeed, "sinedown"))
@@ -447,17 +448,17 @@ export class Sword extends PowerUp {
         this.bulletSpeed = Reference.NORMAL_BULLET_SPEED
         this.name = "SWORD"
         this.projectileType = "sword"
-        this.fire(junkership)
-        Sound.playSFX("crazyshot")
-    }
 
-    fire(curShip) {
         this.curSword = new Projectiles.SwordProjectile(
             curShip.position.x + curShip.width,
             curShip.position.y + curShip.height/2, this.vector,
             curShip, this.bulletSpeed, this.projectileType)
         game.addChild(this.curSword)
+
+        Sound.playSFX("crazyshot")
     }
+
+    fire() { }
 
     destroy() {
         if (this.curSword != null && this.curSword != undefined) {
